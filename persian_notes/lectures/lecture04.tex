@@ -1,0 +1,247 @@
+% lecture04.tex - تبدیلات در سه بعد و دترمینان
+% Chapter 4: 3D Transformations and Determinants
+
+\chapter{تبدیلات سه‌بعدی و دترمینان}
+\label{ch:determinant}
+
+\begin{abstract}
+دترمینان عددی است که میزان «کشیدگی» یا «فشردگی» فضا توسط یک تبدیل خطی را اندازه می‌گیرد. در این درس معنای هندسی دترمینان و نحوه محاسبه آن را می‌آموزیم.
+\end{abstract}
+
+% ============================================
+\section{تبدیلات در فضای سه‌بعدی}
+% ============================================
+
+\begin{definition}[ماتریس تبدیل سه‌بعدی]
+یک تبدیل خطی در $\Rthree$ با ماتریس $3 \times 3$ نمایش داده می‌شود:
+\[
+\mA = \threemat{a_{11}}{a_{12}}{a_{13}}{a_{21}}{a_{22}}{a_{23}}{a_{31}}{a_{32}}{a_{33}}
+\]
+ستون‌ها محل فرود $\vi$، $\vj$، و $\vk$ هستند.
+\end{definition}
+
+\begin{intuition}
+همان منطق دوبعدی در سه بعد هم کار می‌کند. شبکه سه‌بعدی را تصور کنید که کشیده، فشرده، چرخیده، یا برش می‌خورد. خطوط همچنان راست می‌مانند و مبدأ ثابت است.
+\end{intuition}
+
+% ============================================
+\section{دترمینان: معنای هندسی}
+% ============================================
+
+\begin{definition}[دترمینان - تعریف هندسی]
+\vocab{دترمینان} یک ماتریس، ضریبی است که نشان می‌دهد تبدیل متناظر، مساحت (در دو بعد) یا حجم (در سه بعد) را چند برابر می‌کند.
+
+اگر $\mA$ ماتریس تبدیل $T$ باشد:
+\[
+\det(\mA) = \frac{\text{مساحت/حجم بعد از تبدیل}}{\text{مساحت/حجم قبل از تبدیل}}
+\]
+\end{definition}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.2]
+    % Original unit square
+    \begin{scope}[shift={(0,0)}]
+        \fill[blue!20] (0,0) -- (1,0) -- (1,1) -- (0,1) -- cycle;
+        \draw[thick] (0,0) -- (1,0) -- (1,1) -- (0,1) -- cycle;
+        \draw[basis] (0,0) -- (1,0);
+        \draw[basis] (0,0) -- (0,1);
+        \node at (0.5,0.5) {$1$};
+        \node at (0.5,-0.5) {مساحت = $1$};
+    \end{scope}
+
+    \draw[-{Stealth}, very thick] (1.5,0.5) -- (2.5,0.5) node[midway, above] {$T$};
+
+    % Transformed parallelogram
+    \begin{scope}[shift={(3,0)}]
+        \fill[green!20] (0,0) -- (2,0) -- (3,1.5) -- (1,1.5) -- cycle;
+        \draw[thick] (0,0) -- (2,0) -- (3,1.5) -- (1,1.5) -- cycle;
+        \draw[transformed, very thick] (0,0) -- (2,0);
+        \draw[transformed, very thick] (0,0) -- (1,1.5);
+        \node at (1.5,0.75) {$3$};
+        \node at (1.5,-0.5) {مساحت = $3$};
+    \end{scope}
+\end{tikzpicture}
+\end{center}
+
+\begin{important}
+دترمینان = ضریب تغییر مساحت/حجم
+
+اگر $\det(\mA) = 3$، هر شکل پس از تبدیل، $3$ برابر بزرگ‌تر می‌شود.
+\end{important}
+
+% ============================================
+\section{علامت دترمینان}
+% ============================================
+
+\begin{theorem}[معنای علامت دترمینان]
+\begin{itemize}
+    \item $\det(\mA) > 0$: جهت‌گیری فضا حفظ می‌شود
+    \item $\det(\mA) < 0$: جهت‌گیری فضا معکوس می‌شود (مثل آینه)
+    \item $\det(\mA) = 0$: فضا به بعد پایین‌تر فشرده می‌شود
+\end{itemize}
+\end{theorem}
+
+\begin{intuition}
+در دو بعد، اگر $\vj$ نسبت به $\vi$ در سمت چپ باشد، جهت‌گیری «مثبت» است. اگر تبدیل این رابطه را عوض کند (مثلاً انعکاس)، دترمینان منفی می‌شود.
+
+در سه بعد، قاعده دست راست: اگر انگشتان از $\vi$ به $\vj$ بچرخند و شست به $\vk$ اشاره کند، جهت‌گیری مثبت است.
+\end{intuition}
+
+% ============================================
+\section{محاسبه دترمینان}
+% ============================================
+
+\subsection{دترمینان ماتریس $2 \times 2$}
+
+\begin{definition}
+\[
+\det\twomat{a}{b}{c}{d} = ad - bc
+\]
+\end{definition}
+
+\begin{example}
+\[
+\det\twomat{3}{1}{0}{2} = 3 \times 2 - 1 \times 0 = 6
+\]
+مساحت هر شکل ۶ برابر می‌شود.
+\end{example}
+
+\subsection{دترمینان ماتریس $3 \times 3$}
+
+\begin{definition}[قاعده ساروس یا بسط]
+\[
+\det\threemat{a}{b}{c}{d}{e}{f}{g}{h}{i} = a(ei-fh) - b(di-fg) + c(dh-eg)
+\]
+\end{definition}
+
+\begin{intuition}
+دترمینان $3 \times 3$ برابر است با حجم متوازی‌السطوح ساخته شده از سه بردار ستونی ماتریس (با علامت).
+\end{intuition}
+
+\begin{example}
+\[
+\det\threemat{1}{2}{3}{4}{5}{6}{7}{8}{9}
+\]
+\begin{align*}
+&= 1(5 \times 9 - 6 \times 8) - 2(4 \times 9 - 6 \times 7) + 3(4 \times 8 - 5 \times 7) \\
+&= 1(45-48) - 2(36-42) + 3(32-35) \\
+&= 1(-3) - 2(-6) + 3(-3) \\
+&= -3 + 12 - 9 = 0
+\end{align*}
+دترمینان صفر یعنی سه ستون در یک صفحه هستند!
+\end{example}
+
+% ============================================
+\section{خواص دترمینان}
+% ============================================
+
+\begin{theorem}[خواص اصلی دترمینان]
+\begin{enumerate}
+    \item $\det(\mI) = 1$
+    \item $\det(\mA\mB) = \det(\mA) \cdot \det(\mB)$
+    \item $\det(\mA\trans) = \det(\mA)$
+    \item $\det(c\mA) = c^n \det(\mA)$ برای ماتریس $n \times n$
+    \item اگر یک سطر/ستون صفر باشد: $\det(\mA) = 0$
+    \item اگر دو سطر/ستون برابر باشند: $\det(\mA) = 0$
+\end{enumerate}
+\end{theorem}
+
+\begin{intuition}
+خاصیت $\det(\mA\mB) = \det(\mA) \cdot \det(\mB)$ بسیار مهم است:
+
+اگر $\mA$ مساحت را ۳ برابر کند و $\mB$ مساحت را ۲ برابر کند، ترکیب آنها مساحت را $3 \times 2 = 6$ برابر می‌کند.
+\end{intuition}
+
+% ============================================
+\section{دترمینان صفر: فشردگی فضا}
+% ============================================
+
+\begin{theorem}
+$\det(\mA) = 0$ اگر و تنها اگر:
+\begin{itemize}
+    \item ستون‌های $\mA$ وابسته خطی باشند
+    \item تبدیل متناظر، فضا را به بعد پایین‌تر ببرد
+\end{itemize}
+\end{theorem}
+
+\begin{center}
+\begin{tikzpicture}[scale=1]
+    % 2D to 1D
+    \begin{scope}[shift={(0,0)}]
+        \fill[blue!20] (0,0) -- (1,0) -- (1,1) -- (0,1) -- cycle;
+        \node at (0.5,-0.5) {$\Rtwo$};
+    \end{scope}
+
+    \draw[-{Stealth}, very thick] (1.5,0.5) -- (3,0.5) node[midway, above] {$\det = 0$};
+
+    \begin{scope}[shift={(3.5,0)}]
+        \draw[blue!70, ultra thick] (-0.5,0.5) -- (2,0.5);
+        \node at (0.75,-0.5) {یک خط};
+    \end{scope}
+\end{tikzpicture}
+\end{center}
+
+\begin{practical}
+\textbf{تشخیص وابستگی خطی:}
+
+می‌خواهید بدانید آیا سه بردار در فضا مستقل خطی هستند؟ آنها را ستون‌های یک ماتریس قرار دهید. اگر $\det \neq 0$، مستقل هستند.
+\end{practical}
+
+% ============================================
+\section{مثال‌های کاربردی}
+% ============================================
+
+\begin{practical}
+\textbf{محاسبه مساحت مثلث با رأس‌های مشخص}
+
+اگر رأس‌های مثلث $(x_1, y_1)$، $(x_2, y_2)$، $(x_3, y_3)$ باشند:
+\[
+\text{مساحت} = \frac{1}{2} \left| \det\threemat{x_1}{y_1}{1}{x_2}{y_2}{1}{x_3}{y_3}{1} \right|
+\]
+\end{practical}
+
+\begin{practical}
+\textbf{فیزیک: گشتاور و نیرو}
+
+دترمینان در محاسبه ضرب خارجی بردارها استفاده می‌شود که در محاسبه گشتاور، تکانه زاویه‌ای، و میدان‌های الکترومغناطیسی کاربرد دارد.
+\end{practical}
+
+% ============================================
+\section{تمرین‌ها}
+% ============================================
+
+\begin{exercise}
+دترمینان ماتریس‌های زیر را محاسبه کنید:
+\begin{enumerate}[label=(\alph*)]
+    \item $\twomat{3}{7}{1}{4}$
+    \item $\twomat{2}{6}{1}{3}$
+    \item $\twomat{-1}{2}{3}{-6}$
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}
+اگر $\det(\mA) = 5$ و $\det(\mB) = -2$، مقدار $\det(\mA\mB)$ چیست؟
+\end{exercise}
+
+\begin{exercise}
+مساحت متوازی‌الاضلاع با رأس‌های $(0,0)$، $(3,1)$، $(1,4)$، $(4,5)$ را محاسبه کنید.
+\end{exercise}
+
+\begin{exercise}
+دترمینان ماتریس چرخش $\theta$ را محاسبه کنید و نتیجه را تفسیر کنید.
+\end{exercise}
+
+\begin{exercise}[چالشی]
+ثابت کنید که برای هر ماتریس $\mA$:
+\[
+\det(\mA\inv) = \frac{1}{\det(\mA)}
+\]
+(فرض کنید $\mA$ معکوس‌پذیر است)
+\end{exercise}
+
+\begin{problem}
+حجم متوازی‌السطوح ساخته شده از بردارهای زیر را محاسبه کنید:
+\[
+\va = \threevec{1}{0}{2}, \quad \vb = \threevec{0}{3}{1}, \quad \vc = \threevec{2}{1}{0}
+\]
+\end{problem}

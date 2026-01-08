@@ -1,0 +1,238 @@
+% lecture06.tex - Dot Products and Duality
+% Chapter 6: Dot Products and Duality
+
+\chapter{Dot Products and Duality}
+\label{ch:dotproduct}
+
+\begin{abstract}
+The dot product is one of the fundamental operations in linear algebra. In this chapter, we learn its definition, properties, and the deep concept of duality that connects vectors to linear functions.
+\end{abstract}
+
+% ============================================
+\section{Definition of the Dot Product}
+% ============================================
+
+\begin{definition}[Dot Product]
+The \vocab{dot product} of two vectors $\vv = \twovec{v_1}{v_2}$ and $\vw = \twovec{w_1}{w_2}$:
+\[
+\vv \cdot \vw = v_1 w_1 + v_2 w_2
+\]
+In $n$-dimensional space:
+\[
+\vv \cdot \vw = \sum_{i=1}^{n} v_i w_i
+\]
+\end{definition}
+
+\begin{important}
+The dot product of two vectors is a \textbf{number} (scalar), not a vector!
+\end{important}
+
+\begin{example}
+\[
+\twovec{3}{2} \cdot \twovec{1}{4} = 3 \times 1 + 2 \times 4 = 3 + 8 = 11
+\]
+\end{example}
+
+% ============================================
+\section{Geometric Interpretation}
+% ============================================
+
+\begin{theorem}[Geometric Formula for Dot Product]
+\[
+\vv \cdot \vw = \norm{\vv} \norm{\vw} \cos\theta
+\]
+where $\theta$ is the angle between the two vectors.
+\end{theorem}
+
+\begin{intuition}
+The dot product can be interpreted two ways:
+\begin{enumerate}
+    \item Length of $\vv$ times the length of the projection of $\vw$ onto $\vv$
+    \item Length of $\vw$ times the length of the projection of $\vv$ onto $\vw$
+\end{enumerate}
+\end{intuition}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.5]
+    % Vectors
+    \draw[vector, blue!70, very thick] (0,0) -- (3,0) node[right] {$\vv$};
+    \draw[vector, green!60!black, very thick] (0,0) -- (2,1.5) node[above] {$\vw$};
+
+    % Projection
+    \draw[dashed, red] (2,1.5) -- (2,0);
+    \draw[red, thick] (0,0) -- (2,0) node[midway, below] {projection of $\vw$};
+
+    % Angle
+    \draw (0.7,0) arc (0:36.87:0.7) node[midway, right] {$\theta$};
+\end{tikzpicture}
+\end{center}
+
+% ============================================
+\section{Properties of the Dot Product}
+% ============================================
+
+\begin{theorem}[Main Properties]
+\begin{enumerate}
+    \item \textbf{Commutative:} $\vv \cdot \vw = \vw \cdot \vv$
+    \item \textbf{Distributive:} $\vv \cdot (\vw + \vu) = \vv \cdot \vw + \vv \cdot \vu$
+    \item \textbf{Scalar multiplication:} $(c\vv) \cdot \vw = c(\vv \cdot \vw)$
+    \item \textbf{Positive definiteness:} $\vv \cdot \vv \geq 0$ and $\vv \cdot \vv = 0 \Leftrightarrow \vv = \vzero$
+\end{enumerate}
+\end{theorem}
+
+\begin{definition}[Length of a Vector]
+\[
+\norm{\vv} = \sqrt{\vv \cdot \vv} = \sqrt{v_1^2 + v_2^2 + \cdots + v_n^2}
+\]
+\end{definition}
+
+% ============================================
+\section{Orthogonality}
+% ============================================
+
+\begin{theorem}[Condition for Orthogonality]
+Two vectors $\vv$ and $\vw$ are \vocab{orthogonal} (perpendicular) if and only if:
+\[
+\vv \cdot \vw = 0
+\]
+\end{theorem}
+
+\begin{intuition}
+If $\vv \cdot \vw = 0$, then $\cos\theta = 0$, so $\theta = 90°$.
+
+The projection of any vector onto a perpendicular vector is zero.
+\end{intuition}
+
+\begin{example}
+Vectors $\vv = \twovec{3}{2}$ and $\vw = \twovec{2}{-3}$ are orthogonal because:
+\[
+\vv \cdot \vw = 3 \times 2 + 2 \times (-3) = 6 - 6 = 0
+\]
+\end{example}
+
+% ============================================
+\section{Vector Projection}
+% ============================================
+
+\begin{definition}[Projection of a Vector]
+The projection of vector $\vv$ onto vector $\vw$:
+\[
+\proj_{\vw}(\vv) = \frac{\vv \cdot \vw}{\vw \cdot \vw} \vw = \frac{\vv \cdot \vw}{\norm{\vw}^2} \vw
+\]
+\end{definition}
+
+\begin{intuition}
+The projection of $\vv$ onto $\vw$ is a vector in the direction of $\vw$ that represents the ``shadow'' of $\vv$ on the line of $\vw$.
+\end{intuition}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.5]
+    \draw[vector, blue!70, very thick] (0,0) -- (3,0) node[right] {$\vw$};
+    \draw[vector, green!60!black, very thick] (0,0) -- (2,2) node[above] {$\vv$};
+    \draw[vector, red!70, very thick] (0,0) -- (2,0) node[below] {$\proj_{\vw}(\vv)$};
+    \draw[dashed, gray] (2,2) -- (2,0);
+\end{tikzpicture}
+\end{center}
+
+% ============================================
+\section{Duality}
+% ============================================
+
+\begin{intuition}
+A deep insight: every $1 \times n$ row vector can be thought of as a \textbf{linear function} that takes $n$-dimensional vectors to numbers.
+
+For example, $\bmat{2 & 1}$ is a linear function:
+\[
+\bmat{2 & 1} \twovec{x}{y} = 2x + y
+\]
+\end{intuition}
+
+\begin{theorem}[Duality]
+Every linear function $f: \R^n \to \R$ can be written as a dot product with a fixed vector:
+\[
+f(\vx) = \vv \cdot \vx
+\]
+for a unique vector $\vv$.
+\end{theorem}
+
+\begin{definition}[Dual Vector]
+The vector $\vv$ that represents a linear function $f$ is called the \vocab{dual vector} of that function.
+\end{definition}
+
+\begin{practical}
+\textbf{Application in Machine Learning:}
+
+In neural networks, each neuron computes a linear function of its inputs:
+\[
+\text{output} = w_1 x_1 + w_2 x_2 + \cdots + w_n x_n = \vw \cdot \vx
+\]
+The weights $\vw$ are the dual vector of that neuron.
+\end{practical}
+
+% ============================================
+\section{Practical Applications}
+% ============================================
+
+\begin{practical}
+\textbf{Physics: Mechanical Work}
+
+Work done by force $\vec{F}$ over displacement $\vec{d}$:
+\[
+W = \vec{F} \cdot \vec{d} = \norm{\vec{F}} \norm{\vec{d}} \cos\theta
+\]
+If the force is perpendicular to the direction of motion, no work is done!
+\end{practical}
+
+\begin{practical}
+\textbf{Computer Graphics: Lighting Calculations}
+
+The intensity of light reflected from a surface:
+\[
+I = \max(0, \vec{n} \cdot \vec{l})
+\]
+where $\vec{n}$ is the surface normal and $\vec{l}$ is the light direction.
+\end{practical}
+
+\begin{practical}
+\textbf{Text Similarity}
+
+To compare two text documents, convert each to a vector (e.g., TF-IDF) and compute cosine similarity:
+\[
+\text{similarity} = \frac{\vv \cdot \vw}{\norm{\vv}\norm{\vw}} = \cos\theta
+\]
+\end{practical}
+
+% ============================================
+\section{Exercises}
+% ============================================
+
+\begin{exercise}
+Compute the dot product of:
+\begin{enumerate}[label=(\alph*)]
+    \item $\twovec{1}{2} \cdot \twovec{3}{4}$
+    \item $\threevec{1}{-1}{2} \cdot \threevec{2}{3}{-1}$
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}
+Are vectors $\va = \twovec{4}{3}$ and $\vb = \twovec{-3}{4}$ orthogonal?
+\end{exercise}
+
+\begin{exercise}
+Find the projection of $\vv = \twovec{3}{4}$ onto $\vw = \twovec{1}{0}$.
+\end{exercise}
+
+\begin{exercise}
+Calculate the angle between vectors $\va = \twovec{1}{1}$ and $\vb = \twovec{1}{0}$.
+\end{exercise}
+
+\begin{exercise}[Challenge]
+Show that for any two vectors $\vv$ and $\vw$:
+\[
+\norm{\vv + \vw}^2 = \norm{\vv}^2 + 2(\vv \cdot \vw) + \norm{\vw}^2
+\]
+\end{exercise}
+
+\begin{problem}
+A force of magnitude $10$ Newtons acts at an angle of $60°$ to the horizontal on an object. If the object moves $5$ meters horizontally, how much work is done?
+\end{problem}

@@ -1,0 +1,448 @@
+% lecture01.tex - Introduction to Vectors
+% Chapter 1: Introduction to Vectors
+
+\chapter{Introduction to Vectors}
+\label{ch:vectors}
+
+\begin{abstract}
+Vectors are the fundamental building block of linear algebra. In this chapter, we explore three different perspectives on vectors: the physics view, the computer science view, and the mathematics view. We also learn the basic operations of vector addition and scalar multiplication.
+\end{abstract}
+
+% ============================================
+\section{Three Perspectives on Vectors}
+% ============================================
+
+The concept of a vector has different meanings depending on your field of study. Understanding these three perspectives helps us form a complete picture of vectors.
+
+% -------------------------------------------
+\subsection{The Physics Perspective}
+% -------------------------------------------
+
+\begin{definition}[Vector from Physics Perspective]
+A vector is an \vocab{arrow} in space defined by two properties:
+\begin{enumerate}
+    \item \textbf{Length} (magnitude)
+    \item \textbf{Direction}
+\end{enumerate}
+As long as these two properties remain the same, a vector can be moved anywhere in space and still be considered the same vector.
+\end{definition}
+
+\begin{intuition}
+Draw an arrow on paper. Now move it to another location without rotating it or changing its size. From a physicist's perspective, this is still the same vector!
+
+For example, the gravitational force on an apple always points downward with a constant magnitude---regardless of where the apple is in the room.
+\end{intuition}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.2]
+    % Draw multiple copies of same vector
+    \draw[vector, blue!70, very thick] (0,0) -- (2,1) node[midway, above] {$\vv$};
+    \draw[vector, blue!70, very thick] (3,1) -- (5,2) node[midway, above] {$\vv$};
+    \draw[vector, blue!70, very thick] (-1,2) -- (1,3) node[midway, above] {$\vv$};
+
+    % Note
+    \node at (2,-0.5) {\small All of these are the same vector};
+\end{tikzpicture}
+\end{center}
+
+% -------------------------------------------
+\subsection{The Computer Science Perspective}
+% -------------------------------------------
+
+\begin{definition}[Vector from Computer Science Perspective]
+A vector is an \vocab{ordered list of numbers}. For example:
+\[
+\vv = \twovec{3}{-2}
+\]
+In this view, ``vector'' is almost synonymous with ``list.''
+\end{definition}
+
+\begin{practical}
+\textbf{Example: Housing Price Model}
+
+Suppose you want to model houses based on two features:
+\begin{itemize}
+    \item Square footage (in square meters)
+    \item Price (in thousands of dollars)
+\end{itemize}
+
+Each house is a two-dimensional vector:
+\[
+\text{House}_1 = \twovec{85}{250}, \quad
+\text{House}_2 = \twovec{120}{420}, \quad
+\text{House}_3 = \twovec{65}{180}
+\]
+
+\textbf{Important:} The order of numbers matters! $\twovec{85}{250}$ is different from $\twovec{250}{85}$.
+\end{practical}
+
+% -------------------------------------------
+\subsection{The Mathematics Perspective}
+% -------------------------------------------
+
+\begin{definition}[Vector from Mathematics Perspective]
+Mathematicians define vectors abstractly: a vector is anything on which you can perform these two operations:
+\begin{enumerate}
+    \item \textbf{Add two vectors}
+    \item \textbf{Multiply a vector by a number (scalar)}
+\end{enumerate}
+We will explore the details of this definition in the final chapter (Abstract Vector Spaces).
+\end{definition}
+
+\begin{important}
+Throughout this course, we visualize a vector as an \textbf{arrow in a coordinate system} with its \textbf{tail at the origin}. This geometric perspective helps us understand concepts more deeply.
+\end{important}
+
+% ============================================
+\section{Coordinate Systems and Vector Representation}
+% ============================================
+
+\begin{definition}[Two-Dimensional Cartesian Coordinate System]
+A coordinate system consists of:
+\begin{itemize}
+    \item Horizontal axis: \vocab{$x$-axis}
+    \item Vertical axis: \vocab{$y$-axis}
+    \item Point of intersection: \vocab{origin}
+\end{itemize}
+\end{definition}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.5]
+    % Grid
+    \draw[grid] (-0.5,-0.5) grid (4.5,3.5);
+
+    % Axes
+    \draw[axis, thick] (-0.5,0) -- (4.5,0) node[right] {$x$};
+    \draw[axis, thick] (0,-0.5) -- (0,3.5) node[above] {$y$};
+
+    % Origin label
+    \node[below left] at (0,0) {O};
+
+    % Tick marks
+    \foreach \x in {1,2,3,4} {
+        \draw (\x,0.1) -- (\x,-0.1) node[below] {\small $\x$};
+    }
+    \foreach \y in {1,2,3} {
+        \draw (0.1,\y) -- (-0.1,\y) node[left] {\small $\y$};
+    }
+
+    % Vector
+    \draw[vector, blue!70, ultra thick] (0,0) -- (3,2);
+    \node[above right, blue!70!black] at (3,2) {$\vv = \twovec{3}{2}$};
+
+    % Dashed lines to show coordinates
+    \draw[dashed, red!70] (3,0) -- (3,2);
+    \draw[dashed, red!70] (0,2) -- (3,2);
+
+    % Coordinate labels
+    \node[below, red!70!black] at (3,0) {$3$};
+    \node[left, red!70!black] at (0,2) {$2$};
+\end{tikzpicture}
+\end{center}
+
+\begin{definition}[Coordinates of a Vector]
+The \vocab{coordinates} of a vector are a pair of numbers describing how to get from the origin to the tip of the vector:
+\begin{itemize}
+    \item First number: how far to move along the $x$-axis (right is positive, left is negative)
+    \item Second number: how far to move along the $y$-axis (up is positive, down is negative)
+\end{itemize}
+\end{definition}
+
+\begin{intuition}
+The coordinates $\twovec{3}{2}$ mean:
+\begin{enumerate}
+    \item From the origin, move 3 units to the right
+    \item Then move 2 units up
+    \item The tip of the vector is right here!
+\end{enumerate}
+\end{intuition}
+
+% ============================================
+\section{Three-Dimensional Space}
+% ============================================
+
+\begin{definition}[Three-Dimensional Vector]
+In three-dimensional space, a third axis called the \vocab{$z$-axis} is added, perpendicular to both the $x$ and $y$ axes. Each vector is specified by three numbers:
+\[
+\vv = \threevec{a}{b}{c}
+\]
+\end{definition}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.2]
+    % 3D axes
+    \draw[axis, thick] (0,0) -- (3,0) node[right] {$x$};
+    \draw[axis, thick] (0,0) -- (0,3) node[above] {$z$};
+    \draw[axis, thick] (0,0) -- (-1.5,-1) node[below left] {$y$};
+
+    % Vector
+    \draw[vector, blue!70, ultra thick] (0,0) -- (2,1.5);
+    \draw[vector, green!60!black, ultra thick] (0,0) -- (-0.8,-0.5);
+
+    % Labels
+    \node[above right, blue!70!black] at (2,1.5) {$\threevec{2}{0}{1.5}$};
+\end{tikzpicture}
+\end{center}
+
+% ============================================
+\section{Vector Addition}
+% ============================================
+
+\begin{definition}[Adding Two Vectors - Geometric Method]
+To add two vectors $\va$ and $\vb$:
+\begin{enumerate}
+    \item Draw vector $\va$
+    \item Move vector $\vb$ so that its tail is at the tip of $\va$
+    \item The sum vector is drawn from the origin (tail of $\va$) to the tip of $\vb$
+\end{enumerate}
+\end{definition}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.3]
+    % Grid
+    \draw[grid] (-0.5,-0.5) grid (5.5,3.5);
+
+    % Axes
+    \draw[axis] (-0.5,0) -- (5.5,0);
+    \draw[axis] (0,-0.5) -- (0,3.5);
+
+    % Vector a
+    \draw[vector, red!70, very thick] (0,0) -- (2,1) node[midway, below] {$\va$};
+
+    % Vector b (translated)
+    \draw[vector, blue!70, very thick] (2,1) -- (4,3) node[midway, right] {$\vb$};
+
+    % Sum vector
+    \draw[vector, purple!70, ultra thick] (0,0) -- (4,3) node[midway, above left] {$\va + \vb$};
+
+    % Original b (dashed)
+    \draw[vector, blue!40, dashed] (0,0) -- (2,2) node[midway, left] {\small $\vb$};
+\end{tikzpicture}
+\end{center}
+
+\begin{definition}[Adding Two Vectors - Algebraic Method]
+If $\va = \twovec{a_1}{a_2}$ and $\vb = \twovec{b_1}{b_2}$:
+\[
+\va + \vb = \twovec{a_1 + b_1}{a_2 + b_2}
+\]
+We add corresponding components together.
+\end{definition}
+
+\begin{example}
+\[
+\twovec{1}{2} + \twovec{3}{-1} = \twovec{1+3}{2+(-1)} = \twovec{4}{1}
+\]
+\end{example}
+
+\begin{intuition}
+Vector addition can be interpreted as \textbf{walking a path}:
+\begin{itemize}
+    \item First walk along vector $\va$
+    \item Then walk along vector $\vb$
+    \item The net effect is the same as walking directly along $\va + \vb$
+\end{itemize}
+
+Like walking: if you take 2 steps right, then 5 steps right, it's the same as taking 7 steps right.
+\end{intuition}
+
+\begin{practical}
+\textbf{Example: Airplane Speed in Wind}
+
+An airplane flies at $\twovec{500}{0}$ km/h toward the east (positive $x$ direction). Wind blows at $\twovec{0}{50}$ km/h toward the north (positive $y$ direction).
+
+Actual speed of the airplane relative to ground:
+\[
+\vv_{\text{actual}} = \twovec{500}{0} + \twovec{0}{50} = \twovec{500}{50}
+\]
+
+The airplane moves both east and slightly north.
+\end{practical}
+
+% ============================================
+\section{Scalar Multiplication}
+% ============================================
+
+\begin{definition}[Scalar Times Vector]
+Multiplying a number (scalar) $c$ by a vector $\vv$ \vocab{scales} the vector by factor $c$:
+\[
+c \cdot \twovec{v_1}{v_2} = \twovec{c \cdot v_1}{c \cdot v_2}
+\]
+\end{definition}
+
+\begin{center}
+\begin{tikzpicture}[scale=1]
+    % Original vector
+    \draw[vector, blue!70, very thick] (0,0) -- (1.5,1) node[right] {$\vv$};
+
+    % Scaled vectors
+    \draw[vector, green!60!black, very thick] (3,0) -- (6,2) node[right] {$2\vv$};
+    \draw[vector, orange!70, very thick] (8,0) -- (8.75,0.5) node[right] {$\frac{1}{2}\vv$};
+    \draw[vector, red!70, very thick] (11,0) -- (8.3,-1.8) node[below] {$-1.8\vv$};
+
+    % Labels below
+    \node at (0.75,-0.5) {\small original};
+    \node at (4.5,-0.5) {\small stretched};
+    \node at (8.4,-0.5) {\small compressed};
+    \node at (9.7,-2.3) {\small reversed \& stretched};
+\end{tikzpicture}
+\end{center}
+
+\begin{important}
+Effects of scalar multiplication:
+\begin{itemize}
+    \item $c > 1$: vector is \textbf{stretched}
+    \item $0 < c < 1$: vector is \textbf{compressed}
+    \item $c < 0$: vector is \textbf{reversed} and then scaled
+    \item $c = 0$: vector becomes zero
+    \item $c = 1$: vector is unchanged
+\end{itemize}
+\end{important}
+
+\begin{warning}
+If $c < 0$, the vector not only changes in magnitude but also \textbf{reverses direction}!
+\end{warning}
+
+\begin{example}
+If $\vv = \twovec{4}{-2}$:
+\begin{align*}
+2\vv &= \twovec{8}{-4} & &\text{(doubled)} \\
+-\vv &= \twovec{-4}{2} & &\text{(reversed)} \\
+\frac{1}{2}\vv &= \twovec{2}{-1} & &\text{(halved)}
+\end{align*}
+\end{example}
+
+\begin{definition}[Scalar]
+In linear algebra, numbers that multiply vectors are called \vocab{scalars}. This name comes from the verb ``to scale.'' The word ``scalar'' is essentially synonymous with ``number.''
+\end{definition}
+
+% ============================================
+\section{Basis Vectors}
+% ============================================
+
+\begin{definition}[Standard Basis Vectors in $\Rtwo$]
+The two standard basis vectors are:
+\[
+\vi = \twovec{1}{0} \quad \text{and} \quad \vj = \twovec{0}{1}
+\]
+\end{definition}
+
+\begin{center}
+\begin{tikzpicture}[scale=2]
+    % Grid
+    \draw[grid] (-0.5,-0.5) grid (2.5,2.5);
+
+    % Axes
+    \draw[axis] (-0.5,0) -- (2.5,0) node[right] {$x$};
+    \draw[axis] (0,-0.5) -- (0,2.5) node[above] {$y$};
+
+    % Basis vectors
+    \draw[basis, -{Stealth[length=4mm]}] (0,0) -- (1,0) node[below right] {$\vi$};
+    \draw[basis, -{Stealth[length=4mm]}] (0,0) -- (0,1) node[above left] {$\vj$};
+
+    % A general vector
+    \draw[vector, blue!70, very thick] (0,0) -- (2,1.5);
+    \node[above right, blue!70!black] at (2,1.5) {$\vv = 2\vi + 1.5\vj$};
+
+    % Components
+    \draw[dashed, orange] (0,0) -- (2,0) node[midway, below] {$2\vi$};
+    \draw[dashed, orange] (2,0) -- (2,1.5) node[midway, right] {$1.5\vj$};
+\end{tikzpicture}
+\end{center}
+
+\begin{theorem}
+Any vector in $\Rtwo$ can be written as a linear combination of basis vectors:
+\[
+\twovec{a}{b} = a\vi + b\vj = a\twovec{1}{0} + b\twovec{0}{1}
+\]
+\end{theorem}
+
+\begin{intuition}
+When we write $\twovec{3}{2}$, we're really saying:
+\begin{center}
+``Take 3 copies of $\vi$ and 2 copies of $\vj$, then add them together''
+\end{center}
+That is:
+\[
+\twovec{3}{2} = 3\vi + 2\vj = 3\twovec{1}{0} + 2\twovec{0}{1}
+\]
+\end{intuition}
+
+% ============================================
+\section{Connecting the Perspectives}
+% ============================================
+
+\begin{summary}
+\textbf{The power of linear algebra} lies in translating between different perspectives:
+\begin{itemize}
+    \item \textbf{Data analyst:} can visualize long lists of numbers as vectors in space
+    \item \textbf{Physicist:} can describe motion and forces using numbers
+    \item \textbf{Graphics programmer:} can implement geometric transformations using matrices
+\end{itemize}
+\end{summary}
+
+% ============================================
+\section{Exercises}
+% ============================================
+
+\begin{exercise}
+Draw the following vectors in a coordinate system:
+\[
+\va = \twovec{3}{1}, \quad \vb = \twovec{-2}{4}, \quad \vc = \twovec{0}{-3}
+\]
+\end{exercise}
+
+\begin{exercise}
+Calculate the sum and difference of the following vectors:
+\[
+\va = \twovec{2}{5}, \quad \vb = \twovec{-1}{3}
+\]
+\begin{enumerate}[label=(\alph*)]
+    \item $\va + \vb$
+    \item $\va - \vb$
+    \item $2\va + 3\vb$
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}
+If $\vv = \twovec{4}{-2}$, calculate and sketch the following vectors:
+\begin{enumerate}[label=(\alph*)]
+    \item $2\vv$
+    \item $-\vv$
+    \item $\frac{1}{2}\vv$
+    \item $-2.5\vv$
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}[Applied]
+A ship moves at 30 km/h toward the north. The water current flows at 10 km/h toward the east. What is the ship's actual velocity relative to the shore?
+\end{exercise}
+
+\begin{exercise}
+Show that for any vector $\vv$:
+\[
+\vv + (-\vv) = \vzero
+\]
+where $\vzero = \twovec{0}{0}$ is the zero vector.
+\end{exercise}
+
+\begin{exercise}
+Prove that vector addition is commutative:
+\[
+\va + \vb = \vb + \va
+\]
+\end{exercise}
+
+\begin{exercise}[Challenge]
+Three points $A(1,2)$, $B(4,6)$, and $C(7,2)$ are given. Show that these three points form an isosceles triangle.
+
+\textit{Hint: The length of vector $\twovec{a}{b}$ equals $\sqrt{a^2 + b^2}$.}
+\end{exercise}
+
+\begin{problem}
+In three-dimensional space, vector $\vv = \threevec{2}{3}{-1}$ is given. Calculate:
+\begin{enumerate}[label=(\alph*)]
+    \item $3\vv$
+    \item $\vv + \threevec{1}{-1}{2}$
+    \item $-\frac{1}{2}\vv$
+\end{enumerate}
+\end{problem}

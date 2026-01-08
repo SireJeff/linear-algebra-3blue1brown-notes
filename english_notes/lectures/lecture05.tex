@@ -1,0 +1,295 @@
+% lecture05.tex - Inverse Matrices, Column Space, and Null Space
+% Chapter 5: Inverse Matrices, Column Space, and Null Space
+
+\chapter{Inverse Matrices, Column Space, and Null Space}
+\label{ch:inverse}
+
+\begin{abstract}
+In this chapter, we learn about inverse matrices, solving systems of linear equations, and important spaces associated with matrices (column space, null space, and rank).
+\end{abstract}
+
+% ============================================
+\section{Systems of Linear Equations}
+% ============================================
+
+\begin{definition}[System of Equations in Matrix Form]
+A system of linear equations:
+\[
+\system{
+a_{11}x_1 + a_{12}x_2 + \cdots + a_{1n}x_n &= b_1 \\
+a_{21}x_1 + a_{22}x_2 + \cdots + a_{2n}x_n &= b_2 \\
+&\vdots \\
+a_{m1}x_1 + a_{m2}x_2 + \cdots + a_{mn}x_n &= b_m
+}
+\]
+can be written as $\mA\vx = \vb$.
+\end{definition}
+
+\begin{intuition}
+Interpret the equation $\mA\vx = \vb$ as:
+\begin{center}
+``What vector $\vx$ lands on $\vb$ after applying transformation $\mA$?''
+\end{center}
+In other words: ``reverse'' the transformation $\mA$ to get from $\vb$ to $\vx$.
+\end{intuition}
+
+% ============================================
+\section{Inverse Matrix}
+% ============================================
+
+\begin{definition}[Inverse Matrix]
+The matrix $\mA\inv$ is the \vocab{inverse} of matrix $\mA$ if:
+\[
+\mA\inv \mA = \mA \mA\inv = \mI
+\]
+where $\mI$ is the identity matrix.
+\end{definition}
+
+\begin{intuition}
+If $\mA$ is a transformation, $\mA\inv$ is the transformation that undoes the effect of $\mA$:
+\begin{itemize}
+    \item If $\mA$ is rotation by $90°$, then $\mA\inv$ is rotation by $-90°$
+    \item If $\mA$ scales by 2, then $\mA\inv$ scales by $\frac{1}{2}$
+\end{itemize}
+\end{intuition}
+
+\begin{theorem}[Solving Systems with the Inverse]
+If $\mA$ is invertible, the unique solution to $\mA\vx = \vb$ is:
+\[
+\vx = \mA\inv \vb
+\]
+\end{theorem}
+
+\subsection{Formula for $2 \times 2$ Inverse}
+
+\begin{theorem}
+If $\mA = \twomat{a}{b}{c}{d}$ and $\det(\mA) \neq 0$:
+\[
+\mA\inv = \frac{1}{ad-bc} \twomat{d}{-b}{-c}{a}
+\]
+\end{theorem}
+
+\begin{example}
+\[
+\mA = \twomat{3}{1}{2}{4}, \quad \det(\mA) = 12 - 2 = 10
+\]
+\[
+\mA\inv = \frac{1}{10} \twomat{4}{-1}{-2}{3} = \twomat{0.4}{-0.1}{-0.2}{0.3}
+\]
+\end{example}
+
+% ============================================
+\section{When Does the Inverse Exist?}
+% ============================================
+
+\begin{theorem}
+Matrix $\mA$ is invertible if and only if $\det(\mA) \neq 0$.
+\end{theorem}
+
+\begin{intuition}
+If $\det(\mA) = 0$, the transformation $\mA$ collapses space (e.g., plane to line). Such a transformation is not reversible---information is lost.
+
+It's like adding several numbers together: you can't recover the original numbers from just the sum.
+\end{intuition}
+
+% ============================================
+\section{Column Space}
+% ============================================
+
+\begin{definition}[Column Space]
+The \vocab{column space} of matrix $\mA$, denoted $\Col(\mA)$, is the span of the columns of $\mA$:
+\[
+\Col(\mA) = \spn\{\text{columns of } \mA\}
+\]
+\end{definition}
+
+\begin{intuition}
+Column space = set of all possible outputs of transformation $\mA$
+
+Question: ``Does $\mA\vx = \vb$ have a solution?'' is equivalent to ``Is $\vb$ in the column space of $\mA$?''
+\end{intuition}
+
+\begin{example}
+\[
+\mA = \twomat{1}{3}{2}{6}
+\]
+The second column = 3 times the first column, so:
+\[
+\Col(\mA) = \spn\left\{\twovec{1}{2}\right\} = \text{a line through the origin}
+\]
+\end{example}
+
+% ============================================
+\section{Null Space}
+% ============================================
+
+\begin{definition}[Null Space]
+The \vocab{null space} (or kernel) of matrix $\mA$ is the set of all vectors that $\mA$ sends to zero:
+\[
+\Null(\mA) = \{\vx \mid \mA\vx = \vzero\}
+\]
+\end{definition}
+
+\begin{intuition}
+Null space = vectors that transformation $\mA$ ``squishes'' to zero
+
+If $\det(\mA) \neq 0$: only the zero vector gets squished, so $\Null(\mA) = \{\vzero\}$
+
+If $\det(\mA) = 0$: an entire line or plane gets compressed to the origin
+\end{intuition}
+
+\begin{example}
+For matrix $\mA = \twomat{1}{2}{2}{4}$:
+
+Solve $\mA\vx = \vzero$:
+\[
+\twomat{1}{2}{2}{4}\twovec{x}{y} = \twovec{0}{0}
+\]
+Equation: $x + 2y = 0$, so $x = -2y$
+
+Null space: $\Null(\mA) = \left\{ t\twovec{-2}{1} \mid t \in \R \right\}$ (a line)
+\end{example}
+
+% ============================================
+\section{Rank}
+% ============================================
+
+\begin{definition}[Rank]
+The \vocab{rank} of matrix $\mA$ equals:
+\begin{itemize}
+    \item The dimension of the column space
+    \item The number of linearly independent columns
+    \item The number of linearly independent rows
+\end{itemize}
+\[
+\rank(\mA) = \dim(\Col(\mA))
+\]
+\end{definition}
+
+\begin{theorem}[Rank-Nullity Theorem]
+For an $m \times n$ matrix:
+\[
+\rank(\mA) + \dim(\Null(\mA)) = n
+\]
+(the number of columns)
+\end{theorem}
+
+\begin{intuition}
+Rank = dimensions that the transformation preserves
+
+$\dim(\Null(\mA))$ = dimensions that are lost
+
+Their sum = dimension of the input space
+\end{intuition}
+
+% ============================================
+\section{Non-Square Matrices}
+% ============================================
+
+\begin{definition}[Transformations Between Dimensions]
+An $m \times n$ matrix represents a transformation from $\R^n$ to $\R^m$:
+\begin{itemize}
+    \item $m > n$: transformation from lower to higher dimension
+    \item $m < n$: transformation from higher to lower dimension
+\end{itemize}
+\end{definition}
+
+\begin{example}
+A $2 \times 3$ matrix:
+\[
+\mA = \twomat{1}{0}{2}{0}{1}{-1}
+\]
+is a transformation from $\Rthree$ to $\Rtwo$. It ``projects'' 3D space onto a plane.
+\end{example}
+
+% ============================================
+\section{Different Cases for Systems of Equations}
+% ============================================
+
+\begin{theorem}[Analysis of $\mA\vx = \vb$]
+\begin{enumerate}
+    \item \textbf{Unique solution:} If $\det(\mA) \neq 0$
+    \item \textbf{Infinitely many solutions:} If $\det(\mA) = 0$ and $\vb \in \Col(\mA)$
+    \item \textbf{No solution:} If $\vb \notin \Col(\mA)$
+\end{enumerate}
+\end{theorem}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.9]
+    % Case 1: Unique solution
+    \begin{scope}[shift={(0,0)}]
+        \fill[blue!10] (-1.5,-1.5) rectangle (1.5,1.5);
+        \draw[axis] (-1.5,0) -- (1.5,0);
+        \draw[axis] (0,-1.5) -- (0,1.5);
+        \fill[red] (0.8,0.6) circle (2pt) node[above right] {$\vx$};
+        \node at (0,-2) {Unique solution};
+        \node at (0,-2.5) {\small $\det \neq 0$};
+    \end{scope}
+
+    % Case 2: Infinite solutions
+    \begin{scope}[shift={(5,0)}]
+        \draw[blue!30, very thick] (-1.5,-0.75) -- (1.5,0.75);
+        \draw[axis] (-1.5,0) -- (1.5,0);
+        \draw[axis] (0,-1.5) -- (0,1.5);
+        \node at (0,-2) {Infinite solutions};
+        \node at (0,-2.5) {\small $\det = 0$, $\vb \in \Col$};
+    \end{scope}
+
+    % Case 3: No solution
+    \begin{scope}[shift={(10,0)}]
+        \draw[blue!30, very thick] (-1.5,-0.75) -- (1.5,0.75);
+        \draw[axis] (-1.5,0) -- (1.5,0);
+        \draw[axis] (0,-1.5) -- (0,1.5);
+        \fill[red] (0.5,1.2) circle (2pt) node[right] {$\vb$};
+        \node[red] at (0.5,0.8) {$\times$};
+        \node at (0,-2) {No solution};
+        \node at (0,-2.5) {\small $\vb \notin \Col$};
+    \end{scope}
+\end{tikzpicture}
+\end{center}
+
+% ============================================
+\section{Exercises}
+% ============================================
+
+\begin{exercise}
+Compute the inverse of:
+\[
+\mA = \twomat{2}{5}{1}{3}
+\]
+\end{exercise}
+
+\begin{exercise}
+Solve the following system using the inverse matrix:
+\[
+\system{
+2x + 3y &= 7 \\
+x + 2y &= 4
+}
+\]
+\end{exercise}
+
+\begin{exercise}
+Find the null space of:
+\[
+\mA = \twomat{1}{-2}{-3}{6}
+\]
+\end{exercise}
+
+\begin{exercise}
+Determine the rank of:
+\[
+\mA = \threemat{1}{2}{3}{2}{4}{6}{1}{1}{1}
+\]
+\end{exercise}
+
+\begin{exercise}[Challenge]
+Show that $(\mA\mB)\inv = \mB\inv\mA\inv$ (if the inverses exist).
+\end{exercise}
+
+\begin{problem}
+For what values of $k$ is the following matrix not invertible?
+\[
+\mA = \twomat{k}{2}{3}{k}
+\]
+\end{problem}

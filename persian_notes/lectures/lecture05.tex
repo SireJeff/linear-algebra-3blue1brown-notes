@@ -1,0 +1,295 @@
+% lecture05.tex - ماتریس معکوس، فضای ستونی و فضای پوچ
+% Chapter 5: Inverse Matrices, Column Space, and Null Space
+
+\chapter{ماتریس معکوس، فضای ستونی و فضای پوچ}
+\label{ch:inverse}
+
+\begin{abstract}
+در این درس با مفهوم ماتریس معکوس، حل دستگاه معادلات خطی، و فضاهای مهم مرتبط با ماتریس (فضای ستونی، فضای پوچ، و رتبه) آشنا می‌شویم.
+\end{abstract}
+
+% ============================================
+\section{دستگاه معادلات خطی}
+% ============================================
+
+\begin{definition}[دستگاه معادلات به فرم ماتریسی]
+دستگاه معادلات خطی:
+\[
+\system{
+a_{11}x_1 + a_{12}x_2 + \cdots + a_{1n}x_n &= b_1 \\
+a_{21}x_1 + a_{22}x_2 + \cdots + a_{2n}x_n &= b_2 \\
+&\vdots \\
+a_{m1}x_1 + a_{m2}x_2 + \cdots + a_{mn}x_n &= b_m
+}
+\]
+را می‌توان به صورت $\mA\vx = \vb$ نوشت.
+\end{definition}
+
+\begin{intuition}
+معادله $\mA\vx = \vb$ را اینگونه تفسیر کنید:
+\begin{center}
+«چه برداری $\vx$ پس از اعمال تبدیل $\mA$ به $\vb$ می‌رسد؟»
+\end{center}
+یا به عبارتی: تبدیل $\mA$ را «برعکس» کنید تا از $\vb$ به $\vx$ برسید.
+\end{intuition}
+
+% ============================================
+\section{ماتریس معکوس}
+% ============================================
+
+\begin{definition}[ماتریس معکوس]
+ماتریس $\mA\inv$ \vocab{معکوس} ماتریس $\mA$ است اگر:
+\[
+\mA\inv \mA = \mA \mA\inv = \mI
+\]
+که $\mI$ ماتریس همانی است.
+\end{definition}
+
+\begin{intuition}
+اگر $\mA$ یک تبدیل باشد، $\mA\inv$ تبدیلی است که اثر $\mA$ را خنثی می‌کند:
+\begin{itemize}
+    \item اگر $\mA$ چرخش $90°$ باشد، $\mA\inv$ چرخش $-90°$ است
+    \item اگر $\mA$ مقیاس ۲ برابر باشد، $\mA\inv$ مقیاس $\frac{1}{2}$ است
+\end{itemize}
+\end{intuition}
+
+\begin{theorem}[حل دستگاه با ماتریس معکوس]
+اگر $\mA$ معکوس‌پذیر باشد، جواب یکتای $\mA\vx = \vb$:
+\[
+\vx = \mA\inv \vb
+\]
+\end{theorem}
+
+\subsection{فرمول معکوس ماتریس $2 \times 2$}
+
+\begin{theorem}
+اگر $\mA = \twomat{a}{b}{c}{d}$ و $\det(\mA) \neq 0$:
+\[
+\mA\inv = \frac{1}{ad-bc} \twomat{d}{-b}{-c}{a}
+\]
+\end{theorem}
+
+\begin{example}
+\[
+\mA = \twomat{3}{1}{2}{4}, \quad \det(\mA) = 12 - 2 = 10
+\]
+\[
+\mA\inv = \frac{1}{10} \twomat{4}{-1}{-2}{3} = \twomat{0.4}{-0.1}{-0.2}{0.3}
+\]
+\end{example}
+
+% ============================================
+\section{شرط وجود معکوس}
+% ============================================
+
+\begin{theorem}
+ماتریس $\mA$ معکوس‌پذیر است اگر و تنها اگر $\det(\mA) \neq 0$.
+\end{theorem}
+
+\begin{intuition}
+اگر $\det(\mA) = 0$، تبدیل $\mA$ فضا را فشرده می‌کند (مثلاً صفحه به خط). چنین تبدیلی برگشت‌پذیر نیست - اطلاعات از دست رفته قابل بازیابی نیست.
+
+مثل این است که چند عدد را جمع کنید: از حاصل‌جمع نمی‌توانید اعداد اصلی را پیدا کنید.
+\end{intuition}
+
+% ============================================
+\section{فضای ستونی \lr{(Column Space)}}
+% ============================================
+
+\begin{definition}[فضای ستونی]
+\vocab{فضای ستونی} ماتریس $\mA$، که با $\Col(\mA)$ نمایش داده می‌شود، فضای پوشش ستون‌های $\mA$ است:
+\[
+\Col(\mA) = \spn\{\text{ستون‌های } \mA\}
+\]
+\end{definition}
+
+\begin{intuition}
+فضای ستونی = مجموعه همه خروجی‌های ممکن تبدیل $\mA$
+
+سؤال: «معادله $\mA\vx = \vb$ جواب دارد؟» معادل است با «آیا $\vb$ در فضای ستونی $\mA$ است؟»
+\end{intuition}
+
+\begin{example}
+\[
+\mA = \twomat{1}{3}{2}{6}
+\]
+ستون دوم = ۳ برابر ستون اول، پس:
+\[
+\Col(\mA) = \spn\left\{\twovec{1}{2}\right\} = \text{یک خط از مبدأ}
+\]
+\end{example}
+
+% ============================================
+\section{فضای پوچ \lr{(Null Space)}}
+% ============================================
+
+\begin{definition}[فضای پوچ]
+\vocab{فضای پوچ} (یا هسته) ماتریس $\mA$، مجموعه تمام بردارهایی است که $\mA$ آنها را به صفر می‌برد:
+\[
+\Null(\mA) = \{\vx \mid \mA\vx = \vzero\}
+\]
+\end{definition}
+
+\begin{intuition}
+فضای پوچ = بردارهایی که تبدیل $\mA$ آنها را «له» می‌کند
+
+اگر $\det(\mA) \neq 0$: فقط بردار صفر له می‌شود، پس $\Null(\mA) = \{\vzero\}$
+
+اگر $\det(\mA) = 0$: یک خط یا صفحه کامل به مبدأ فشرده می‌شود
+\end{intuition}
+
+\begin{example}
+برای ماتریس $\mA = \twomat{1}{2}{2}{4}$:
+
+حل $\mA\vx = \vzero$:
+\[
+\twomat{1}{2}{2}{4}\twovec{x}{y} = \twovec{0}{0}
+\]
+معادله: $x + 2y = 0$، پس $x = -2y$
+
+فضای پوچ: $\Null(\mA) = \left\{ t\twovec{-2}{1} \mid t \in \R \right\}$ (یک خط)
+\end{example}
+
+% ============================================
+\section{رتبه \lr{(Rank)}}
+% ============================================
+
+\begin{definition}[رتبه]
+\vocab{رتبه} ماتریس $\mA$ برابر است با:
+\begin{itemize}
+    \item بعد فضای ستونی
+    \item تعداد ستون‌های مستقل خطی
+    \item تعداد سطرهای مستقل خطی
+\end{itemize}
+\[
+\rank(\mA) = \dim(\Col(\mA))
+\]
+\end{definition}
+
+\begin{theorem}[قضیه رتبه-پوچی]
+برای ماتریس $m \times n$:
+\[
+\rank(\mA) + \dim(\Null(\mA)) = n
+\]
+(تعداد ستون‌ها)
+\end{theorem}
+
+\begin{intuition}
+رتبه = ابعادی که تبدیل حفظ می‌کند
+
+$\dim(\Null(\mA))$ = ابعادی که از دست می‌رود
+
+جمع این دو = ابعاد فضای ورودی
+\end{intuition}
+
+% ============================================
+\section{ماتریس‌های غیرمربعی}
+% ============================================
+
+\begin{definition}[تبدیل بین ابعاد مختلف]
+ماتریس $m \times n$ تبدیلی از $\R^n$ به $\R^m$ را نمایش می‌دهد:
+\begin{itemize}
+    \item $m > n$: تبدیل از بعد کمتر به بعد بیشتر
+    \item $m < n$: تبدیل از بعد بیشتر به بعد کمتر
+\end{itemize}
+\end{definition}
+
+\begin{example}
+ماتریس $2 \times 3$:
+\[
+\mA = \twomat{1}{0}{2}{0}{1}{-1}
+\]
+تبدیلی از $\Rthree$ به $\Rtwo$ است. فضای سه‌بعدی را روی صفحه «پروژه» می‌کند.
+\end{example}
+
+% ============================================
+\section{حالت‌های مختلف دستگاه معادلات}
+% ============================================
+
+\begin{theorem}[تحلیل جواب دستگاه $\mA\vx = \vb$]
+\begin{enumerate}
+    \item \textbf{جواب یکتا:} اگر $\det(\mA) \neq 0$
+    \item \textbf{بی‌نهایت جواب:} اگر $\det(\mA) = 0$ و $\vb \in \Col(\mA)$
+    \item \textbf{بدون جواب:} اگر $\vb \notin \Col(\mA)$
+\end{enumerate}
+\end{theorem}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.9]
+    % Case 1: Unique solution
+    \begin{scope}[shift={(0,0)}]
+        \fill[blue!10] (-1.5,-1.5) rectangle (1.5,1.5);
+        \draw[axis] (-1.5,0) -- (1.5,0);
+        \draw[axis] (0,-1.5) -- (0,1.5);
+        \fill[red] (0.8,0.6) circle (2pt) node[above right] {$\vx$};
+        \node at (0,-2) {جواب یکتا};
+        \node at (0,-2.5) {\small $\det \neq 0$};
+    \end{scope}
+
+    % Case 2: Infinite solutions
+    \begin{scope}[shift={(5,0)}]
+        \draw[blue!30, very thick] (-1.5,-0.75) -- (1.5,0.75);
+        \draw[axis] (-1.5,0) -- (1.5,0);
+        \draw[axis] (0,-1.5) -- (0,1.5);
+        \node at (0,-2) {بی‌نهایت جواب};
+        \node at (0,-2.5) {\small $\det = 0$, $\vb \in \Col$};
+    \end{scope}
+
+    % Case 3: No solution
+    \begin{scope}[shift={(10,0)}]
+        \draw[blue!30, very thick] (-1.5,-0.75) -- (1.5,0.75);
+        \draw[axis] (-1.5,0) -- (1.5,0);
+        \draw[axis] (0,-1.5) -- (0,1.5);
+        \fill[red] (0.5,1.2) circle (2pt) node[right] {$\vb$};
+        \node[red] at (0.5,0.8) {$\times$};
+        \node at (0,-2) {بدون جواب};
+        \node at (0,-2.5) {\small $\vb \notin \Col$};
+    \end{scope}
+\end{tikzpicture}
+\end{center}
+
+% ============================================
+\section{تمرین‌ها}
+% ============================================
+
+\begin{exercise}
+معکوس ماتریس زیر را محاسبه کنید:
+\[
+\mA = \twomat{2}{5}{1}{3}
+\]
+\end{exercise}
+
+\begin{exercise}
+دستگاه زیر را با استفاده از ماتریس معکوس حل کنید:
+\[
+\system{
+2x + 3y &= 7 \\
+x + 2y &= 4
+}
+\]
+\end{exercise}
+
+\begin{exercise}
+فضای پوچ ماتریس زیر را پیدا کنید:
+\[
+\mA = \twomat{1}{-2}{-3}{6}
+\]
+\end{exercise}
+
+\begin{exercise}
+رتبه ماتریس زیر را تعیین کنید:
+\[
+\mA = \threemat{1}{2}{3}{2}{4}{6}{1}{1}{1}
+\]
+\end{exercise}
+
+\begin{exercise}[چالشی]
+نشان دهید که $(\mA\mB)\inv = \mB\inv\mA\inv$ (اگر معکوس‌ها وجود داشته باشند).
+\end{exercise}
+
+\begin{problem}
+برای چه مقادیر $k$، ماتریس زیر معکوس‌پذیر نیست؟
+\[
+\mA = \twomat{k}{2}{3}{k}
+\]
+\end{problem}

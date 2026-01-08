@@ -1,0 +1,448 @@
+% lecture01.tex - مقدمه‌ای بر بردارها
+% Chapter 1: Introduction to Vectors
+
+\chapter{مقدمه‌ای بر بردارها}
+\label{ch:vectors}
+
+\begin{abstract}
+بردار، سنگ بنای اصلی جبر خطی است. در این درس با سه دیدگاه متفاوت به بردار آشنا می‌شویم: دیدگاه فیزیک، دیدگاه علوم کامپیوتر، و دیدگاه ریاضیات. همچنین عملیات‌های پایه‌ای جمع برداری و ضرب اسکالری را یاد می‌گیریم.
+\end{abstract}
+
+% ============================================
+\section{سه دیدگاه به بردار}
+% ============================================
+
+مفهوم بردار بسته به رشته تحصیلی، معانی متفاوتی دارد. درک این سه دیدگاه به ما کمک می‌کند تا تصویر کاملی از بردارها داشته باشیم.
+
+% -------------------------------------------
+\subsection{دیدگاه فیزیک}
+% -------------------------------------------
+
+\begin{definition}[بردار از دیدگاه فیزیک]
+بردار یک \vocab{پیکان} در فضا است که با دو ویژگی تعریف می‌شود:
+\begin{enumerate}
+    \item \textbf{طول} (اندازه یا بزرگی)
+    \item \textbf{جهت}
+\end{enumerate}
+تا زمانی که این دو ویژگی ثابت بماند، بردار را می‌توان در فضا جابجا کرد و همچنان همان بردار باقی می‌ماند.
+\end{definition}
+
+\begin{intuition}
+یک پیکان روی کاغذ رسم کنید. حالا آن را به نقطه دیگری منتقل کنید بدون اینکه بچرخانید یا اندازه‌اش را عوض کنید. از نظر فیزیکدان‌ها، این همان بردار اولی است!
+
+به عنوان مثال، نیروی گرانش روی یک سیب، همیشه رو به پایین است با اندازه‌ای ثابت - مهم نیست سیب کجای اتاق باشد.
+\end{intuition}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.2]
+    % Draw multiple copies of same vector
+    \draw[vector, blue!70, very thick] (0,0) -- (2,1) node[midway, above] {$\vv$};
+    \draw[vector, blue!70, very thick] (3,1) -- (5,2) node[midway, above] {$\vv$};
+    \draw[vector, blue!70, very thick] (-1,2) -- (1,3) node[midway, above] {$\vv$};
+
+    % Note
+    \node at (2,-0.5) {\small همه اینها یک بردار هستند};
+\end{tikzpicture}
+\end{center}
+
+% -------------------------------------------
+\subsection{دیدگاه علوم کامپیوتر}
+% -------------------------------------------
+
+\begin{definition}[بردار از دیدگاه علوم کامپیوتر]
+بردار یک \vocab{لیست مرتب از اعداد} است. برای مثال:
+\[
+\vv = \twovec{3}{-2}
+\]
+در این دیدگاه، «بردار» تقریباً مترادف با «لیست» است.
+\end{definition}
+
+\begin{practical}
+\textbf{مثال: مدل‌سازی قیمت مسکن}
+
+فرض کنید می‌خواهید خانه‌ها را بر اساس دو ویژگی مدل کنید:
+\begin{itemize}
+    \item متراژ (بر حسب متر مربع)
+    \item قیمت (بر حسب میلیون تومان)
+\end{itemize}
+
+هر خانه یک بردار دوبعدی است:
+\[
+\text{خانه}_1 = \twovec{85}{2500}, \quad
+\text{خانه}_2 = \twovec{120}{4200}, \quad
+\text{خانه}_3 = \twovec{65}{1800}
+\]
+
+\textbf{نکته مهم:} ترتیب اعداد اهمیت دارد! $\twovec{85}{2500}$ با $\twovec{2500}{85}$ فرق دارد.
+\end{practical}
+
+% -------------------------------------------
+\subsection{دیدگاه ریاضیات}
+% -------------------------------------------
+
+\begin{definition}[بردار از دیدگاه ریاضیات]
+ریاضیدان بردار را به صورت انتزاعی تعریف می‌کند: بردار هر چیزی است که بتوان دو عملیات زیر را روی آن انجام داد:
+\begin{enumerate}
+    \item \textbf{جمع دو بردار}
+    \item \textbf{ضرب بردار در یک عدد (اسکالر)}
+\end{enumerate}
+جزئیات این تعریف را در درس آخر (فضاهای برداری انتزاعی) بررسی خواهیم کرد.
+\end{definition}
+
+\begin{important}
+در سراسر این دوره، ما بردار را به صورت یک \textbf{پیکان در دستگاه مختصات} تصور می‌کنیم که \textbf{دُم آن روی مبدأ} قرار دارد. این دیدگاه هندسی به ما کمک می‌کند مفاهیم را بهتر درک کنیم.
+\end{important}
+
+% ============================================
+\section{دستگاه مختصات و نمایش بردار}
+% ============================================
+
+\begin{definition}[دستگاه مختصات دکارتی دوبعدی]
+دستگاه مختصات شامل:
+\begin{itemize}
+    \item محور افقی: \vocab{محور $x$}
+    \item محور عمودی: \vocab{محور $y$}
+    \item نقطه تقاطع: \vocab{مبدأ} \lr{(Origin)}
+\end{itemize}
+\end{definition}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.5]
+    % Grid
+    \draw[grid] (-0.5,-0.5) grid (4.5,3.5);
+
+    % Axes
+    \draw[axis, thick] (-0.5,0) -- (4.5,0) node[right] {$x$};
+    \draw[axis, thick] (0,-0.5) -- (0,3.5) node[above] {$y$};
+
+    % Origin label
+    \node[below left] at (0,0) {O};
+
+    % Tick marks
+    \foreach \x in {1,2,3,4} {
+        \draw (\x,0.1) -- (\x,-0.1) node[below] {\small $\x$};
+    }
+    \foreach \y in {1,2,3} {
+        \draw (0.1,\y) -- (-0.1,\y) node[left] {\small $\y$};
+    }
+
+    % Vector
+    \draw[vector, blue!70, ultra thick] (0,0) -- (3,2);
+    \node[above right, blue!70!black] at (3,2) {$\vv = \twovec{3}{2}$};
+
+    % Dashed lines to show coordinates
+    \draw[dashed, red!70] (3,0) -- (3,2);
+    \draw[dashed, red!70] (0,2) -- (3,2);
+
+    % Coordinate labels
+    \node[below, red!70!black] at (3,0) {$3$};
+    \node[left, red!70!black] at (0,2) {$2$};
+\end{tikzpicture}
+\end{center}
+
+\begin{definition}[مختصات بردار]
+\vocab{مختصات} یک بردار، زوجی از اعداد است که نحوه رسیدن از مبدأ به نوک بردار را توصیف می‌کند:
+\begin{itemize}
+    \item عدد اول: چقدر در راستای محور $x$ حرکت کنیم (راست مثبت، چپ منفی)
+    \item عدد دوم: چقدر در راستای محور $y$ حرکت کنیم (بالا مثبت، پایین منفی)
+\end{itemize}
+\end{definition}
+
+\begin{intuition}
+مختصات $\twovec{3}{2}$ یعنی:
+\begin{enumerate}
+    \item از مبدأ، ۳ واحد به راست برو
+    \item سپس ۲ واحد به بالا برو
+    \item نوک بردار همین‌جاست!
+\end{enumerate}
+\end{intuition}
+
+% ============================================
+\section{فضای سه‌بعدی}
+% ============================================
+
+\begin{definition}[بردار سه‌بعدی]
+در فضای سه‌بعدی، یک محور سوم به نام \vocab{محور $z$} اضافه می‌شود که بر هر دو محور $x$ و $y$ عمود است. هر بردار با سه عدد مشخص می‌شود:
+\[
+\vv = \threevec{a}{b}{c}
+\]
+\end{definition}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.2]
+    % 3D axes
+    \draw[axis, thick] (0,0) -- (3,0) node[right] {$x$};
+    \draw[axis, thick] (0,0) -- (0,3) node[above] {$z$};
+    \draw[axis, thick] (0,0) -- (-1.5,-1) node[below left] {$y$};
+
+    % Vector
+    \draw[vector, blue!70, ultra thick] (0,0) -- (2,1.5);
+    \draw[vector, green!60!black, ultra thick] (0,0) -- (-0.8,-0.5);
+
+    % Labels
+    \node[above right, blue!70!black] at (2,1.5) {$\threevec{2}{0}{1.5}$};
+\end{tikzpicture}
+\end{center}
+
+% ============================================
+\section{جمع برداری}
+% ============================================
+
+\begin{definition}[جمع دو بردار - روش هندسی]
+برای جمع دو بردار $\va$ و $\vb$:
+\begin{enumerate}
+    \item بردار $\va$ را رسم کنید
+    \item بردار $\vb$ را طوری جابجا کنید که دُم آن روی نوک $\va$ قرار گیرد
+    \item بردار حاصل‌جمع از مبدأ (دُم $\va$) تا نوک $\vb$ کشیده می‌شود
+\end{enumerate}
+\end{definition}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.3]
+    % Grid
+    \draw[grid] (-0.5,-0.5) grid (5.5,3.5);
+
+    % Axes
+    \draw[axis] (-0.5,0) -- (5.5,0);
+    \draw[axis] (0,-0.5) -- (0,3.5);
+
+    % Vector a
+    \draw[vector, red!70, very thick] (0,0) -- (2,1) node[midway, below] {$\va$};
+
+    % Vector b (translated)
+    \draw[vector, blue!70, very thick] (2,1) -- (4,3) node[midway, right] {$\vb$};
+
+    % Sum vector
+    \draw[vector, purple!70, ultra thick] (0,0) -- (4,3) node[midway, above left] {$\va + \vb$};
+
+    % Original b (dashed)
+    \draw[vector, blue!40, dashed] (0,0) -- (2,2) node[midway, left] {\small $\vb$};
+\end{tikzpicture}
+\end{center}
+
+\begin{definition}[جمع دو بردار - روش جبری]
+اگر $\va = \twovec{a_1}{a_2}$ و $\vb = \twovec{b_1}{b_2}$ باشند:
+\[
+\va + \vb = \twovec{a_1 + b_1}{a_2 + b_2}
+\]
+یعنی مؤلفه‌های متناظر را با هم جمع می‌کنیم.
+\end{definition}
+
+\begin{example}
+\[
+\twovec{1}{2} + \twovec{3}{-1} = \twovec{1+3}{2+(-1)} = \twovec{4}{1}
+\]
+\end{example}
+
+\begin{intuition}
+جمع برداری را می‌توان به صورت \textbf{پیمودن مسیر} تفسیر کرد:
+\begin{itemize}
+    \item اگر ابتدا بردار $\va$ را طی کنید
+    \item سپس بردار $\vb$ را طی کنید
+    \item اثر نهایی مثل این است که بردار $\va + \vb$ را مستقیم طی کرده باشید
+\end{itemize}
+
+مثل راه رفتن: اگر ۲ قدم به راست و سپس ۵ قدم به راست بروید، مثل این است که ۷ قدم به راست رفته باشید.
+\end{intuition}
+
+\begin{practical}
+\textbf{مثال: سرعت هواپیما در باد}
+
+یک هواپیما با سرعت $\twovec{500}{0}$ کیلومتر بر ساعت به سمت شرق پرواز می‌کند (جهت مثبت $x$). باد با سرعت $\twovec{0}{50}$ کیلومتر بر ساعت به سمت شمال می‌وزد (جهت مثبت $y$).
+
+سرعت واقعی هواپیما نسبت به زمین:
+\[
+\vv_{\text{واقعی}} = \twovec{500}{0} + \twovec{0}{50} = \twovec{500}{50}
+\]
+
+هواپیما هم به شرق و هم کمی به شمال حرکت می‌کند.
+\end{practical}
+
+% ============================================
+\section{ضرب اسکالری (ضرب عددی)}
+% ============================================
+
+\begin{definition}[ضرب اسکالر در بردار]
+ضرب یک عدد (اسکالر) $c$ در بردار $\vv$، بردار را به نسبت $c$ \vocab{مقیاس} می‌کند:
+\[
+c \cdot \twovec{v_1}{v_2} = \twovec{c \cdot v_1}{c \cdot v_2}
+\]
+\end{definition}
+
+\begin{center}
+\begin{tikzpicture}[scale=1]
+    % Original vector
+    \draw[vector, blue!70, very thick] (0,0) -- (1.5,1) node[right] {$\vv$};
+
+    % Scaled vectors
+    \draw[vector, green!60!black, very thick] (3,0) -- (6,2) node[right] {$2\vv$};
+    \draw[vector, orange!70, very thick] (8,0) -- (8.75,0.5) node[right] {$\frac{1}{2}\vv$};
+    \draw[vector, red!70, very thick] (11,0) -- (8.3,-1.8) node[below] {$-1.8\vv$};
+
+    % Labels below
+    \node at (0.75,-0.5) {\small اصلی};
+    \node at (4.5,-0.5) {\small کشیده};
+    \node at (8.4,-0.5) {\small فشرده};
+    \node at (9.7,-2.3) {\small معکوس و کشیده};
+\end{tikzpicture}
+\end{center}
+
+\begin{important}
+اثرات ضرب اسکالری:
+\begin{itemize}
+    \item $c > 1$: بردار \textbf{کشیده} می‌شود
+    \item $0 < c < 1$: بردار \textbf{فشرده} می‌شود
+    \item $c < 0$: بردار \textbf{معکوس} می‌شود و سپس مقیاس می‌شود
+    \item $c = 0$: بردار صفر می‌شود
+    \item $c = 1$: بردار بدون تغییر می‌ماند
+\end{itemize}
+\end{important}
+
+\begin{warning}
+اگر $c < 0$ باشد، بردار علاوه بر تغییر اندازه، \textbf{جهتش نیز معکوس} می‌شود!
+\end{warning}
+
+\begin{example}
+اگر $\vv = \twovec{4}{-2}$ باشد:
+\begin{align*}
+2\vv &= \twovec{8}{-4} & &\text{(دو برابر شده)} \\
+-\vv &= \twovec{-4}{2} & &\text{(معکوس شده)} \\
+\frac{1}{2}\vv &= \twovec{2}{-1} & &\text{(نصف شده)}
+\end{align*}
+\end{example}
+
+\begin{definition}[اسکالر]
+در جبر خطی، به اعدادی که در بردارها ضرب می‌شوند \vocab{اسکالر} گفته می‌شود. این نام از فعل «مقیاس کردن» \lr{(to scale)} گرفته شده است. واژه «اسکالر» تقریباً مترادف «عدد» است.
+\end{definition}
+
+% ============================================
+\section{بردارهای پایه}
+% ============================================
+
+\begin{definition}[بردارهای پایه استاندارد در $\Rtwo$]
+دو بردار پایه استاندارد عبارتند از:
+\[
+\vi = \twovec{1}{0} \quad \text{و} \quad \vj = \twovec{0}{1}
+\]
+\end{definition}
+
+\begin{center}
+\begin{tikzpicture}[scale=2]
+    % Grid
+    \draw[grid] (-0.5,-0.5) grid (2.5,2.5);
+
+    % Axes
+    \draw[axis] (-0.5,0) -- (2.5,0) node[right] {$x$};
+    \draw[axis] (0,-0.5) -- (0,2.5) node[above] {$y$};
+
+    % Basis vectors
+    \draw[basis, -{Stealth[length=4mm]}] (0,0) -- (1,0) node[below right] {$\vi$};
+    \draw[basis, -{Stealth[length=4mm]}] (0,0) -- (0,1) node[above left] {$\vj$};
+
+    % A general vector
+    \draw[vector, blue!70, very thick] (0,0) -- (2,1.5);
+    \node[above right, blue!70!black] at (2,1.5) {$\vv = 2\vi + 1.5\vj$};
+
+    % Components
+    \draw[dashed, orange] (0,0) -- (2,0) node[midway, below] {$2\vi$};
+    \draw[dashed, orange] (2,0) -- (2,1.5) node[midway, right] {$1.5\vj$};
+\end{tikzpicture}
+\end{center}
+
+\begin{theorem}
+هر بردار در $\Rtwo$ را می‌توان به صورت ترکیب خطی از بردارهای پایه نوشت:
+\[
+\twovec{a}{b} = a\vi + b\vj = a\twovec{1}{0} + b\twovec{0}{1}
+\]
+\end{theorem}
+
+\begin{intuition}
+وقتی می‌نویسیم $\twovec{3}{2}$، در واقع داریم می‌گوییم:
+\begin{center}
+«۳ تا از $\vi$ بردار و ۲ تا از $\vj$ را با هم جمع کن»
+\end{center}
+یعنی:
+\[
+\twovec{3}{2} = 3\vi + 2\vj = 3\twovec{1}{0} + 2\twovec{0}{1}
+\]
+\end{intuition}
+
+% ============================================
+\section{ارتباط دیدگاه‌ها}
+% ============================================
+
+\begin{summary}
+\textbf{قدرت جبر خطی} در توانایی ترجمه بین دیدگاه‌های مختلف است:
+\begin{itemize}
+    \item \textbf{تحلیل‌گر داده:} می‌تواند لیست‌های طولانی اعداد را به صورت بردار در فضا تجسم کند
+    \item \textbf{فیزیکدان:} می‌تواند حرکت و نیروها را با اعداد توصیف کند
+    \item \textbf{برنامه‌نویس گرافیک:} می‌تواند تبدیلات هندسی را با ماتریس‌ها پیاده‌سازی کند
+\end{itemize}
+\end{summary}
+
+% ============================================
+\section{تمرین‌ها}
+% ============================================
+
+\begin{exercise}
+بردارهای زیر را در دستگاه مختصات رسم کنید:
+\[
+\va = \twovec{3}{1}, \quad \vb = \twovec{-2}{4}, \quad \vc = \twovec{0}{-3}
+\]
+\end{exercise}
+
+\begin{exercise}
+حاصل جمع و تفاضل بردارهای زیر را محاسبه کنید:
+\[
+\va = \twovec{2}{5}, \quad \vb = \twovec{-1}{3}
+\]
+\begin{enumerate}[label=(\alph*)}]
+    \item $\va + \vb$
+    \item $\va - \vb$
+    \item $2\va + 3\vb$
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}
+اگر $\vv = \twovec{4}{-2}$ باشد، بردارهای زیر را محاسبه و رسم کنید:
+\begin{enumerate}[label=(\alph*)]
+    \item $2\vv$
+    \item $-\vv$
+    \item $\frac{1}{2}\vv$
+    \item $-2.5\vv$
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}[کاربردی]
+یک کشتی با سرعت $30$ کیلومتر بر ساعت به سمت شمال حرکت می‌کند. جریان آب با سرعت $10$ کیلومتر بر ساعت به سمت شرق است. سرعت واقعی کشتی نسبت به ساحل چیست؟
+\end{exercise}
+
+\begin{exercise}
+نشان دهید که برای هر بردار $\vv$:
+\[
+\vv + (-\vv) = \vzero
+\]
+که در آن $\vzero = \twovec{0}{0}$ بردار صفر است.
+\end{exercise}
+
+\begin{exercise}
+ثابت کنید که جمع برداری خاصیت جابجایی دارد:
+\[
+\va + \vb = \vb + \va
+\]
+\end{exercise}
+
+\begin{exercise}[چالشی]
+سه نقطه $A(1,2)$، $B(4,6)$ و $C(7,2)$ داده شده‌اند. نشان دهید که این سه نقطه یک مثلث متساوی‌الساقین تشکیل می‌دهند.
+
+\textit{راهنمایی: طول بردار $\twovec{a}{b}$ برابر است با $\sqrt{a^2 + b^2}$.}
+\end{exercise}
+
+\begin{problem}
+در فضای سه‌بعدی، بردار $\vv = \threevec{2}{3}{-1}$ داده شده است. بردارهای زیر را محاسبه کنید:
+\begin{enumerate}[label=(\alph*)]
+    \item $3\vv$
+    \item $\vv + \threevec{1}{-1}{2}$
+    \item $-\frac{1}{2}\vv$
+\end{enumerate}
+\end{problem}

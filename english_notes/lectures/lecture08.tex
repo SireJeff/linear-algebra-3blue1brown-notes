@@ -1,0 +1,233 @@
+% lecture08.tex - Cramer's Rule
+% Chapter 8: Cramer's Rule
+
+\chapter{Cramer's Rule}
+\label{ch:cramer}
+
+\begin{abstract}
+Cramer's rule is an elegant method for solving systems of linear equations using determinants. In this chapter, we learn the geometric interpretation of this rule and its conditions for use.
+\end{abstract}
+
+% ============================================
+\section{Statement of Cramer's Rule}
+% ============================================
+
+\begin{theorem}[Cramer's Rule]
+For the system $\mA\vx = \vb$ with an $n \times n$ matrix and $\det(\mA) \neq 0$:
+\[
+x_i = \frac{\det(\mA_i)}{\det(\mA)}
+\]
+where $\mA_i$ is the matrix with column $i$ of $\mA$ replaced by vector $\vb$.
+\end{theorem}
+
+\begin{example}
+For a $2 \times 2$ system:
+\[
+\system{
+ax + by &= e \\
+cx + dy &= f
+}
+\]
+Solution:
+\[
+x = \frac{\det\twomat{e}{b}{f}{d}}{\det\twomat{a}{b}{c}{d}} = \frac{ed - bf}{ad - bc}
+\]
+\[
+y = \frac{\det\twomat{a}{e}{c}{f}}{\det\twomat{a}{b}{c}{d}} = \frac{af - ec}{ad - bc}
+\]
+\end{example}
+
+% ============================================
+\section{Geometric Interpretation}
+% ============================================
+
+\begin{intuition}
+In two dimensions, the equation $\mA\vx = \vb$ asks:
+
+``What linear combination of the columns of $\mA$ equals $\vb$?''
+
+If $\mA = [\va_1 \,|\, \va_2]$ and $\vx = \twovec{x}{y}$:
+\[
+x\va_1 + y\va_2 = \vb
+\]
+\end{intuition}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.3]
+    % Parallelogram
+    \draw[vector, red!70, very thick] (0,0) -- (2,0.5) node[right] {$\va_1$};
+    \draw[vector, blue!70, very thick] (0,0) -- (0.5,2) node[above] {$\va_2$};
+    \draw[vector, green!60!black, ultra thick] (0,0) -- (1.5,1.5) node[above right] {$\vb$};
+
+    % Parallelogram formed by b and a2
+    \fill[orange!20] (0,0) -- (1.5,1.5) -- (2,3.5) -- (0.5,2) -- cycle;
+
+    % Parallelogram formed by a1 and a2
+    \fill[gray!20] (0,0) -- (2,0.5) -- (2.5,2.5) -- (0.5,2) -- cycle;
+
+    \node at (1.2,2.5) {\small orange area};
+    \node at (1.8,1) {\small gray area};
+\end{tikzpicture}
+\end{center}
+
+\begin{theorem}[Area Interpretation]
+\[
+x = \frac{\text{Area of parallelogram}(\vb, \va_2)}{\text{Area of parallelogram}(\va_1, \va_2)}
+\]
+\[
+y = \frac{\text{Area of parallelogram}(\va_1, \vb)}{\text{Area of parallelogram}(\va_1, \va_2)}
+\]
+\end{theorem}
+
+\begin{intuition}
+Why does this work?
+
+Consider the parallelogram $(\vb, \va_2)$. Since $\vb = x\va_1 + y\va_2$:
+\[
+\text{Area}(\vb, \va_2) = \text{Area}(x\va_1 + y\va_2, \va_2)
+\]
+Since $\va_2 \times \va_2 = 0$:
+\[
+= \text{Area}(x\va_1, \va_2) = x \cdot \text{Area}(\va_1, \va_2)
+\]
+Therefore:
+\[
+x = \frac{\text{Area}(\vb, \va_2)}{\text{Area}(\va_1, \va_2)}
+\]
+\end{intuition}
+
+% ============================================
+\section{Computational Example}
+% ============================================
+
+\begin{example}
+Solve the system:
+\[
+\system{
+3x + 2y &= 7 \\
+x + 4y &= 9
+}
+\]
+
+\textbf{Step 1:} Compute $\det(\mA)$:
+\[
+\det\twomat{3}{2}{1}{4} = 12 - 2 = 10
+\]
+
+\textbf{Step 2:} Compute $x$:
+\[
+x = \frac{\det\twomat{7}{2}{9}{4}}{\det(\mA)} = \frac{28 - 18}{10} = \frac{10}{10} = 1
+\]
+
+\textbf{Step 3:} Compute $y$:
+\[
+y = \frac{\det\twomat{3}{7}{1}{9}}{\det(\mA)} = \frac{27 - 7}{10} = \frac{20}{10} = 2
+\]
+
+\textbf{Check:} $3(1) + 2(2) = 7$ \checkmark\ and $1(1) + 4(2) = 9$ \checkmark
+\end{example}
+
+% ============================================
+\section{Three Dimensions and Higher}
+% ============================================
+
+\begin{example}
+A $3 \times 3$ system:
+\[
+\system{
+2x + y - z &= 3 \\
+x - y + 2z &= 1 \\
+3x + 2y + z &= 4
+}
+\]
+
+Coefficient matrix:
+\[
+\mA = \threemat{2}{1}{-1}{1}{-1}{2}{3}{2}{1}
+\]
+
+\[
+x = \frac{\det\threemat{3}{1}{-1}{1}{-1}{2}{4}{2}{1}}{\det(\mA)}, \quad
+y = \frac{\det\threemat{2}{3}{-1}{1}{1}{2}{3}{4}{1}}{\det(\mA)}, \quad
+z = \frac{\det\threemat{2}{1}{3}{1}{-1}{1}{3}{2}{4}}{\det(\mA)}
+\]
+\end{example}
+
+\begin{intuition}
+In three dimensions, instead of ratios of areas, we have ratios of \textbf{volumes}.
+
+$x$ = ratio of volume of parallelepiped $(\vb, \va_2, \va_3)$ to volume of $(\va_1, \va_2, \va_3)$
+\end{intuition}
+
+% ============================================
+\section{Limitations and Applications}
+% ============================================
+
+\begin{warning}
+Cramer's rule:
+\begin{itemize}
+    \item Only works for square systems ($n$ equations, $n$ unknowns)
+    \item Only when $\det(\mA) \neq 0$ (unique solution)
+    \item For large $n$, computationally \textbf{very expensive}
+\end{itemize}
+\end{warning}
+
+\begin{remark}
+In practice, for large systems, methods like Gaussian elimination are used which are more efficient. However, Cramer's rule:
+\begin{itemize}
+    \item Provides deeper theoretical understanding
+    \item Is useful for analytical formulas
+    \item Is used in theorem proofs
+\end{itemize}
+\end{remark}
+
+\begin{practical}
+\textbf{Application: Finding Line Intersections}
+
+Two lines $a_1x + b_1y = c_1$ and $a_2x + b_2y = c_2$ intersect at:
+\[
+x = \frac{c_1 b_2 - c_2 b_1}{a_1 b_2 - a_2 b_1}, \quad y = \frac{a_1 c_2 - a_2 c_1}{a_1 b_2 - a_2 b_1}
+\]
+This formula comes directly from Cramer's rule.
+\end{practical}
+
+% ============================================
+\section{Exercises}
+% ============================================
+
+\begin{exercise}
+Solve using Cramer's rule:
+\[
+\system{
+2x + 3y &= 8 \\
+4x - y &= 2
+}
+\]
+\end{exercise}
+
+\begin{exercise}
+Solve using Cramer's rule:
+\[
+\system{
+x + y + z &= 6 \\
+2x - y + z &= 3 \\
+x + 2y - z &= 2
+}
+\]
+\end{exercise}
+
+\begin{exercise}
+Find the intersection point of lines $2x + 3y = 7$ and $x - y = 1$ using Cramer's rule.
+\end{exercise}
+
+\begin{exercise}
+Explain the geometric interpretation of Cramer's rule when $\det(\mA) = 0$.
+\end{exercise}
+
+\begin{exercise}[Challenge]
+Show that the Cramer formula is consistent with computing $\mA\inv \vb$.
+\end{exercise}
+
+\begin{problem}
+A triangle with vertices $A(1,1)$, $B(4,2)$, $C(2,5)$ is given. Using Cramer's rule, find the coordinates of the centroid.
+\end{problem}

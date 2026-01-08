@@ -1,0 +1,53 @@
+# LaTeX auxiliary files
+*.aux
+*.log
+*.out
+*.toc
+*.lof
+*.lot
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.bbl
+*.blg
+*.nav
+*.snm
+*.vrb
+texput.log
+
+# Temporary files
+*.tmp
+*.temp
+nul
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor files
+*.swp
+*.swo
+*~
+
+# Claude Code
+.claude/
+
+# Python
+__pycache__/
+*.pyc
+.env
+venv/
+
+# Utility scripts and development files
+scripts/
+transcripts/
+extract_transcripts.py
+requirements.txt
+api_docs.txt
+
+# Misc
+*.bak
+subtitles_temp/
+
+# Root level files to ignore
+anjoman logo correct.png

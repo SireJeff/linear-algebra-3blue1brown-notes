@@ -1,0 +1,241 @@
+% lecture10.tex - بردارها و مقادیر ویژه
+% Chapter 10: Eigenvectors and Eigenvalues
+
+\chapter{بردارها و مقادیر ویژه}
+\label{ch:eigen}
+
+\begin{abstract}
+بردارهای ویژه جهت‌های خاصی هستند که تبدیل خطی آنها را فقط مقیاس می‌کند بدون اینکه جهتشان را تغییر دهد. این مفهوم یکی از مهم‌ترین ایده‌های جبر خطی است با کاربردهای گسترده در فیزیک، مهندسی، و علوم داده.
+\end{abstract}
+
+% ============================================
+\section{انگیزه: بردارهای خاص}
+% ============================================
+
+\begin{intuition}
+وقتی یک تبدیل خطی اعمال می‌کنید، اکثر بردارها از جهت اصلی‌شان منحرف می‌شوند. اما برخی بردارهای خاص فقط کشیده یا فشرده می‌شوند و \textbf{روی همان خط} باقی می‌مانند.
+
+این بردارهای خاص، \textbf{بردارهای ویژه} نامیده می‌شوند.
+\end{intuition}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.2]
+    % Before transformation
+    \begin{scope}[shift={(0,0)}]
+        \draw[grid] (-2,-2) grid (2,2);
+        \draw[axis] (-2,0) -- (2,0);
+        \draw[axis] (0,-2) -- (0,2);
+        \draw[vector, blue!70, very thick] (0,0) -- (1,0.5) node[right] {$\vv_1$};
+        \draw[vector, red!70, very thick] (0,0) -- (0.5,1) node[above] {$\vv_2$};
+        \draw[vector, green!60!black, very thick] (0,0) -- (-1,1) node[above left] {ویژه!};
+        \node at (0,-2.5) {قبل از تبدیل};
+    \end{scope}
+
+    \draw[-{Stealth}, very thick] (2.5,0) -- (4,0) node[midway, above] {$T$};
+
+    % After transformation
+    \begin{scope}[shift={(6.5,0)}]
+        \draw[blue!20] (-2,-1) -- (0,2) -- (4,2) -- (2,-1) -- cycle;
+        \draw[axis] (-2,0) -- (4,0);
+        \draw[axis] (0,-2) -- (0,2);
+        \draw[vector, blue!70, very thick] (0,0) -- (1.5,1) node[right] {$T(\vv_1)$};
+        \draw[vector, red!70, very thick] (0,0) -- (1.5,1.5) node[above] {$T(\vv_2)$};
+        \draw[vector, green!60!black, very thick] (0,0) -- (-2,2) node[above left] {$2 \times$ ویژه!};
+        \node at (1,-2.5) {بعد از تبدیل};
+    \end{scope}
+\end{tikzpicture}
+\end{center}
+
+% ============================================
+\section{تعریف رسمی}
+% ============================================
+
+\begin{definition}[بردار ویژه و مقدار ویژه]
+بردار غیرصفر $\vv$ یک \vocab{بردار ویژه} ماتریس $\mA$ است اگر:
+\[
+\mA\vv = \lambda\vv
+\]
+برای یک عدد $\lambda$. این عدد \vocab{مقدار ویژه} متناظر نامیده می‌شود.
+\end{definition}
+
+\begin{intuition}
+$\mA\vv = \lambda\vv$ یعنی:
+\begin{center}
+«تبدیل $\mA$ روی بردار $\vv$ فقط اثر یک ضرب اسکالری دارد»
+\end{center}
+بردار $\vv$ روی همان خط می‌ماند، فقط $\lambda$ برابر می‌شود.
+\end{intuition}
+
+\begin{example}
+برای ماتریس $\mA = \twomat{3}{1}{0}{2}$:
+
+بردار $\vv = \twovec{1}{0}$ یک بردار ویژه است:
+\[
+\mA\vv = \twomat{3}{1}{0}{2}\twovec{1}{0} = \twovec{3}{0} = 3\twovec{1}{0} = 3\vv
+\]
+مقدار ویژه متناظر: $\lambda = 3$
+\end{example}
+
+% ============================================
+\section{یافتن مقادیر ویژه}
+% ============================================
+
+\begin{theorem}[معادله مشخصه]
+$\lambda$ مقدار ویژه $\mA$ است اگر و تنها اگر:
+\[
+\det(\mA - \lambda\mI) = 0
+\]
+\end{theorem}
+
+\begin{proof}
+$\mA\vv = \lambda\vv$ را می‌توان نوشت:
+\[
+\mA\vv - \lambda\vv = \vzero \implies (\mA - \lambda\mI)\vv = \vzero
+\]
+این معادله جواب غیرصفر دارد اگر و تنها اگر $\mA - \lambda\mI$ معکوس‌پذیر نباشد، یعنی $\det(\mA - \lambda\mI) = 0$.
+\end{proof}
+
+\begin{definition}[چندجمله‌ای مشخصه]
+$\det(\mA - \lambda\mI)$ یک چندجمله‌ای در $\lambda$ است که \vocab{چندجمله‌ای مشخصه} نامیده می‌شود. ریشه‌های آن مقادیر ویژه هستند.
+\end{definition}
+
+\begin{example}
+برای $\mA = \twomat{3}{1}{0}{2}$:
+\[
+\det(\mA - \lambda\mI) = \det\twomat{3-\lambda}{1}{0}{2-\lambda} = (3-\lambda)(2-\lambda) - 0 = 0
+\]
+ریشه‌ها: $\lambda_1 = 3$, $\lambda_2 = 2$
+\end{example}
+
+% ============================================
+\section{یافتن بردارهای ویژه}
+% ============================================
+
+\begin{theorem}
+برای هر مقدار ویژه $\lambda$، بردارهای ویژه متناظر از حل دستگاه همگن زیر به دست می‌آیند:
+\[
+(\mA - \lambda\mI)\vv = \vzero
+\]
+\end{theorem}
+
+\begin{example}
+ادامه مثال قبل با $\lambda = 2$:
+\[
+(\mA - 2\mI)\vv = \twomat{1}{1}{0}{0}\twovec{v_1}{v_2} = \vzero
+\]
+معادله: $v_1 + v_2 = 0$، پس $v_1 = -v_2$
+
+بردار ویژه: $\vv = t\twovec{-1}{1}$ برای هر $t \neq 0$
+\end{example}
+
+% ============================================
+\section{فضای ویژه}
+% ============================================
+
+\begin{definition}[فضای ویژه]
+\vocab{فضای ویژه} متناظر با مقدار ویژه $\lambda$:
+\[
+E_\lambda = \Null(\mA - \lambda\mI) = \{\vv \mid \mA\vv = \lambda\vv\}
+\]
+\end{definition}
+
+\begin{intuition}
+فضای ویژه شامل همه بردارهایی است که تبدیل $\mA$ آنها را فقط با ضریب $\lambda$ مقیاس می‌کند. این فضا همیشه یک زیرفضای برداری است.
+\end{intuition}
+
+% ============================================
+\section{تفسیر هندسی}
+% ============================================
+
+\begin{practical}
+\textbf{چرخش سه‌بعدی}
+
+برای یک چرخش در $\Rthree$، بردار ویژه با $\lambda = 1$ \textbf{محور چرخش} است! این بردار ثابت می‌ماند.
+
+توصیف چرخش با محور و زاویه بسیار ساده‌تر از ماتریس $3 \times 3$ است.
+\end{practical}
+
+\begin{example}
+ماتریس برش: $\mA = \twomat{1}{1}{0}{1}$
+
+مقدار ویژه: $\lambda = 1$ (مضاعف)
+
+بردار ویژه: $\twovec{1}{0}$ (فقط یک جهت ویژه)
+
+تفسیر: برش، محور $x$ را ثابت نگه می‌دارد.
+\end{example}
+
+% ============================================
+\section{حالات خاص}
+% ============================================
+
+\begin{theorem}[چرخش دوبعدی]
+ماتریس چرخش $\mR_\theta = \twomat{\cos\theta}{-\sin\theta}{\sin\theta}{\cos\theta}$ برای $\theta \neq 0, \pi$:
+
+مقادیر ویژه: $\lambda = \cos\theta \pm i\sin\theta$ (مختلط!)
+
+هیچ بردار حقیقی روی جای خود نمی‌ماند - همه بردارها می‌چرخند.
+\end{theorem}
+
+\begin{warning}
+مقادیر ویژه می‌توانند \textbf{مختلط} باشند حتی برای ماتریس‌های حقیقی! این در چرخش‌ها اتفاق می‌افتد.
+\end{warning}
+
+% ============================================
+\section{کاربردها}
+% ============================================
+
+\begin{practical}
+\textbf{Google PageRank}
+
+صفحات وب را بردار، لینک‌ها را ماتریس در نظر بگیرید. بردار ویژه غالب (با بزرگ‌ترین مقدار ویژه) اهمیت نسبی صفحات را نشان می‌دهد.
+\end{practical}
+
+\begin{practical}
+\textbf{تحلیل مؤلفه‌های اصلی (PCA)}
+
+در یادگیری ماشین، بردارهای ویژه ماتریس کوواریانس، جهت‌های اصلی تغییرات داده را نشان می‌دهند.
+\end{practical}
+
+\begin{practical}
+\textbf{مکانیک کوانتومی}
+
+مقادیر ویژه عملگرها = نتایج ممکن اندازه‌گیری
+
+بردارهای ویژه = حالت‌های پایدار سیستم
+\end{practical}
+
+% ============================================
+\section{تمرین‌ها}
+% ============================================
+
+\begin{exercise}
+مقادیر ویژه و بردارهای ویژه ماتریس زیر را پیدا کنید:
+\[
+\mA = \twomat{4}{1}{2}{3}
+\]
+\end{exercise}
+
+\begin{exercise}
+نشان دهید که مقادیر ویژه ماتریس قطری، درایه‌های قطری آن هستند.
+\end{exercise}
+
+\begin{exercise}
+مقادیر ویژه ماتریس چرخش $90°$ را پیدا کنید.
+\end{exercise}
+
+\begin{exercise}
+اگر $\lambda$ مقدار ویژه $\mA$ باشد، نشان دهید $\lambda^2$ مقدار ویژه $\mA^2$ است.
+\end{exercise}
+
+\begin{exercise}[چالشی]
+ثابت کنید که اثر ماتریس (مجموع درایه‌های قطری) برابر مجموع مقادیر ویژه است.
+\end{exercise}
+
+\begin{problem}
+ماتریس پوپولاسیون:
+\[
+\mL = \twomat{0}{4}{0.5}{0}
+\]
+مقدار ویژه غالب را پیدا کنید و تفسیر کنید.
+\end{problem}

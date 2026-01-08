@@ -1,0 +1,206 @@
+% commands.tex - Custom Math Commands for Linear Algebra
+% Persian Linear Algebra Lecture Notes
+
+% === Vector Notation ===
+% Bold vectors (column vectors)
+\newcommand{\vect}[1]{\mathbf{#1}}
+\newcommand{\vv}{\vect{v}}
+\newcommand{\vw}{\vect{w}}
+\newcommand{\vu}{\vect{u}}
+\newcommand{\vx}{\vect{x}}
+\newcommand{\vy}{\vect{y}}
+\newcommand{\vz}{\vect{z}}
+\newcommand{\va}{\vect{a}}
+\newcommand{\vb}{\vect{b}}
+\newcommand{\vc}{\vect{c}}
+
+% Basis vectors (with hat notation)
+\newcommand{\vi}{\hat{\imath}}
+\newcommand{\vj}{\hat{\jmath}}
+\newcommand{\vk}{\hat{k}}
+
+% Zero vector
+\newcommand{\vzero}{\vect{0}}
+
+% === Matrix Notation ===
+\newcommand{\mat}[1]{\mathbf{#1}}
+\newcommand{\mA}{\mat{A}}
+\newcommand{\mB}{\mat{B}}
+\newcommand{\mC}{\mat{C}}
+\newcommand{\mD}{\mat{D}}
+\newcommand{\mI}{\mat{I}}
+\newcommand{\mP}{\mat{P}}
+\newcommand{\mQ}{\mat{Q}}
+\newcommand{\mT}{\mat{T}}
+\newcommand{\mM}{\mat{M}}
+
+% Matrix with brackets
+\newcommand{\bmat}[1]{\begin{bmatrix}#1\end{bmatrix}}
+\newcommand{\pmat}[1]{\begin{pmatrix}#1\end{pmatrix}}
+\newcommand{\vmat}[1]{\begin{vmatrix}#1\end{vmatrix}}
+
+% === Common Operations ===
+% Transpose
+\newcommand{\trans}{^{\mathsf{T}}}
+\newcommand{\transpose}[1]{#1^{\mathsf{T}}}
+
+% Inverse
+\newcommand{\inv}{^{-1}}
+\newcommand{\inverse}[1]{#1^{-1}}
+
+% Norm and absolute value
+\newcommand{\norm}[1]{\left\| #1 \right\|}
+\newcommand{\abs}[1]{\left| #1 \right|}
+
+% Dot product
+\newcommand{\dotp}[2]{\vect{#1} \cdot \vect{#2}}
+\newcommand{\dotprod}{\cdot}
+
+% Cross product
+\newcommand{\crossp}[2]{\vect{#1} \times \vect{#2}}
+\newcommand{\crossprod}{\times}
+
+% === Important Spaces ===
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+
+% Rn space
+\newcommand{\Rn}[1]{\mathbb{R}^{#1}}
+\newcommand{\Rtwo}{\mathbb{R}^2}
+\newcommand{\Rthree}{\mathbb{R}^3}
+\newcommand{\Rn}{\mathbb{R}^n}
+\newcommand{\Rm}{\mathbb{R}^m}
+
+% === Linear Algebra Operators ===
+% Span
+\DeclareMathOperator{\spn}{span}
+\DeclareMathOperator{\Span}{Span}
+
+% Null space
+\DeclareMathOperator{\nullspace}{Null}
+\DeclareMathOperator{\Null}{Null}
+\DeclareMathOperator{\kernel}{Ker}
+\DeclareMathOperator{\Ker}{Ker}
+
+% Column space
+\DeclareMathOperator{\colspace}{Col}
+\DeclareMathOperator{\Col}{Col}
+\DeclareMathOperator{\Range}{Range}
+\DeclareMathOperator{\image}{Im}
+\DeclareMathOperator{\Image}{Im}
+
+% Row space
+\DeclareMathOperator{\rowspace}{Row}
+\DeclareMathOperator{\Row}{Row}
+
+% Rank and dimension
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\Rank}{Rank}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\dimop}{dim}
+
+% Determinant (redefine for styling)
+\let\olddet\det
+\renewcommand{\det}{\operatorname{det}}
+
+% Trace
+\DeclareMathOperator{\trace}{tr}
+\DeclareMathOperator{\tr}{tr}
+
+% Projection
+\DeclareMathOperator{\proj}{proj}
+\DeclareMathOperator{\Proj}{Proj}
+
+% === Eigenvalues and Eigenvectors ===
+\newcommand{\eigen}{\lambda}
+\newcommand{\eigenvec}{\vect{v}}
+\newcommand{\eigenspace}{E_{\lambda}}
+
+% === Matrix Components ===
+% Entry notation
+\newcommand{\entry}[3]{#1_{#2#3}}
+
+% Row and column
+\newcommand{\row}[2]{\text{سطر}_{#2}(#1)}
+\newcommand{\col}[2]{\text{ستون}_{#2}(#1)}
+
+% === Transformation Notation ===
+% Linear transformation
+\newcommand{\trans}[1]{T(#1)}
+\newcommand{\transform}[2]{#1 : #2}
+\newcommand{\maps}{\rightarrow}
+\newcommand{\mapsto}{\longmapsto}
+
+% === Set Notation ===
+\newcommand{\set}[1]{\left\{ #1 \right\}}
+\newcommand{\setbuilder}[2]{\left\{ #1 \,\middle|\, #2 \right\}}
+
+% === Inner Product ===
+\newcommand{\inner}[2]{\langle #1, #2 \rangle}
+\newcommand{\iprod}[2]{\langle #1, #2 \rangle}
+
+% === Linear Independence ===
+\newcommand{\lindep}{\text{وابسته خطی}}
+\newcommand{\linindep}{\text{مستقل خطی}}
+
+% === Common Matrices ===
+% 2x2 matrix shorthand
+\newcommand{\twomat}[4]{\begin{bmatrix} #1 & #2 \\ #3 & #4 \end{bmatrix}}
+
+% 3x3 matrix shorthand
+\newcommand{\threemat}[9]{\begin{bmatrix} #1 & #2 & #3 \\ #4 & #5 & #6 \\ #7 & #8 & #9 \end{bmatrix}}
+
+% 2D column vector
+\newcommand{\twovec}[2]{\begin{bmatrix} #1 \\ #2 \end{bmatrix}}
+
+% 3D column vector
+\newcommand{\threevec}[3]{\begin{bmatrix} #1 \\ #2 \\ #3 \end{bmatrix}}
+
+% n-vector
+\newcommand{\nvec}[1]{\begin{bmatrix} #1_1 \\ #1_2 \\ \vdots \\ #1_n \end{bmatrix}}
+
+% === Augmented Matrix ===
+\newcommand{\augmat}[2]{\left[\begin{array}{@{}#1|c@{}} #2 \end{array}\right]}
+
+% === Greek Letters Shortcuts ===
+\newcommand{\al}{\alpha}
+\newcommand{\be}{\beta}
+\newcommand{\ga}{\gamma}
+\newcommand{\de}{\delta}
+\newcommand{\ep}{\epsilon}
+\newcommand{\la}{\lambda}
+\newcommand{\si}{\sigma}
+\newcommand{\om}{\omega}
+\newcommand{\ph}{\phi}
+\newcommand{\ps}{\psi}
+\newcommand{\th}{\theta}
+
+% === Change of Basis ===
+\newcommand{\coords}[2]{[#1]_{#2}}
+\newcommand{\changemat}[2]{\mat{P}_{#1 \leftarrow #2}}
+
+% === System of Equations ===
+\newcommand{\system}[1]{\left\{\begin{aligned} #1 \end{aligned}\right.}
+
+% === Proof Symbols ===
+\newcommand{\qed}{\hfill\ensuremath{\square}}
+\newcommand{\proof}{\noindent\textbf{اثبات:} }
+
+% === Persian Math Terms in Text ===
+\newcommand{\ماتریس}[1]{\text{ماتریس } #1}
+\newcommand{\بردار}[1]{\text{بردار } #1}
+\newcommand{\دترمینان}[1]{\det(#1)}
+
+% === Arrows and Relations ===
+\newcommand{\lra}{\longrightarrow}
+\newcommand{\Lra}{\Longrightarrow}
+\newcommand{\lla}{\longleftarrow}
+\newcommand{\llla}{\longleftrightarrow}
+\newcommand{\Llla}{\Longleftrightarrow}
+
+% === Emphasizing ===
+\newcommand{\vocab}[1]{\textbf{\textcolor{blue!70!black}{#1}}}
+\newcommand{\emphasis}[1]{\textit{#1}}

@@ -1,0 +1,324 @@
+% lecture03.tex - تبدیلات خطی و ماتریس‌ها
+% Chapter 3: Linear Transformations and Matrices
+
+\chapter{تبدیلات خطی و ماتریس‌ها}
+\label{ch:transformations}
+
+\begin{abstract}
+تبدیلات خطی قلب جبر خطی هستند. در این درس می‌آموزیم که چگونه هر تبدیل خطی را می‌توان با یک ماتریس نمایش داد، و ضرب ماتریسی چگونه با ترکیب تبدیلات مرتبط است.
+\end{abstract}
+
+% ============================================
+\section{تبدیل چیست؟}
+% ============================================
+
+\begin{definition}[تبدیل]
+\vocab{تبدیل} \lr{(Transformation)} تابعی است که بردارها را به بردارهای دیگر می‌برد:
+\[
+T: \Rtwo \to \Rtwo
+\]
+یعنی هر بردار ورودی را به یک بردار خروجی نگاشت می‌کند.
+\end{definition}
+
+\begin{intuition}
+به جای «تابع» از واژه «تبدیل» استفاده می‌کنیم چون می‌خواهیم به \textbf{حرکت} فکر کنیم. تصور کنید هر بردار در فضا به جایی جدید «منتقل» می‌شود.
+
+شبکه خطوط مختصات را تصور کنید. یک تبدیل این شبکه را می‌کشد، می‌فشارد، می‌چرخاند، یا به شکل دیگری تغییر می‌دهد.
+\end{intuition}
+
+% ============================================
+\section{تبدیل خطی}
+% ============================================
+
+\begin{definition}[تبدیل خطی]
+تبدیل $T$ یک \vocab{تبدیل خطی} است اگر و تنها اگر دو شرط زیر برقرار باشد:
+\begin{enumerate}
+    \item \textbf{جمع‌پذیری:} $T(\vv + \vw) = T(\vv) + T(\vw)$
+    \item \textbf{همگنی:} $T(c\vv) = c \cdot T(\vv)$
+\end{enumerate}
+برای هر بردارهای $\vv, \vw$ و هر اسکالر $c$.
+\end{definition}
+
+\begin{intuition}
+یک تبدیل خطی را می‌توان با دو ویژگی هندسی شناخت:
+\begin{enumerate}
+    \item \textbf{خطوط راست، راست می‌مانند} (خم نمی‌شوند)
+    \item \textbf{مبدأ در جای خود می‌ماند}
+\end{enumerate}
+
+اگر خطوط شبکه بعد از تبدیل همچنان موازی و با فاصله یکنواخت باقی بمانند، تبدیل خطی است.
+\end{intuition}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.8]
+    % Original grid
+    \begin{scope}[shift={(0,0)}]
+        \draw[grid] (-2,-2) grid (2,2);
+        \draw[axis] (-2,0) -- (2,0);
+        \draw[axis] (0,-2) -- (0,2);
+        \draw[basis, -{Stealth[length=3mm]}] (0,0) -- (1,0) node[below] {$\vi$};
+        \draw[basis, -{Stealth[length=3mm]}] (0,0) -- (0,1) node[left] {$\vj$};
+        \node at (0,-3) {قبل از تبدیل};
+    \end{scope}
+
+    % Arrow
+    \draw[-{Stealth[length=5mm]}, very thick] (3,0) -- (5,0) node[midway, above] {$T$};
+
+    % Transformed grid (shear)
+    \begin{scope}[shift={(8,0)}]
+        \draw[blue!30, thin] (-2,-2) -- (0,2) -- (4,2) -- (2,-2) -- cycle;
+        \foreach \y in {-1,0,1} {
+            \draw[blue!30, thin] ({-2+\y},-2) -- ({\y+2},2);
+        }
+        \foreach \x in {-2,-1,0,1,2} {
+            \draw[blue!30, thin] ({\x-1},-2) -- ({\x+1},2);
+        }
+        \draw[axis] (-2,0) -- (4,0);
+        \draw[axis] (0,-2) -- (2,2);
+        \draw[transformed, -{Stealth[length=3mm]}, very thick] (0,0) -- (1,0) node[below] {$T(\vi)$};
+        \draw[transformed, -{Stealth[length=3mm]}, very thick] (0,0) -- (1,1) node[above left] {$T(\vj)$};
+        \node at (1,-3) {بعد از تبدیل};
+    \end{scope}
+\end{tikzpicture}
+\end{center}
+
+% ============================================
+\section{ماتریس یک تبدیل خطی}
+% ============================================
+
+\begin{theorem}[قضیه اساسی]
+هر تبدیل خطی $T: \Rtwo \to \Rtwo$ کاملاً با دانستن اینکه $T$ بردارهای پایه $\vi$ و $\vj$ را به کجا می‌برد، مشخص می‌شود.
+\end{theorem}
+
+\begin{proof}
+هر بردار $\vv = \twovec{x}{y}$ را می‌توان نوشت: $\vv = x\vi + y\vj$
+
+با استفاده از خطی بودن:
+\[
+T(\vv) = T(x\vi + y\vj) = xT(\vi) + yT(\vj)
+\]
+پس اگر $T(\vi)$ و $T(\vj)$ را بدانیم، می‌توانیم $T(\vv)$ را برای هر $\vv$ محاسبه کنیم.
+\end{proof}
+
+\begin{definition}[ماتریس تبدیل]
+اگر $T(\vi) = \twovec{a}{c}$ و $T(\vj) = \twovec{b}{d}$ باشد، \vocab{ماتریس تبدیل} $T$ برابر است با:
+\[
+\mA = \twomat{a}{b}{c}{d}
+\]
+ستون اول محل فرود $\vi$ و ستون دوم محل فرود $\vj$ است.
+\end{definition}
+
+\begin{important}
+\textbf{قانون طلایی:} ستون‌های ماتریس = محل فرود بردارهای پایه
+\end{important}
+
+% ============================================
+\section{ضرب ماتریس در بردار}
+% ============================================
+
+\begin{definition}[ضرب ماتریس در بردار]
+\[
+\twomat{a}{b}{c}{d} \twovec{x}{y} = x\twovec{a}{c} + y\twovec{b}{d} = \twovec{ax + by}{cx + dy}
+\]
+\end{definition}
+
+\begin{intuition}
+ضرب ماتریس در بردار یعنی:
+\begin{enumerate}
+    \item مؤلفه $x$ بردار ورودی را در ستون اول ضرب کن
+    \item مؤلفه $y$ بردار ورودی را در ستون دوم ضرب کن
+    \item نتایج را جمع کن
+\end{enumerate}
+این دقیقاً همان ترکیب خطی بردارهای پایه جدید است!
+\end{intuition}
+
+\begin{example}
+تبدیل چرخش $90°$ پادساعتگرد:
+\[
+T(\vi) = \twovec{0}{1}, \quad T(\vj) = \twovec{-1}{0}
+\]
+پس ماتریس چرخش:
+\[
+\mR = \twomat{0}{-1}{1}{0}
+\]
+بررسی: $\mR\twovec{1}{0} = \twovec{0}{1}$ ✓
+\end{example}
+
+% ============================================
+\section{مثال‌های تبدیلات مهم}
+% ============================================
+
+\subsection{چرخش \lr{(Rotation)}}
+
+\begin{definition}[ماتریس چرخش]
+چرخش به اندازه زاویه $\theta$ پادساعتگرد:
+\[
+\mR_\theta = \twomat{\cos\theta}{-\sin\theta}{\sin\theta}{\cos\theta}
+\]
+\end{definition}
+
+\begin{example}
+چرخش $45°$:
+\[
+\mR_{45°} = \twomat{\frac{\sqrt{2}}{2}}{-\frac{\sqrt{2}}{2}}{\frac{\sqrt{2}}{2}}{\frac{\sqrt{2}}{2}}
+\]
+\end{example}
+
+\subsection{مقیاس‌گذاری \lr{(Scaling)}}
+
+\begin{definition}[ماتریس مقیاس]
+مقیاس‌گذاری با ضرایب $s_x$ در راستای $x$ و $s_y$ در راستای $y$:
+\[
+\mS = \twomat{s_x}{0}{0}{s_y}
+\]
+\end{definition}
+
+\begin{practical}
+\textbf{کاربرد در گرافیک کامپیوتری:} برای بزرگ یا کوچک کردن تصویر:
+\begin{itemize}
+    \item $s_x = s_y = 2$: تصویر دو برابر بزرگ می‌شود
+    \item $s_x = 1, s_y = 0.5$: تصویر در راستای عمودی فشرده می‌شود
+\end{itemize}
+\end{practical}
+
+\subsection{برش \lr{(Shear)}}
+
+\begin{definition}[ماتریس برش افقی]
+\[
+\mH = \twomat{1}{k}{0}{1}
+\]
+که در آن $k$ مقدار برش است.
+\end{definition}
+
+\begin{center}
+\begin{tikzpicture}[scale=1]
+    % Original square
+    \begin{scope}[shift={(0,0)}]
+        \draw[fill=blue!20] (0,0) -- (1,0) -- (1,1) -- (0,1) -- cycle;
+        \draw[basis] (0,0) -- (1,0) node[midway, below] {$\vi$};
+        \draw[basis] (0,0) -- (0,1) node[midway, left] {$\vj$};
+        \node at (0.5,-0.7) {اصلی};
+    \end{scope}
+
+    % Sheared
+    \begin{scope}[shift={(4,0)}]
+        \draw[fill=blue!20] (0,0) -- (1,0) -- (2,1) -- (1,1) -- cycle;
+        \draw[transformed, very thick] (0,0) -- (1,0) node[midway, below] {$T(\vi)$};
+        \draw[transformed, very thick] (0,0) -- (1,1) node[midway, left] {$T(\vj)$};
+        \node at (1,-0.7) {برش با $k=1$};
+    \end{scope}
+\end{tikzpicture}
+\end{center}
+
+\subsection{انعکاس \lr{(Reflection)}}
+
+\begin{example}
+انعکاس نسبت به محور $x$:
+\[
+\twomat{1}{0}{0}{-1}
+\]
+
+انعکاس نسبت به خط $y = x$:
+\[
+\twomat{0}{1}{1}{0}
+\]
+\end{example}
+
+% ============================================
+\section{ضرب ماتریس‌ها = ترکیب تبدیلات}
+% ============================================
+
+\begin{theorem}[ترکیب تبدیلات]
+اگر $\mA$ ماتریس تبدیل $T_1$ و $\mB$ ماتریس تبدیل $T_2$ باشد، آنگاه:
+\[
+\mB \cdot \mA = \text{ماتریس تبدیل } (T_2 \circ T_1)
+\]
+یعنی اول $T_1$ و سپس $T_2$ اعمال شود.
+\end{theorem}
+
+\begin{warning}
+ترتیب مهم است! $\mA\mB \neq \mB\mA$ در حالت کلی.
+
+اول چرخش و بعد برش $\neq$ اول برش و بعد چرخش
+\end{warning}
+
+\begin{definition}[ضرب دو ماتریس]
+\[
+\twomat{a}{b}{c}{d} \twomat{e}{f}{g}{h} = \twomat{ae+bg}{af+bh}{ce+dg}{cf+dh}
+\]
+\end{definition}
+
+\begin{intuition}
+برای محاسبه ستون‌های $\mB\mA$:
+\begin{itemize}
+    \item ستون اول: $\mB$ ضرب در ستون اول $\mA$ = محل فرود $\vi$ پس از هر دو تبدیل
+    \item ستون دوم: $\mB$ ضرب در ستون دوم $\mA$ = محل فرود $\vj$ پس از هر دو تبدیل
+\end{itemize}
+\end{intuition}
+
+\begin{example}
+چرخش $90°$ و سپس برش:
+\[
+\underbrace{\twomat{1}{1}{0}{1}}_{\text{برش}} \underbrace{\twomat{0}{-1}{1}{0}}_{\text{چرخش}} = \twomat{1}{-1}{1}{0}
+\]
+
+بررسی: $\vi \to \twovec{0}{1} \to \twovec{1}{1}$ ✓
+\end{example}
+
+% ============================================
+\section{کاربردهای عملی}
+% ============================================
+
+\begin{practical}
+\textbf{گرافیک کامپیوتری و بازی‌های ویدیویی}
+
+هر شیء در بازی با مجموعه‌ای از بردارها (رأس‌ها) توصیف می‌شود. برای حرکت، چرخش، یا تغییر اندازه شیء، کافی است ماتریس مناسب را در همه رأس‌ها ضرب کنیم.
+
+یک انیمیشن = دنباله‌ای از ضرب ماتریس‌ها
+\end{practical}
+
+\begin{practical}
+\textbf{پردازش تصویر}
+
+فیلترهای تصویر مثل تار کردن، تیز کردن، و تشخیص لبه با ضرب ماتریسی پیاده‌سازی می‌شوند.
+\end{practical}
+
+% ============================================
+\section{تمرین‌ها}
+% ============================================
+
+\begin{exercise}
+ماتریس تبدیلی که $\vi$ را به $\twovec{2}{1}$ و $\vj$ را به $\twovec{-1}{3}$ می‌برد، بنویسید.
+\end{exercise}
+
+\begin{exercise}
+حاصل ضرب زیر را محاسبه کنید:
+\[
+\twomat{1}{2}{3}{4} \twovec{5}{6}
+\]
+\end{exercise}
+
+\begin{exercise}
+ماتریس چرخش $180°$ را بنویسید و نشان دهید که برابر است با $-\mI$.
+\end{exercise}
+
+\begin{exercise}
+دو ماتریس زیر را در هم ضرب کنید (به هر دو ترتیب) و نشان دهید که $\mA\mB \neq \mB\mA$:
+\[
+\mA = \twomat{1}{2}{0}{1}, \quad \mB = \twomat{0}{1}{1}{0}
+\]
+\end{exercise}
+
+\begin{exercise}[چالشی]
+ماتریسی پیدا کنید که انعکاس نسبت به خط $y = 2x$ باشد.
+
+\textit{راهنمایی: این خط با محور $x$ زاویه $\arctan(2)$ می‌سازد.}
+\end{exercise}
+
+\begin{problem}
+نشان دهید که ترکیب دو چرخش با زاویه‌های $\alpha$ و $\beta$ برابر است با چرخش به زاویه $\alpha + \beta$.
+\end{problem}
+
+\begin{problem}
+اگر $\mA^2 = \mA$ (یعنی $\mA$ یک ماتریس تصویر باشد)، چه تفسیر هندسی‌ای دارد؟
+\end{problem}

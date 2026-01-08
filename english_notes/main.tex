@@ -1,0 +1,195 @@
+% main.tex - English Linear Algebra Lecture Notes
+% Master Document - Compile with pdfLaTeX
+%
+% Linear Algebra: Essence of Linear Algebra
+% Based on 3Blue1Brown video series
+%
+% Compilation: pdflatex main.tex (run 2 times for references)
+
+\input{preamble}
+
+\begin{document}
+
+% === Title Page ===
+\begin{titlepage}
+\centering
+\vspace*{1cm}
+
+{\Huge\bfseries Linear Algebra}\\[0.5cm]
+{\LARGE\bfseries Essence of Linear Algebra}\\[2cm]
+
+{\Large Comprehensive Lecture Notes}\\[0.5cm]
+{\large with emphasis on geometric intuition and practical applications}\\[2cm]
+
+\begin{tikzpicture}[scale=0.6]
+    % Background grid
+    \draw[grid] (-3,-3) grid (3,3);
+
+    % Axes
+    \draw[axis] (-3.5,0) -- (3.5,0);
+    \draw[axis] (0,-3.5) -- (0,3.5);
+
+    % Basis vectors
+    \draw[basis, -{Stealth[length=4mm]}] (0,0) -- (1,0) node[below right] {$\vi$};
+    \draw[basis, -{Stealth[length=4mm]}] (0,0) -- (0,1) node[above left] {$\vj$};
+
+    % A transformed vector
+    \draw[vector, blue!70, very thick] (0,0) -- (2,1.5) node[above right] {$\vv$};
+
+    % Another vector
+    \draw[vector, green!60!black, very thick] (0,0) -- (-1,2) node[above left] {$\vw$};
+\end{tikzpicture}\\[2cm]
+
+{\large Based on the video series}\\[0.3cm]
+{\Large\textbf{Essence of Linear Algebra}}\\[0.3cm]
+{\large by Grant Sanderson}\\[0.3cm]
+{\small YouTube Channel: 3Blue1Brown}\\[1.5cm]
+
+{\small \today}
+
+\end{titlepage}
+
+% === Credits Page ===
+\begin{titlepage}
+\centering
+\vspace*{3cm}
+
+{\Large\bfseries Acknowledgments}
+
+\vspace{2cm}
+
+{\large Special thanks to:}
+
+\vspace{1cm}
+
+Ebrahim Khosravani\\[0.25cm]
+Mohammadhasan Shiri\\[0.25cm]
+Zahra Amiri\\[0.25cm]
+Amin Azizi\\[0.25cm]
+Bita Qorbani\\[0.25cm]
+Yasamin Yazdani\\[0.25cm]
+Sepehr Talaei
+
+\vspace{2cm}
+
+{\small Based on the ``Essence of Linear Algebra'' video series by 3Blue1Brown}
+
+\vspace{1cm}
+
+{\small Sharif University of Technology Physics Scientific Association}
+\end{titlepage}
+
+% === Table of Contents ===
+\tableofcontents
+
+% === Preface ===
+\chapter*{Preface}
+\addcontentsline{toc}{chapter}{Preface}
+
+These notes are based on the famous ``Essence of Linear Algebra'' video series by Grant Sanderson from the 3Blue1Brown YouTube channel. The main goal of this series is to provide an intuitive and geometric understanding of linear algebra concepts.
+
+\section*{Features of These Notes}
+\begin{itemize}
+    \item \textbf{Geometric Intuition:} Emphasis on visual understanding of concepts, not just calculations
+    \item \textbf{Rigorous Definitions:} Standard mathematical formulations
+    \item \textbf{Practical Applications:} Applications in physics, computer science, and engineering
+    \item \textbf{Exercises:} Diverse problems to reinforce learning
+\end{itemize}
+
+\section*{Prerequisites}
+\begin{itemize}
+    \item Familiarity with basic mathematics (high school algebra)
+    \item Understanding of Cartesian coordinate systems
+    \item A desire for deep understanding of mathematics!
+\end{itemize}
+
+\section*{How to Use These Notes}
+Each chapter contains the following sections:
+\begin{description}
+    \item[Definitions:] Key concepts with mathematical notation
+    \item[Geometric Intuition:] Visual explanations (in blue boxes)
+    \item[Practical Applications:] Real-world examples (in green boxes)
+    \item[Exercises:] Problems for practice
+\end{description}
+
+\begin{flushright}
+Best wishes for learning linear algebra
+\end{flushright}
+
+% === LECTURES ===
+
+% Chapter 1: Introduction to Vectors
+\input{lectures/lecture01}
+
+% Chapter 2: Linear Combinations, Span, and Basis
+\input{lectures/lecture02}
+
+% Chapter 3: Linear Transformations and Matrices
+\input{lectures/lecture03}
+
+% Chapter 4: 3D Transformations and Determinants
+\input{lectures/lecture04}
+
+% Chapter 5: Inverse Matrices, Column Space, and Null Space
+\input{lectures/lecture05}
+
+% Chapter 6: Dot Products and Duality
+\input{lectures/lecture06}
+
+% Chapter 7: Cross Products and Applications
+\input{lectures/lecture07}
+
+% Chapter 8: Cramer's Rule
+\input{lectures/lecture08}
+
+% Chapter 9: Change of Basis
+\input{lectures/lecture09}
+
+% Chapter 10: Eigenvalues and Eigenvectors
+\input{lectures/lecture10}
+
+% Chapter 11: Computing Eigenvalues and Eigenbasis
+\input{lectures/lecture11}
+
+% Chapter 12: Abstract Vector Spaces
+\input{lectures/lecture12}
+
+% === Appendix: Glossary ===
+\appendix
+\chapter{Glossary}
+
+\begin{center}
+\begin{tabular}{l|l}
+\toprule
+\textbf{Term} & \textbf{Symbol/Notation} \\
+\midrule
+Vector & $\vv, \vw, \vu$ \\
+Matrix & $\mA, \mB, \mC$ \\
+Linear Transformation & $T: \Rtwo \to \Rtwo$ \\
+Determinant & $\det(\mA)$ \\
+Eigenvalue & $\lambda$ \\
+Eigenvector & $\vv$ \\
+Basis & $\{\vi, \vj\}$ \\
+Span & $\spn\{\vv_1, \vv_2, \ldots\}$ \\
+Null Space & $\Null(\mA)$ \\
+Column Space & $\Col(\mA)$ \\
+Row Space & $\Row(\mA)$ \\
+Rank & $\rank(\mA)$ \\
+Linear Independence & vectors with no redundancy \\
+Linear Dependence & at least one redundant vector \\
+Dot Product & $\vv \cdot \vw$ \\
+Cross Product & $\vv \times \vw$ \\
+Identity Matrix & $\mI$ \\
+Inverse Matrix & $\mA\inv$ \\
+Transpose & $\mA\trans$ \\
+Change of Basis & $\mP\inv \mA \mP$ \\
+Eigenbasis & basis of eigenvectors \\
+Diagonal Matrix & non-zero only on diagonal \\
+Scalar & a number (real or complex) \\
+Linear Combination & $c_1\vv_1 + c_2\vv_2 + \cdots$ \\
+Vector Space & set closed under $+$ and scalar $\times$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\end{document}

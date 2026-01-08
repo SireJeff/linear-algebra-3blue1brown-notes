@@ -1,0 +1,238 @@
+% lecture06.tex - ضرب داخلی و دوگانگی
+% Chapter 6: Dot Products and Duality
+
+\chapter{ضرب داخلی و دوگانگی}
+\label{ch:dotproduct}
+
+\begin{abstract}
+ضرب داخلی (ضرب نقطه‌ای) یکی از عملیات‌های بنیادین جبر خطی است. در این درس با تعریف، خواص، و مفهوم عمیق دوگانگی آشنا می‌شویم که ارتباط بین بردارها و تابع‌های خطی را نشان می‌دهد.
+\end{abstract}
+
+% ============================================
+\section{تعریف ضرب داخلی}
+% ============================================
+
+\begin{definition}[ضرب داخلی]
+\vocab{ضرب داخلی} \lr{(Dot Product)} دو بردار $\vv = \twovec{v_1}{v_2}$ و $\vw = \twovec{w_1}{w_2}$:
+\[
+\vv \cdot \vw = v_1 w_1 + v_2 w_2
+\]
+در فضای $n$-بعدی:
+\[
+\vv \cdot \vw = \sum_{i=1}^{n} v_i w_i
+\]
+\end{definition}
+
+\begin{important}
+ضرب داخلی دو بردار، یک \textbf{عدد} (اسکالر) است، نه بردار!
+\end{important}
+
+\begin{example}
+\[
+\twovec{3}{2} \cdot \twovec{1}{4} = 3 \times 1 + 2 \times 4 = 3 + 8 = 11
+\]
+\end{example}
+
+% ============================================
+\section{تفسیر هندسی}
+% ============================================
+
+\begin{theorem}[فرمول هندسی ضرب داخلی]
+\[
+\vv \cdot \vw = \norm{\vv} \norm{\vw} \cos\theta
+\]
+که $\theta$ زاویه بین دو بردار است.
+\end{theorem}
+
+\begin{intuition}
+ضرب داخلی را می‌توان به دو صورت تفسیر کرد:
+\begin{enumerate}
+    \item طول $\vv$ ضرب در طول تصویر $\vw$ روی $\vv$
+    \item طول $\vw$ ضرب در طول تصویر $\vv$ روی $\vw$
+\end{enumerate}
+\end{intuition}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.5]
+    % Vectors
+    \draw[vector, blue!70, very thick] (0,0) -- (3,0) node[right] {$\vv$};
+    \draw[vector, green!60!black, very thick] (0,0) -- (2,1.5) node[above] {$\vw$};
+
+    % Projection
+    \draw[dashed, red] (2,1.5) -- (2,0);
+    \draw[red, thick] (0,0) -- (2,0) node[midway, below] {تصویر $\vw$};
+
+    % Angle
+    \draw (0.7,0) arc (0:36.87:0.7) node[midway, right] {$\theta$};
+\end{tikzpicture}
+\end{center}
+
+% ============================================
+\section{خواص ضرب داخلی}
+% ============================================
+
+\begin{theorem}[خواص اصلی]
+\begin{enumerate}
+    \item \textbf{جابجایی:} $\vv \cdot \vw = \vw \cdot \vv$
+    \item \textbf{توزیع‌پذیری:} $\vv \cdot (\vw + \vu) = \vv \cdot \vw + \vv \cdot \vu$
+    \item \textbf{همگنی:} $(c\vv) \cdot \vw = c(\vv \cdot \vw)$
+    \item \textbf{مثبت‌بودن:} $\vv \cdot \vv \geq 0$ و $\vv \cdot \vv = 0 \Leftrightarrow \vv = \vzero$
+\end{enumerate}
+\end{theorem}
+
+\begin{definition}[طول بردار]
+\[
+\norm{\vv} = \sqrt{\vv \cdot \vv} = \sqrt{v_1^2 + v_2^2 + \cdots + v_n^2}
+\]
+\end{definition}
+
+% ============================================
+\section{عمود بودن}
+% ============================================
+
+\begin{theorem}[شرط عمود بودن]
+دو بردار $\vv$ و $\vw$ بر هم \vocab{عمود} هستند اگر و تنها اگر:
+\[
+\vv \cdot \vw = 0
+\]
+\end{theorem}
+
+\begin{intuition}
+اگر $\vv \cdot \vw = 0$، یعنی $\cos\theta = 0$، پس $\theta = 90°$.
+
+تصویر هر بردار روی بردار عمود بر آن، صفر است.
+\end{intuition}
+
+\begin{example}
+بردارهای $\vv = \twovec{3}{2}$ و $\vw = \twovec{2}{-3}$ عمود هستند زیرا:
+\[
+\vv \cdot \vw = 3 \times 2 + 2 \times (-3) = 6 - 6 = 0
+\]
+\end{example}
+
+% ============================================
+\section{تصویر برداری}
+% ============================================
+
+\begin{definition}[تصویر بردار]
+تصویر بردار $\vv$ روی بردار $\vw$:
+\[
+\proj_{\vw}(\vv) = \frac{\vv \cdot \vw}{\vw \cdot \vw} \vw = \frac{\vv \cdot \vw}{\norm{\vw}^2} \vw
+\]
+\end{definition}
+
+\begin{intuition}
+تصویر $\vv$ روی $\vw$ برداری است در راستای $\vw$ که «سایه» $\vv$ روی خط $\vw$ را نشان می‌دهد.
+\end{intuition}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.5]
+    \draw[vector, blue!70, very thick] (0,0) -- (3,0) node[right] {$\vw$};
+    \draw[vector, green!60!black, very thick] (0,0) -- (2,2) node[above] {$\vv$};
+    \draw[vector, red!70, very thick] (0,0) -- (2,0) node[below] {$\proj_{\vw}(\vv)$};
+    \draw[dashed, gray] (2,2) -- (2,0);
+\end{tikzpicture}
+\end{center}
+
+% ============================================
+\section{دوگانگی \lr{(Duality)}}
+% ============================================
+
+\begin{intuition}
+یک بینش عمیق: هر بردار سطری $1 \times n$ را می‌توان به عنوان یک \textbf{تابع خطی} در نظر گرفت که بردارهای $n$-بعدی را به اعداد می‌برد.
+
+برای مثال، $\bmat{2 & 1}$ یک تابع خطی است:
+\[
+\bmat{2 & 1} \twovec{x}{y} = 2x + y
+\]
+\end{intuition}
+
+\begin{theorem}[دوگانگی]
+هر تابع خطی $f: \R^n \to \R$ را می‌توان به صورت ضرب داخلی با یک بردار ثابت نوشت:
+\[
+f(\vx) = \vv \cdot \vx
+\]
+برای یک بردار یکتای $\vv$.
+\end{theorem}
+
+\begin{definition}[بردار دوگان]
+بردار $\vv$ که تابع خطی $f$ را نمایش می‌دهد، \vocab{بردار دوگان} آن تابع نامیده می‌شود.
+\end{definition}
+
+\begin{practical}
+\textbf{کاربرد در یادگیری ماشین:}
+
+در شبکه‌های عصبی، هر نورون یک تابع خطی روی ورودی‌ها محاسبه می‌کند:
+\[
+\text{خروجی} = w_1 x_1 + w_2 x_2 + \cdots + w_n x_n = \vw \cdot \vx
+\]
+وزن‌های $\vw$ بردار دوگان آن نورون هستند.
+\end{practical}
+
+% ============================================
+\section{کاربردهای عملی}
+% ============================================
+
+\begin{practical}
+\textbf{فیزیک: کار مکانیکی}
+
+کار انجام شده توسط نیروی $\vec{F}$ در طول جابجایی $\vec{d}$:
+\[
+W = \vec{F} \cdot \vec{d} = \norm{\vec{F}} \norm{\vec{d}} \cos\theta
+\]
+اگر نیرو عمود بر جهت حرکت باشد، کار صفر است!
+\end{practical}
+
+\begin{practical}
+\textbf{گرافیک کامپیوتری: محاسبه نور}
+
+شدت نوری که از سطح منعکس می‌شود:
+\[
+I = \max(0, \vec{n} \cdot \vec{l})
+\]
+که $\vec{n}$ بردار نرمال سطح و $\vec{l}$ جهت نور است.
+\end{practical}
+
+\begin{practical}
+\textbf{تشابه متون}
+
+برای مقایسه دو سند متنی، هر سند را به بردار تبدیل می‌کنیم (مثلاً TF-IDF) و تشابه کسینوسی محاسبه می‌کنیم:
+\[
+\text{similarity} = \frac{\vv \cdot \vw}{\norm{\vv}\norm{\vw}} = \cos\theta
+\]
+\end{practical}
+
+% ============================================
+\section{تمرین‌ها}
+% ============================================
+
+\begin{exercise}
+ضرب داخلی بردارهای زیر را محاسبه کنید:
+\begin{enumerate}[label=(\alph*)]
+    \item $\twovec{1}{2} \cdot \twovec{3}{4}$
+    \item $\threevec{1}{-1}{2} \cdot \threevec{2}{3}{-1}$
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}
+آیا بردارهای $\va = \twovec{4}{3}$ و $\vb = \twovec{-3}{4}$ عمود هستند؟
+\end{exercise}
+
+\begin{exercise}
+تصویر بردار $\vv = \twovec{3}{4}$ روی بردار $\vw = \twovec{1}{0}$ را پیدا کنید.
+\end{exercise}
+
+\begin{exercise}
+زاویه بین بردارهای $\va = \twovec{1}{1}$ و $\vb = \twovec{1}{0}$ را محاسبه کنید.
+\end{exercise}
+
+\begin{exercise}[چالشی]
+نشان دهید که برای هر دو بردار $\vv$ و $\vw$:
+\[
+\norm{\vv + \vw}^2 = \norm{\vv}^2 + 2(\vv \cdot \vw) + \norm{\vw}^2
+\]
+\end{exercise}
+
+\begin{problem}
+نیرویی با بزرگی $10$ نیوتن تحت زاویه $60°$ با سطح افقی به جسمی وارد می‌شود. اگر جسم $5$ متر در راستای افقی حرکت کند، چقدر کار انجام شده؟
+\end{problem}

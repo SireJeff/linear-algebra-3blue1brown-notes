@@ -1,0 +1,251 @@
+% lecture07.tex - Cross Products and Applications
+% Chapter 7: Cross Products and Applications
+
+\chapter{Cross Products and Applications}
+\label{ch:crossproduct}
+
+\begin{abstract}
+The cross product (vector product) is an operation that creates a vector perpendicular to two vectors in three-dimensional space. In this chapter, we study its definition, properties, and deep connection to determinants.
+\end{abstract}
+
+% ============================================
+\section{Cross Product in Two Dimensions}
+% ============================================
+
+\begin{definition}[2D Cross Product]
+For two vectors in $\Rtwo$:
+\[
+\vv \times \vw = v_1 w_2 - v_2 w_1 = \det\twomat{v_1}{w_1}{v_2}{w_2}
+\]
+The result is a \textbf{number} (not a vector).
+\end{definition}
+
+\begin{intuition}
+2D cross product = signed area of the parallelogram formed by the two vectors
+
+Positive sign: $\vw$ is to the left of $\vv$\\
+Negative sign: $\vw$ is to the right of $\vv$
+\end{intuition}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.2]
+    % Parallelogram
+    \fill[blue!20] (0,0) -- (2,0.5) -- (3,2) -- (1,1.5) -- cycle;
+    \draw[vector, red!70, very thick] (0,0) -- (2,0.5) node[midway, below] {$\vv$};
+    \draw[vector, green!60!black, very thick] (0,0) -- (1,1.5) node[midway, left] {$\vw$};
+    \draw[dashed] (2,0.5) -- (3,2);
+    \draw[dashed] (1,1.5) -- (3,2);
+    \node at (1.5,1) {Area $= |\vv \times \vw|$};
+\end{tikzpicture}
+\end{center}
+
+% ============================================
+\section{Cross Product in Three Dimensions}
+% ============================================
+
+\begin{definition}[3D Cross Product]
+For $\vv = \threevec{v_1}{v_2}{v_3}$ and $\vw = \threevec{w_1}{w_2}{w_3}$:
+\[
+\vv \times \vw = \threevec{v_2 w_3 - v_3 w_2}{v_3 w_1 - v_1 w_3}{v_1 w_2 - v_2 w_1}
+\]
+\end{definition}
+
+\begin{theorem}[Determinant Formula]
+\[
+\vv \times \vw = \det\threemat{\vi}{\vj}{\vk}{v_1}{v_2}{v_3}{w_1}{w_2}{w_3}
+\]
+(symbolic expansion along the first row)
+\end{theorem}
+
+\begin{intuition}
+The cross product $\vv \times \vw$:
+\begin{itemize}
+    \item \textbf{Direction:} Perpendicular to both vectors (right-hand rule)
+    \item \textbf{Magnitude:} Area of the parallelogram formed by $\vv$ and $\vw$
+\end{itemize}
+\end{intuition}
+
+\begin{center}
+\begin{tikzpicture}[scale=1]
+    % 3D coordinate hint
+    \draw[axis] (0,0) -- (3,0) node[right] {$x$};
+    \draw[axis] (0,0) -- (0,3) node[above] {$z$};
+    \draw[axis] (0,0) -- (-1,-0.7) node[below left] {$y$};
+
+    % Vectors
+    \draw[vector, red!70, very thick] (0,0) -- (2,-0.5) node[right] {$\vv$};
+    \draw[vector, green!60!black, very thick] (0,0) -- (-0.5,0) node[left] {$\vw$};
+    \draw[vector, blue!70, ultra thick] (0,0) -- (0,2) node[above] {$\vv \times \vw$};
+
+    % Parallelogram base
+    \fill[gray!20] (0,0) -- (2,-0.5) -- (1.5,-0.5) -- (-0.5,0) -- cycle;
+\end{tikzpicture}
+\end{center}
+
+% ============================================
+\section{Properties of the Cross Product}
+% ============================================
+
+\begin{theorem}[Main Properties]
+\begin{enumerate}
+    \item \textbf{Anti-commutativity:} $\vv \times \vw = -(\vw \times \vv)$
+    \item \textbf{Distributivity:} $\vv \times (\vw + \vu) = \vv \times \vw + \vv \times \vu$
+    \item \textbf{Scalar multiplication:} $(c\vv) \times \vw = c(\vv \times \vw)$
+    \item \textbf{Orthogonality:} $\vv \times \vw \perp \vv$ and $\vv \times \vw \perp \vw$
+    \item \textbf{Self-cross is zero:} $\vv \times \vv = \vzero$
+\end{enumerate}
+\end{theorem}
+
+\begin{warning}
+The cross product is \textbf{not commutative}!
+\[
+\vv \times \vw \neq \vw \times \vv
+\]
+In fact, they are opposite to each other.
+\end{warning}
+
+\begin{theorem}[Magnitude Formula]
+\[
+\norm{\vv \times \vw} = \norm{\vv} \norm{\vw} \sin\theta
+\]
+where $\theta$ is the angle between the two vectors.
+\end{theorem}
+
+% ============================================
+\section{Cross Product from the Linear Transformation Viewpoint}
+% ============================================
+
+\begin{intuition}
+A deeper view: the cross product can be defined through duality.
+
+The function $f(\vx) = \det[\vv \,|\, \vw \,|\, \vx]$ is a linear function of $\vx$. By duality, there must exist a vector $\vp$ such that:
+\[
+f(\vx) = \vp \cdot \vx
+\]
+This $\vp$ is exactly $\vv \times \vw$!
+\end{intuition}
+
+\begin{theorem}
+\[
+\det[\vv \,|\, \vw \,|\, \vx] = (\vv \times \vw) \cdot \vx
+\]
+\end{theorem}
+
+% ============================================
+\section{Basis Vector Products}
+% ============================================
+
+\begin{theorem}[Cross Products of Basis Vectors]
+\begin{align*}
+\vi \times \vj &= \vk & \vj \times \vi &= -\vk \\
+\vj \times \vk &= \vi & \vk \times \vj &= -\vi \\
+\vk \times \vi &= \vj & \vi \times \vk &= -\vj
+\end{align*}
+\end{theorem}
+
+\begin{example}
+\[
+\threevec{2}{3}{4} \times \threevec{5}{6}{7}
+\]
+\begin{align*}
+&= (3 \times 7 - 4 \times 6)\vi - (2 \times 7 - 4 \times 5)\vj + (2 \times 6 - 3 \times 5)\vk \\
+&= (21-24)\vi - (14-20)\vj + (12-15)\vk \\
+&= -3\vi + 6\vj - 3\vk = \threevec{-3}{6}{-3}
+\end{align*}
+\end{example}
+
+% ============================================
+\section{Applications}
+% ============================================
+
+\begin{practical}
+\textbf{Physics: Torque}
+
+Torque of force $\vec{F}$ about a point at distance $\vec{r}$:
+\[
+\vec{\tau} = \vec{r} \times \vec{F}
+\]
+The direction of torque is perpendicular to the plane containing the force and the lever arm.
+\end{practical}
+
+\begin{practical}
+\textbf{Physics: Lorentz Force}
+
+Force on a charged particle moving in a magnetic field:
+\[
+\vec{F} = q\vec{v} \times \vec{B}
+\]
+\end{practical}
+
+\begin{practical}
+\textbf{Computer Graphics: Surface Normal}
+
+To find the normal vector to a triangular surface with vertices $A$, $B$, $C$:
+\[
+\vec{n} = (\vec{B} - \vec{A}) \times (\vec{C} - \vec{A})
+\]
+\end{practical}
+
+\begin{practical}
+\textbf{Computing Triangle Area}
+
+Area of triangle with vertices $A$, $B$, $C$:
+\[
+\text{Area} = \frac{1}{2}\norm{(\vec{B}-\vec{A}) \times (\vec{C}-\vec{A})}
+\]
+\end{practical}
+
+% ============================================
+\section{Triple Products}
+% ============================================
+
+\begin{definition}[Scalar Triple Product]
+\[
+\va \cdot (\vb \times \vc) = \det[\va \,|\, \vb \,|\, \vc]
+\]
+Result = signed volume of the parallelepiped formed by the three vectors
+\end{definition}
+
+\begin{theorem}[Cyclic Property]
+\[
+\va \cdot (\vb \times \vc) = \vb \cdot (\vc \times \va) = \vc \cdot (\va \times \vb)
+\]
+\end{theorem}
+
+% ============================================
+\section{Exercises}
+% ============================================
+
+\begin{exercise}
+Compute the cross product:
+\[
+\va = \threevec{1}{2}{3}, \quad \vb = \threevec{4}{5}{6}
+\]
+\end{exercise}
+
+\begin{exercise}
+Find the area of the parallelogram with sides $\va = \threevec{1}{0}{0}$ and $\vb = \threevec{1}{1}{0}$.
+\end{exercise}
+
+\begin{exercise}
+Show that $\va \times \vb$ is perpendicular to both $\va$ and $\vb$.
+\end{exercise}
+
+\begin{exercise}
+Find the normal vector to the plane passing through points $(1,0,0)$, $(0,1,0)$, $(0,0,1)$.
+\end{exercise}
+
+\begin{exercise}[Challenge]
+Show that:
+\[
+\norm{\va \times \vb}^2 + (\va \cdot \vb)^2 = \norm{\va}^2 \norm{\vb}^2
+\]
+(This is called Lagrange's identity)
+\end{exercise}
+
+\begin{problem}
+Calculate the volume of the parallelepiped with edges:
+\[
+\va = \threevec{1}{1}{0}, \quad \vb = \threevec{0}{1}{1}, \quad \vc = \threevec{1}{0}{1}
+\]
+\end{problem}

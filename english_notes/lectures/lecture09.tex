@@ -1,0 +1,201 @@
+% lecture09.tex - Change of Basis
+% Chapter 9: Change of Basis
+
+\chapter{Change of Basis}
+\label{ch:changebasis}
+
+\begin{abstract}
+The same vector has different coordinates in different bases. In this chapter, we learn how to translate between different coordinate systems and how this concept relates to matrices.
+\end{abstract}
+
+% ============================================
+\section{Coordinates Relative to Different Bases}
+% ============================================
+
+\begin{intuition}
+The coordinates of a vector depend on the chosen basis. If you speak a different language, you express the same concept differently.
+
+Example: A vector $\vv$ that is $\twovec{3}{2}$ in the standard basis might be $\twovec{1}{1}$ in a different basis!
+\end{intuition}
+
+\begin{definition}[Coordinates in a Basis]
+If $\mathcal{B} = \{\vb_1, \vb_2\}$ is a basis, the coordinates of vector $\vv$ in this basis are the coefficients $c_1, c_2$ such that:
+\[
+\vv = c_1 \vb_1 + c_2 \vb_2
+\]
+Notation: $[\vv]_{\mathcal{B}} = \twovec{c_1}{c_2}$
+\end{definition}
+
+\begin{example}
+Basis $\mathcal{B} = \left\{ \vb_1 = \twovec{2}{1}, \vb_2 = \twovec{-1}{1} \right\}$
+
+Express vector $\vv = \twovec{3}{2}$ in this basis.
+
+We need to find $c_1, c_2$ such that:
+\[
+c_1 \twovec{2}{1} + c_2 \twovec{-1}{1} = \twovec{3}{2}
+\]
+\[
+\system{
+2c_1 - c_2 &= 3 \\
+c_1 + c_2 &= 2
+}
+\]
+Solution: $c_1 = \frac{5}{3}$, $c_2 = \frac{1}{3}$
+
+So $[\vv]_{\mathcal{B}} = \twovec{5/3}{1/3}$
+\end{example}
+
+% ============================================
+\section{Change of Basis Matrix}
+% ============================================
+
+\begin{definition}[Change of Basis Matrix]
+The \vocab{change of basis matrix} from basis $\mathcal{B}$ to the standard basis is a matrix whose columns are the basis vectors of $\mathcal{B}$:
+\[
+\mP = [\vb_1 \,|\, \vb_2 \,|\, \cdots \,|\, \vb_n]
+\]
+\end{definition}
+
+\begin{theorem}
+\[
+\vv = \mP \, [\vv]_{\mathcal{B}}
+\]
+That is: coordinates in basis $\mathcal{B}$ $\times$ change of basis matrix = vector in standard basis
+\end{theorem}
+
+\begin{theorem}
+\[
+[\vv]_{\mathcal{B}} = \mP\inv \vv
+\]
+That is: to convert from standard basis to basis $\mathcal{B}$, we use the inverse.
+\end{theorem}
+
+% ============================================
+\section{Change of Basis Transformation}
+% ============================================
+
+\begin{intuition}
+Matrix $\mP$ is an identity transformation that only changes the language:
+\begin{itemize}
+    \item $\mP$: translates from language $\mathcal{B}$ to standard language
+    \item $\mP\inv$: translates from standard language to language $\mathcal{B}$
+\end{itemize}
+\end{intuition}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.2]
+    % Standard basis
+    \begin{scope}[shift={(0,0)}]
+        \draw[grid] (-0.5,-0.5) grid (3.5,2.5);
+        \draw[axis] (-0.5,0) -- (3.5,0);
+        \draw[axis] (0,-0.5) -- (0,2.5);
+        \draw[basis] (0,0) -- (1,0) node[below] {$\vi$};
+        \draw[basis] (0,0) -- (0,1) node[left] {$\vj$};
+        \draw[vector, blue!70, very thick] (0,0) -- (3,2) node[above] {$\vv$};
+        \node at (1.5,-1) {Standard basis};
+        \node at (1.5,-1.5) {$\vv = \twovec{3}{2}$};
+    \end{scope}
+
+    % Alternative basis
+    \begin{scope}[shift={(6,0)}]
+        \draw[gray!30] (-0.5,-0.5) -- (1,0.5) -- (3,1.5) -- (1.5,1) -- cycle;
+        \draw[axis] (-0.5,0) -- (3.5,0);
+        \draw[axis] (0,-0.5) -- (0,2.5);
+        \draw[red!70, very thick, -{Stealth}] (0,0) -- (2,1) node[below right] {$\vb_1$};
+        \draw[red!70, very thick, -{Stealth}] (0,0) -- (-1,1) node[above left] {$\vb_2$};
+        \draw[vector, blue!70, very thick] (0,0) -- (3,2) node[above] {$\vv$};
+        \node at (1.5,-1) {Basis $\mathcal{B}$};
+        \node at (1.5,-1.5) {$[\vv]_{\mathcal{B}} = \twovec{?}{?}$};
+    \end{scope}
+\end{tikzpicture}
+\end{center}
+
+% ============================================
+\section{Representing Transformations in Different Bases}
+% ============================================
+
+\begin{theorem}[Transformation in New Basis]
+If $\mA$ is the matrix of transformation $T$ in the standard basis, the matrix of the same transformation in basis $\mathcal{B}$ is:
+\[
+[\mA]_{\mathcal{B}} = \mP\inv \mA \mP
+\]
+\end{theorem}
+
+\begin{intuition}
+This formula has three steps:
+\begin{enumerate}
+    \item $\mP$: translate from basis $\mathcal{B}$ to standard basis
+    \item $\mA$: apply the transformation in standard basis
+    \item $\mP\inv$: translate the result back to basis $\mathcal{B}$
+\end{enumerate}
+\end{intuition}
+
+\begin{center}
+\begin{tikzpicture}[node distance=3cm]
+    \node (B1) {$[\vv]_{\mathcal{B}}$};
+    \node (S1) [right of=B1] {$\vv$};
+    \node (S2) [right of=S1] {$T(\vv)$};
+    \node (B2) [right of=S2] {$[T(\vv)]_{\mathcal{B}}$};
+
+    \draw[-{Stealth}, thick] (B1) -- (S1) node[midway, above] {$\mP$};
+    \draw[-{Stealth}, thick] (S1) -- (S2) node[midway, above] {$\mA$};
+    \draw[-{Stealth}, thick] (S2) -- (B2) node[midway, above] {$\mP\inv$};
+    \draw[-{Stealth}, thick, blue] (B1) to[bend right=30] node[midway, below] {$\mP\inv\mA\mP$} (B2);
+\end{tikzpicture}
+\end{center}
+
+% ============================================
+\section{Importance of Change of Basis}
+% ============================================
+
+\begin{intuition}
+Why is change of basis important?
+
+Some transformations look \textbf{simpler} in certain bases. For example:
+\begin{itemize}
+    \item Rotation in the standard basis is complicated
+    \item But in a basis where one axis lies on the axis of rotation, it becomes simpler
+\end{itemize}
+
+The best basis for a transformation? The \textbf{eigenbasis} - next chapter!
+\end{intuition}
+
+\begin{practical}
+\textbf{Application: Simplifying Computations}
+
+Suppose you want to compute $\mA^{100}$. If in a suitable basis, $\mA$ becomes diagonal:
+\[
+\mP\inv \mA \mP = \mD \quad \text{(diagonal)}
+\]
+Then:
+\[
+\mA^{100} = \mP \mD^{100} \mP\inv
+\]
+And $\mD^{100}$ is very easy to compute!
+\end{practical}
+
+% ============================================
+\section{Exercises}
+% ============================================
+
+\begin{exercise}
+Given basis $\mathcal{B} = \left\{ \twovec{1}{1}, \twovec{1}{-1} \right\}$, find the coordinates of vector $\vv = \twovec{3}{1}$ in this basis.
+\end{exercise}
+
+\begin{exercise}
+Write the change of basis matrix from $\mathcal{B} = \left\{ \twovec{2}{1}, \twovec{1}{1} \right\}$ to the standard basis.
+\end{exercise}
+
+\begin{exercise}
+If $\mA = \twomat{2}{1}{0}{3}$ in the standard basis, find the matrix of this transformation in basis $\mathcal{B} = \left\{ \twovec{1}{0}, \twovec{1}{1} \right\}$.
+\end{exercise}
+
+\begin{exercise}[Challenge]
+Show that $\det(\mP\inv\mA\mP) = \det(\mA)$.
+\end{exercise}
+
+\begin{problem}
+Given two bases $\mathcal{B}_1$ and $\mathcal{B}_2$. How do you compute the change of basis matrix directly from $\mathcal{B}_1$ to $\mathcal{B}_2$ (without going through the standard basis)?
+\end{problem}
+

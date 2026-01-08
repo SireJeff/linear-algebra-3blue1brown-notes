@@ -1,0 +1,200 @@
+% lecture09.tex - تغییر پایه
+% Chapter 9: Change of Basis
+
+\chapter{تغییر پایه}
+\label{ch:changebasis}
+
+\begin{abstract}
+یک بردار یکسان در پایه‌های مختلف، مختصات متفاوتی دارد. در این درس یاد می‌گیریم چگونه بین دستگاه‌های مختصات مختلف ترجمه کنیم و این مفهوم چه ارتباطی با ماتریس‌ها دارد.
+\end{abstract}
+
+% ============================================
+\section{مختصات نسبت به پایه‌های مختلف}
+% ============================================
+
+\begin{intuition}
+مختصات یک بردار به پایه انتخابی بستگی دارد. اگر زبان متفاوتی صحبت کنید، همان مفهوم را متفاوت بیان می‌کنید.
+
+مثال: بردار $\vv$ که در پایه استاندارد $\twovec{3}{2}$ است، اگر پایه‌ای متفاوت داشته باشیم، ممکن است $\twovec{1}{1}$ باشد!
+\end{intuition}
+
+\begin{definition}[مختصات در پایه]
+اگر $\mathcal{B} = \{\vb_1, \vb_2\}$ یک پایه باشد، مختصات بردار $\vv$ در این پایه، ضرایب $c_1, c_2$ هستند که:
+\[
+\vv = c_1 \vb_1 + c_2 \vb_2
+\]
+نماد: $[\vv]_{\mathcal{B}} = \twovec{c_1}{c_2}$
+\end{definition}
+
+\begin{example}
+پایه $\mathcal{B} = \left\{ \vb_1 = \twovec{2}{1}, \vb_2 = \twovec{-1}{1} \right\}$
+
+بردار $\vv = \twovec{3}{2}$ را در این پایه بیان کنید.
+
+باید $c_1, c_2$ را پیدا کنیم که:
+\[
+c_1 \twovec{2}{1} + c_2 \twovec{-1}{1} = \twovec{3}{2}
+\]
+\[
+\system{
+2c_1 - c_2 &= 3 \\
+c_1 + c_2 &= 2
+}
+\]
+حل: $c_1 = \frac{5}{3}$, $c_2 = \frac{1}{3}$
+
+پس $[\vv]_{\mathcal{B}} = \twovec{5/3}{1/3}$
+\end{example}
+
+% ============================================
+\section{ماتریس تغییر پایه}
+% ============================================
+
+\begin{definition}[ماتریس تغییر پایه]
+\vocab{ماتریس تغییر پایه} از پایه $\mathcal{B}$ به پایه استاندارد، ماتریسی است که ستون‌هایش بردارهای پایه $\mathcal{B}$ هستند:
+\[
+\mP = [\vb_1 \,|\, \vb_2 \,|\, \cdots \,|\, \vb_n]
+\]
+\end{definition}
+
+\begin{theorem}
+\[
+\vv = \mP \, [\vv]_{\mathcal{B}}
+\]
+یعنی: مختصات در پایه $\mathcal{B}$ $\times$ ماتریس تغییر پایه = بردار در پایه استاندارد
+\end{theorem}
+
+\begin{theorem}
+\[
+[\vv]_{\mathcal{B}} = \mP\inv \vv
+\]
+یعنی: برای تبدیل از پایه استاندارد به پایه $\mathcal{B}$، از معکوس استفاده می‌کنیم.
+\end{theorem}
+
+% ============================================
+\section{تبدیل تغییر پایه}
+% ============================================
+
+\begin{intuition}
+ماتریس $\mP$ یک تبدیل هویت است که فقط زبان را عوض می‌کند:
+\begin{itemize}
+    \item $\mP$: از زبان $\mathcal{B}$ به زبان استاندارد ترجمه می‌کند
+    \item $\mP\inv$: از زبان استاندارد به زبان $\mathcal{B}$ ترجمه می‌کند
+\end{itemize}
+\end{intuition}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.2]
+    % Standard basis
+    \begin{scope}[shift={(0,0)}]
+        \draw[grid] (-0.5,-0.5) grid (3.5,2.5);
+        \draw[axis] (-0.5,0) -- (3.5,0);
+        \draw[axis] (0,-0.5) -- (0,2.5);
+        \draw[basis] (0,0) -- (1,0) node[below] {$\vi$};
+        \draw[basis] (0,0) -- (0,1) node[left] {$\vj$};
+        \draw[vector, blue!70, very thick] (0,0) -- (3,2) node[above] {$\vv$};
+        \node at (1.5,-1) {پایه استاندارد};
+        \node at (1.5,-1.5) {$\vv = \twovec{3}{2}$};
+    \end{scope}
+
+    % Alternative basis
+    \begin{scope}[shift={(6,0)}]
+        \draw[gray!30] (-0.5,-0.5) -- (1,0.5) -- (3,1.5) -- (1.5,1) -- cycle;
+        \draw[axis] (-0.5,0) -- (3.5,0);
+        \draw[axis] (0,-0.5) -- (0,2.5);
+        \draw[red!70, very thick, -{Stealth}] (0,0) -- (2,1) node[below right] {$\vb_1$};
+        \draw[red!70, very thick, -{Stealth}] (0,0) -- (-1,1) node[above left] {$\vb_2$};
+        \draw[vector, blue!70, very thick] (0,0) -- (3,2) node[above] {$\vv$};
+        \node at (1.5,-1) {پایه $\mathcal{B}$};
+        \node at (1.5,-1.5) {$[\vv]_{\mathcal{B}} = \twovec{?}{?}$};
+    \end{scope}
+\end{tikzpicture}
+\end{center}
+
+% ============================================
+\section{نمایش تبدیل در پایه‌های مختلف}
+% ============================================
+
+\begin{theorem}[تبدیل در پایه جدید]
+اگر $\mA$ ماتریس تبدیل $T$ در پایه استاندارد باشد، ماتریس همان تبدیل در پایه $\mathcal{B}$:
+\[
+[\mA]_{\mathcal{B}} = \mP\inv \mA \mP
+\]
+\end{theorem}
+
+\begin{intuition}
+این فرمول سه مرحله دارد:
+\begin{enumerate}
+    \item $\mP$: از پایه $\mathcal{B}$ به پایه استاندارد ترجمه کن
+    \item $\mA$: تبدیل را در پایه استاندارد اعمال کن
+    \item $\mP\inv$: نتیجه را به پایه $\mathcal{B}$ برگردان
+\end{enumerate}
+\end{intuition}
+
+\begin{center}
+\begin{tikzpicture}[node distance=3cm]
+    \node (B1) {$[\vv]_{\mathcal{B}}$};
+    \node (S1) [right of=B1] {$\vv$};
+    \node (S2) [right of=S1] {$T(\vv)$};
+    \node (B2) [right of=S2] {$[T(\vv)]_{\mathcal{B}}$};
+
+    \draw[-{Stealth}, thick] (B1) -- (S1) node[midway, above] {$\mP$};
+    \draw[-{Stealth}, thick] (S1) -- (S2) node[midway, above] {$\mA$};
+    \draw[-{Stealth}, thick] (S2) -- (B2) node[midway, above] {$\mP\inv$};
+    \draw[-{Stealth}, thick, blue] (B1) to[bend right=30] node[midway, below] {$\mP\inv\mA\mP$} (B2);
+\end{tikzpicture}
+\end{center}
+
+% ============================================
+\section{اهمیت تغییر پایه}
+% ============================================
+
+\begin{intuition}
+چرا تغییر پایه مهم است؟
+
+بعضی تبدیلات در پایه‌های خاص \textbf{ساده‌تر} به نظر می‌رسند. مثلاً:
+\begin{itemize}
+    \item چرخش در پایه استاندارد پیچیده است
+    \item اما در پایه‌ای که یک محور روی محور چرخش باشد، ساده می‌شود
+\end{itemize}
+
+بهترین پایه برای یک تبدیل؟ \textbf{پایه ویژه} (eigenbasis) - درس بعدی!
+\end{intuition}
+
+\begin{practical}
+\textbf{کاربرد: ساده‌سازی محاسبات}
+
+فرض کنید می‌خواهید $\mA^{100}$ را محاسبه کنید. اگر در پایه‌ای مناسب، $\mA$ قطری شود:
+\[
+\mP\inv \mA \mP = \mD \quad \text{(قطری)}
+\]
+آنگاه:
+\[
+\mA^{100} = \mP \mD^{100} \mP\inv
+\]
+و $\mD^{100}$ بسیار ساده محاسبه می‌شود!
+\end{practical}
+
+% ============================================
+\section{تمرین‌ها}
+% ============================================
+
+\begin{exercise}
+پایه $\mathcal{B} = \left\{ \twovec{1}{1}, \twovec{1}{-1} \right\}$ داده شده. مختصات بردار $\vv = \twovec{3}{1}$ را در این پایه پیدا کنید.
+\end{exercise}
+
+\begin{exercise}
+ماتریس تغییر پایه از $\mathcal{B} = \left\{ \twovec{2}{1}, \twovec{1}{1} \right\}$ به پایه استاندارد را بنویسید.
+\end{exercise}
+
+\begin{exercise}
+اگر $\mA = \twomat{2}{1}{0}{3}$ در پایه استاندارد، ماتریس این تبدیل را در پایه $\mathcal{B} = \left\{ \twovec{1}{0}, \twovec{1}{1} \right\}$ پیدا کنید.
+\end{exercise}
+
+\begin{exercise}[چالشی]
+نشان دهید که $\det(\mP\inv\mA\mP) = \det(\mA)$.
+\end{exercise}
+
+\begin{problem}
+دو پایه $\mathcal{B}_1$ و $\mathcal{B}_2$ داده شده. ماتریس تغییر پایه مستقیم از $\mathcal{B}_1$ به $\mathcal{B}_2$ (بدون گذر از پایه استاندارد) را چگونه محاسبه می‌کنید؟
+\end{problem}

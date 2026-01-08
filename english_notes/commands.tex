@@ -1,0 +1,97 @@
+% commands.tex - Custom Math Commands for Linear Algebra
+% English Linear Algebra Lecture Notes
+
+% === Vector Notation ===
+% Bold vectors (column vectors)
+\newcommand{\vect}[1]{\mathbf{#1}}
+\newcommand{\vv}{\vect{v}}
+\newcommand{\vw}{\vect{w}}
+\newcommand{\vu}{\vect{u}}
+\newcommand{\vx}{\vect{x}}
+\newcommand{\vy}{\vect{y}}
+\newcommand{\vz}{\vect{z}}
+\newcommand{\va}{\vect{a}}
+\newcommand{\vb}{\vect{b}}
+\newcommand{\vc}{\vect{c}}
+
+% Basis vectors (with hat notation)
+\newcommand{\vi}{\hat{\imath}}
+\newcommand{\vj}{\hat{\jmath}}
+\newcommand{\vk}{\hat{k}}
+
+% Zero vector
+\newcommand{\vzero}{\vect{0}}
+
+% === Matrix Notation ===
+\newcommand{\mat}[1]{\mathbf{#1}}
+\newcommand{\mA}{\mat{A}}
+\newcommand{\mB}{\mat{B}}
+\newcommand{\mC}{\mat{C}}
+\newcommand{\mD}{\mat{D}}
+\newcommand{\mI}{\mat{I}}
+\newcommand{\mP}{\mat{P}}
+\newcommand{\mQ}{\mat{Q}}
+\newcommand{\mT}{\mat{T}}
+\newcommand{\mM}{\mat{M}}
+\newcommand{\mR}{\mat{R}}
+\newcommand{\mS}{\mat{S}}
+\newcommand{\mH}{\mat{H}}
+
+% Matrix with brackets
+\newcommand{\bmat}[1]{\begin{bmatrix}#1\end{bmatrix}}
+\newcommand{\pmat}[1]{\begin{pmatrix}#1\end{pmatrix}}
+\newcommand{\vmat}[1]{\begin{vmatrix}#1\end{vmatrix}}
+
+% === Common Operations ===
+% Transpose
+\newcommand{\trans}{^{\mathsf{T}}}
+
+% Inverse
+\newcommand{\inv}{^{-1}}
+
+% Norm and absolute value
+\newcommand{\norm}[1]{\left\| #1 \right\|}
+\newcommand{\abs}[1]{\left| #1 \right|}
+
+% === Important Spaces ===
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+
+% Rn space
+\newcommand{\Rtwo}{\mathbb{R}^2}
+\newcommand{\Rthree}{\mathbb{R}^3}
+
+% === Linear Algebra Operators ===
+\DeclareMathOperator{\spn}{span}
+\DeclareMathOperator{\Span}{Span}
+\DeclareMathOperator{\Null}{Null}
+\DeclareMathOperator{\Col}{Col}
+\DeclareMathOperator{\Row}{Row}
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\proj}{proj}
+
+% === Common Matrices ===
+% 2x2 matrix shorthand
+\newcommand{\twomat}[4]{\begin{bmatrix} #1 & #2 \\ #3 & #4 \end{bmatrix}}
+
+% 3x3 matrix shorthand
+\newcommand{\threemat}[9]{\begin{bmatrix} #1 & #2 & #3 \\ #4 & #5 & #6 \\ #7 & #8 & #9 \end{bmatrix}}
+
+% 2D column vector
+\newcommand{\twovec}[2]{\begin{bmatrix} #1 \\ #2 \end{bmatrix}}
+
+% 3D column vector
+\newcommand{\threevec}[3]{\begin{bmatrix} #1 \\ #2 \\ #3 \end{bmatrix}}
+
+% === Change of Basis ===
+\newcommand{\coords}[2]{[#1]_{#2}}
+
+% === System of Equations ===
+\newcommand{\system}[1]{\left\{\begin{aligned} #1 \end{aligned}\right.}
+
+% === Emphasizing ===
+\newcommand{\vocab}[1]{\textbf{\textcolor{blue!70!black}{#1}}}

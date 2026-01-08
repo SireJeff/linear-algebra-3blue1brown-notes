@@ -1,0 +1,252 @@
+% lecture07.tex - ضرب خارجی و کاربردها
+% Chapter 7: Cross Products and Applications
+
+\chapter{ضرب خارجی و کاربردها}
+\label{ch:crossproduct}
+
+\begin{abstract}
+ضرب خارجی (ضرب برداری) عملیاتی است که از دو بردار در فضای سه‌بعدی، برداری عمود بر هر دو می‌سازد. در این درس تعریف، خواص، و ارتباط عمیق ضرب خارجی با دترمینان را بررسی می‌کنیم.
+\end{abstract}
+
+% ============================================
+\section{ضرب خارجی در دو بعد}
+% ============================================
+
+\begin{definition}[ضرب خارجی دوبعدی]
+برای دو بردار در $\Rtwo$:
+\[
+\vv \times \vw = v_1 w_2 - v_2 w_1 = \det\twomat{v_1}{w_1}{v_2}{w_2}
+\]
+نتیجه یک \textbf{عدد} است (نه بردار).
+\end{definition}
+
+\begin{intuition}
+ضرب خارجی دوبعدی = مساحت متوازی‌الاضلاع ساخته شده از دو بردار (با علامت)
+
+علامت مثبت: $\vw$ در سمت چپ $\vv$ قرار دارد
+علامت منفی: $\vw$ در سمت راست $\vv$ قرار دارد
+\end{intuition}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.2]
+    % Parallelogram
+    \fill[blue!20] (0,0) -- (2,0.5) -- (3,2) -- (1,1.5) -- cycle;
+    \draw[vector, red!70, very thick] (0,0) -- (2,0.5) node[midway, below] {$\vv$};
+    \draw[vector, green!60!black, very thick] (0,0) -- (1,1.5) node[midway, left] {$\vw$};
+    \draw[dashed] (2,0.5) -- (3,2);
+    \draw[dashed] (1,1.5) -- (3,2);
+    \node at (1.5,1) {مساحت $= |\vv \times \vw|$};
+\end{tikzpicture}
+\end{center}
+
+% ============================================
+\section{ضرب خارجی در سه بعد}
+% ============================================
+
+\begin{definition}[ضرب خارجی سه‌بعدی]
+برای $\vv = \threevec{v_1}{v_2}{v_3}$ و $\vw = \threevec{w_1}{w_2}{w_3}$:
+\[
+\vv \times \vw = \threevec{v_2 w_3 - v_3 w_2}{v_3 w_1 - v_1 w_3}{v_1 w_2 - v_2 w_1}
+\]
+\end{definition}
+
+\begin{theorem}[فرمول دترمینان]
+\[
+\vv \times \vw = \det\threemat{\vi}{\vj}{\vk}{v_1}{v_2}{v_3}{w_1}{w_2}{w_3}
+\]
+(بسط نمادین نسبت به سطر اول)
+\end{theorem}
+
+\begin{intuition}
+ضرب خارجی $\vv \times \vw$:
+\begin{itemize}
+    \item \textbf{جهت:} عمود بر هر دو بردار (قاعده دست راست)
+    \item \textbf{اندازه:} مساحت متوازی‌الاضلاع ساخته شده از $\vv$ و $\vw$
+\end{itemize}
+\end{intuition}
+
+\begin{center}
+\begin{tikzpicture}[scale=1]
+    % 3D coordinate hint
+    \draw[axis] (0,0) -- (3,0) node[right] {$x$};
+    \draw[axis] (0,0) -- (0,3) node[above] {$z$};
+    \draw[axis] (0,0) -- (-1,-0.7) node[below left] {$y$};
+
+    % Vectors
+    \draw[vector, red!70, very thick] (0,0) -- (2,-0.5) node[right] {$\vv$};
+    \draw[vector, green!60!black, very thick] (0,0) -- (-0.5,0) node[left] {$\vw$};
+    \draw[vector, blue!70, ultra thick] (0,0) -- (0,2) node[above] {$\vv \times \vw$};
+
+    % Parallelogram base
+    \fill[gray!20] (0,0) -- (2,-0.5) -- (1.5,-0.5) -- (-0.5,0) -- cycle;
+\end{tikzpicture}
+\end{center}
+
+% ============================================
+\section{خواص ضرب خارجی}
+% ============================================
+
+\begin{theorem}[خواص اصلی]
+\begin{enumerate}
+    \item \textbf{پادجابجایی:} $\vv \times \vw = -(\vw \times \vv)$
+    \item \textbf{توزیع‌پذیری:} $\vv \times (\vw + \vu) = \vv \times \vw + \vv \times \vu$
+    \item \textbf{همگنی:} $(c\vv) \times \vw = c(\vv \times \vw)$
+    \item \textbf{عمود بودن:} $\vv \times \vw \perp \vv$ و $\vv \times \vw \perp \vw$
+    \item \textbf{صفر شدن:} $\vv \times \vv = \vzero$
+\end{enumerate}
+\end{theorem}
+
+\begin{warning}
+ضرب خارجی \textbf{جابجایی ندارد}!
+\[
+\vv \times \vw \neq \vw \times \vv
+\]
+در واقع برعکس هم هستند.
+\end{warning}
+
+\begin{theorem}[فرمول اندازه]
+\[
+\norm{\vv \times \vw} = \norm{\vv} \norm{\vw} \sin\theta
+\]
+که $\theta$ زاویه بین دو بردار است.
+\end{theorem}
+
+% ============================================
+\section{ضرب خارجی از دیدگاه تبدیلات خطی}
+% ============================================
+
+\begin{intuition}
+نگاه عمیق‌تر: ضرب خارجی را می‌توان از طریق دوگانگی تعریف کرد.
+
+تابع $f(\vx) = \det[\vv \,|\, \vw \,|\, \vx]$ یک تابع خطی از $\vx$ است. طبق دوگانگی، باید برداری $\vp$ وجود داشته باشد که:
+\[
+f(\vx) = \vp \cdot \vx
+\]
+این $\vp$ همان $\vv \times \vw$ است!
+\end{intuition}
+
+\begin{theorem}
+\[
+\det[\vv \,|\, \vw \,|\, \vx] = (\vv \times \vw) \cdot \vx
+\]
+\end{theorem}
+
+% ============================================
+\section{ضرب‌های پایه}
+% ============================================
+
+\begin{theorem}[ضرب خارجی بردارهای پایه]
+\begin{align*}
+\vi \times \vj &= \vk & \vj \times \vi &= -\vk \\
+\vj \times \vk &= \vi & \vk \times \vj &= -\vi \\
+\vk \times \vi &= \vj & \vi \times \vk &= -\vj
+\end{align*}
+\end{theorem}
+
+\begin{example}
+\[
+\threevec{2}{3}{4} \times \threevec{5}{6}{7}
+\]
+\begin{align*}
+&= (3 \times 7 - 4 \times 6)\vi - (2 \times 7 - 4 \times 5)\vj + (2 \times 6 - 3 \times 5)\vk \\
+&= (21-24)\vi - (14-20)\vj + (12-15)\vk \\
+&= -3\vi + 6\vj - 3\vk = \threevec{-3}{6}{-3}
+\end{align*}
+\end{example}
+
+% ============================================
+\section{کاربردها}
+% ============================================
+
+\begin{practical}
+\textbf{فیزیک: گشتاور}
+
+گشتاور نیروی $\vec{F}$ حول نقطه‌ای به فاصله $\vec{r}$:
+\[
+\vec{\tau} = \vec{r} \times \vec{F}
+\]
+جهت گشتاور عمود بر صفحه‌ای است که نیرو و بازو در آن قرار دارند.
+\end{practical}
+
+\begin{practical}
+\textbf{فیزیک: نیروی لورنتس}
+
+نیروی وارد بر ذره باردار متحرک در میدان مغناطیسی:
+\[
+\vec{F} = q\vec{v} \times \vec{B}
+\]
+\end{practical}
+
+\begin{practical}
+\textbf{گرافیک کامپیوتری: بردار نرمال}
+
+برای یافتن بردار عمود بر یک سطح مثلثی با رأس‌های $A$، $B$، $C$:
+\[
+\vec{n} = (\vec{B} - \vec{A}) \times (\vec{C} - \vec{A})
+\]
+\end{practical}
+
+\begin{practical}
+\textbf{محاسبه مساحت مثلث}
+
+مساحت مثلث با رأس‌های $A$، $B$، $C$:
+\[
+\text{مساحت} = \frac{1}{2}\norm{(\vec{B}-\vec{A}) \times (\vec{C}-\vec{A})}
+\]
+\end{practical}
+
+% ============================================
+\section{ضرب سه‌گانه}
+% ============================================
+
+\begin{definition}[ضرب سه‌گانه اسکالر]
+\[
+\va \cdot (\vb \times \vc) = \det[\va \,|\, \vb \,|\, \vc]
+\]
+نتیجه = حجم متوازی‌السطوح ساخته شده از سه بردار (با علامت)
+\end{definition}
+
+\begin{theorem}[خاصیت دوری]
+\[
+\va \cdot (\vb \times \vc) = \vb \cdot (\vc \times \va) = \vc \cdot (\va \times \vb)
+\]
+\end{theorem}
+
+% ============================================
+\section{تمرین‌ها}
+% ============================================
+
+\begin{exercise}
+ضرب خارجی بردارهای زیر را محاسبه کنید:
+\[
+\va = \threevec{1}{2}{3}, \quad \vb = \threevec{4}{5}{6}
+\]
+\end{exercise}
+
+\begin{exercise}
+مساحت متوازی‌الاضلاع با اضلاع $\va = \threevec{1}{0}{0}$ و $\vb = \threevec{1}{1}{0}$ را پیدا کنید.
+\end{exercise}
+
+\begin{exercise}
+نشان دهید که $\va \times \vb$ بر هر دو بردار $\va$ و $\vb$ عمود است.
+\end{exercise}
+
+\begin{exercise}
+بردار نرمال به صفحه‌ای که از نقاط $(1,0,0)$، $(0,1,0)$، $(0,0,1)$ می‌گذرد را پیدا کنید.
+\end{exercise}
+
+\begin{exercise}[چالشی]
+نشان دهید که:
+\[
+\norm{\va \times \vb}^2 + (\va \cdot \vb)^2 = \norm{\va}^2 \norm{\vb}^2
+\]
+(این رابطه لاگرانژ نام دارد)
+\end{exercise}
+
+\begin{problem}
+حجم متوازی‌السطوح با اضلاع:
+\[
+\va = \threevec{1}{1}{0}, \quad \vb = \threevec{0}{1}{1}, \quad \vc = \threevec{1}{0}{1}
+\]
+را محاسبه کنید.
+\end{problem}

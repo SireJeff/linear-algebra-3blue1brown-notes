@@ -1,0 +1,374 @@
+% lecture02.tex - Linear Combinations, Span, and Basis Vectors
+% Chapter 2: Linear Combinations, Span, and Basis
+
+\chapter{Linear Combinations, Span, and Basis}
+\label{ch:span-basis}
+
+\begin{abstract}
+In this chapter, we explore the key concepts of ``linear combination,'' ``span,'' and ``basis.'' These concepts form the foundation for a deep understanding of linear algebra and allow us to understand how vectors ``fill'' space.
+\end{abstract}
+
+% ============================================
+\section{A New Look at Coordinates}
+% ============================================
+
+In the previous chapter, we introduced vector coordinates as ``directions for movement.'' But there's another perspective that is very important.
+
+\begin{intuition}
+When we write $\vv = \twovec{3}{-2}$, instead of thinking ``3 units right, 2 units down,'' think of it this way:
+\begin{itemize}
+    \item The number 3 is a \textbf{scalar} that scales vector $\vi$
+    \item The number $-2$ is a \textbf{scalar} that scales vector $\vj$
+    \item The final vector is the \textbf{sum} of these two scaled vectors
+\end{itemize}
+\end{intuition}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.3]
+    % Grid
+    \draw[grid] (-1.5,-2.5) grid (4.5,1.5);
+
+    % Axes
+    \draw[axis] (-1.5,0) -- (4.5,0) node[right] {$x$};
+    \draw[axis] (0,-2.5) -- (0,1.5) node[above] {$y$};
+
+    % Basis vectors (unit)
+    \draw[basis, -{Stealth[length=3mm]}] (0,0) -- (1,0) node[below right] {$\vi$};
+    \draw[basis, -{Stealth[length=3mm]}] (0,0) -- (0,1) node[above left] {$\vj$};
+
+    % Scaled vectors
+    \draw[vector, orange!70, very thick] (0,0) -- (3,0) node[midway, below] {$3\vi$};
+    \draw[vector, green!60!black, very thick] (3,0) -- (3,-2) node[midway, right] {$-2\vj$};
+
+    % Result vector
+    \draw[vector, blue!70, ultra thick] (0,0) -- (3,-2) node[below right] {$\vv = 3\vi - 2\vj$};
+\end{tikzpicture}
+\end{center}
+
+% ============================================
+\section{Linear Combination}
+% ============================================
+
+\begin{definition}[Linear Combination]
+A \vocab{linear combination} of two vectors $\vv$ and $\vw$ is:
+\[
+a\vv + b\vw
+\]
+where $a$ and $b$ are arbitrary scalars.
+
+More generally, a linear combination of $n$ vectors $\vv_1, \vv_2, \ldots, \vv_n$ is:
+\[
+c_1\vv_1 + c_2\vv_2 + \cdots + c_n\vv_n = \sum_{i=1}^{n} c_i\vv_i
+\]
+\end{definition}
+
+\begin{intuition}
+Where does the name ``linear'' come from? If you fix one of the scalars and vary the other, the tip of the resulting vector moves along a \textbf{straight line}.
+
+For example, if $b = 1$ is fixed and $a$ varies, the vector $a\vv + \vw$ moves along a line parallel to $\vv$.
+\end{intuition}
+
+\begin{example}
+Suppose $\vv = \twovec{1}{2}$ and $\vw = \twovec{3}{-1}$. Some linear combinations:
+\begin{align*}
+2\vv + 1\vw &= 2\twovec{1}{2} + 1\twovec{3}{-1} = \twovec{2}{4} + \twovec{3}{-1} = \twovec{5}{3} \\
+-1\vv + 3\vw &= -\twovec{1}{2} + 3\twovec{3}{-1} = \twovec{-1}{-2} + \twovec{9}{-3} = \twovec{8}{-5} \\
+0\vv + 0\vw &= \twovec{0}{0} = \vzero
+\end{align*}
+\end{example}
+
+% ============================================
+\section{Span}
+% ============================================
+
+\begin{definition}[Span]
+The \vocab{span} of a set of vectors is the set of all possible linear combinations of those vectors:
+\[
+\spn\{\vv_1, \vv_2, \ldots, \vv_n\} = \{c_1\vv_1 + c_2\vv_2 + \cdots + c_n\vv_n \mid c_i \in \R\}
+\]
+\end{definition}
+
+\begin{intuition}
+The key question: Given some vectors and using only the two basic operations (addition and scalar multiplication), what vectors can we reach?
+
+The answer: The \textbf{span} of those vectors.
+\end{intuition}
+
+% -------------------------------------------
+\subsection{Span in Two Dimensions}
+% -------------------------------------------
+
+\begin{theorem}
+For two vectors $\vv$ and $\vw$ in $\Rtwo$, there are three possible cases:
+\begin{enumerate}
+    \item If $\vv$ and $\vw$ are not collinear: $\spn\{\vv, \vw\} = \Rtwo$ (the entire plane)
+    \item If $\vv$ and $\vw$ are collinear (but non-zero): $\spn\{\vv, \vw\}$ is a line
+    \item If both are zero: $\spn\{\vv, \vw\} = \{\vzero\}$ (only the origin)
+\end{enumerate}
+\end{theorem}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.9]
+    % Case 1: Full plane
+    \begin{scope}[shift={(0,0)}]
+        \fill[blue!10] (-2,-2) rectangle (2,2);
+        \draw[axis] (-2,0) -- (2,0);
+        \draw[axis] (0,-2) -- (0,2);
+        \draw[vector, red!70, very thick] (0,0) -- (1,0.5) node[right] {$\vv$};
+        \draw[vector, green!60!black, very thick] (0,0) -- (-0.3,1) node[above] {$\vw$};
+        \node at (0,-2.5) {Case 1: Entire plane};
+    \end{scope}
+
+    % Case 2: Line
+    \begin{scope}[shift={(6,0)}]
+        \draw[blue!30, very thick] (-2,-1) -- (2,1);
+        \draw[axis] (-2,0) -- (2,0);
+        \draw[axis] (0,-2) -- (0,2);
+        \draw[vector, red!70, very thick] (0,0) -- (1,0.5) node[right] {$\vv$};
+        \draw[vector, green!60!black, very thick] (0,0) -- (1.6,0.8) node[above] {$\vw$};
+        \node at (0,-2.5) {Case 2: A line};
+    \end{scope}
+
+    % Case 3: Origin
+    \begin{scope}[shift={(12,0)}]
+        \draw[axis] (-2,0) -- (2,0);
+        \draw[axis] (0,-2) -- (0,2);
+        \fill[blue!70] (0,0) circle (3pt);
+        \node at (0,-2.5) {Case 3: Only origin};
+    \end{scope}
+\end{tikzpicture}
+\end{center}
+
+% -------------------------------------------
+\subsection{Span in Three Dimensions}
+% -------------------------------------------
+
+\begin{theorem}
+For vectors in $\Rthree$:
+\begin{itemize}
+    \item \textbf{One non-zero vector:} The span is a \textbf{line}
+    \item \textbf{Two non-collinear vectors:} The span is a \textbf{plane}
+    \item \textbf{Three vectors not in one plane:} The span is all of $\Rthree$
+\end{itemize}
+\end{theorem}
+
+\begin{intuition}
+Imagine two vectors in three-dimensional space. Their linear combinations form a flat plane through the origin. Now if you add a third vector that's not on this plane, it's like ``sweeping'' the plane through space, covering all of 3D space.
+\end{intuition}
+
+% ============================================
+\section{Linear Independence and Dependence}
+% ============================================
+
+\begin{definition}[Linear Dependence]
+A set of vectors is \vocab{linearly dependent} if one of them can be removed without changing the span. In other words, at least one vector is ``redundant.''
+
+Mathematically: vectors $\vv_1, \ldots, \vv_n$ are linearly dependent if and only if there exist scalars $c_1, \ldots, c_n$, not all zero, such that:
+\[
+c_1\vv_1 + c_2\vv_2 + \cdots + c_n\vv_n = \vzero
+\]
+\end{definition}
+
+\begin{definition}[Linear Independence]
+A set of vectors is \vocab{linearly independent} if none of them is redundant---that is, each vector adds a new dimension to the span.
+
+Mathematically: vectors $\vv_1, \ldots, \vv_n$ are linearly independent if and only if:
+\[
+c_1\vv_1 + c_2\vv_2 + \cdots + c_n\vv_n = \vzero \implies c_1 = c_2 = \cdots = c_n = 0
+\]
+\end{definition}
+
+\begin{example}
+Consider vectors $\vv = \twovec{2}{1}$ and $\vw = \twovec{4}{2}$.
+
+These vectors are \textbf{linearly dependent} because $\vw = 2\vv$. We can write:
+\[
+2\vv - \vw = \vzero \quad \text{i.e.,} \quad 2\twovec{2}{1} - \twovec{4}{2} = \twovec{0}{0}
+\]
+\end{example}
+
+\begin{example}
+The vectors $\vv = \twovec{1}{0}$ and $\vw = \twovec{0}{1}$ are linearly independent.
+
+If $a\vv + b\vw = \vzero$:
+\[
+a\twovec{1}{0} + b\twovec{0}{1} = \twovec{a}{b} = \twovec{0}{0}
+\]
+So $a = 0$ and $b = 0$. The only way to get the zero vector is if all coefficients are zero.
+\end{example}
+
+\begin{warning}
+In $n$-dimensional space, at most $n$ vectors can be linearly independent. If you have more than $n$ vectors, they must be linearly dependent.
+\end{warning}
+
+% ============================================
+\section{Basis}
+% ============================================
+
+\begin{definition}[Basis]
+A \vocab{basis} of a vector space is a set of vectors that:
+\begin{enumerate}
+    \item Are \textbf{linearly independent}
+    \item \textbf{Span} the entire space
+\end{enumerate}
+\end{definition}
+
+\begin{theorem}
+The standard basis of $\Rtwo$ is:
+\[
+\left\{ \vi = \twovec{1}{0}, \; \vj = \twovec{0}{1} \right\}
+\]
+And the standard basis of $\Rthree$ is:
+\[
+\left\{ \vi = \threevec{1}{0}{0}, \; \vj = \threevec{0}{1}{0}, \; \vk = \threevec{0}{0}{1} \right\}
+\]
+\end{theorem}
+
+\begin{intuition}
+A basis is like a ``language'' for describing vectors. When we say $\twovec{3}{2}$, we're really saying ``3 of the first basis vector and 2 of the second.''
+
+If we choose a different basis, the same vector will have different coordinates---like translating a sentence to another language.
+\end{intuition}
+
+% -------------------------------------------
+\subsection{Non-Standard Bases}
+% -------------------------------------------
+
+\begin{example}
+The following set is also a basis for $\Rtwo$:
+\[
+\mathcal{B} = \left\{ \vb_1 = \twovec{1}{1}, \; \vb_2 = \twovec{1}{-1} \right\}
+\]
+
+\textbf{Proof of linear independence:} If $a\vb_1 + b\vb_2 = \vzero$:
+\[
+a\twovec{1}{1} + b\twovec{1}{-1} = \twovec{a+b}{a-b} = \twovec{0}{0}
+\]
+So $a + b = 0$ and $a - b = 0$, which gives $a = b = 0$.
+
+\textbf{Spans the entire plane:} Since we have two linearly independent vectors in $\Rtwo$, they span the entire plane.
+\end{example}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.5]
+    % Grid
+    \draw[grid] (-2,-2) grid (2,2);
+
+    % Axes
+    \draw[axis] (-2,0) -- (2,0) node[right] {$x$};
+    \draw[axis] (0,-2) -- (0,2) node[above] {$y$};
+
+    % Standard basis
+    \draw[basis, -{Stealth[length=3mm]}] (0,0) -- (1,0) node[below right] {$\vi$};
+    \draw[basis, -{Stealth[length=3mm]}] (0,0) -- (0,1) node[above left] {$\vj$};
+
+    % Non-standard basis
+    \draw[vector, blue!70, very thick] (0,0) -- (1,1) node[above right] {$\vb_1$};
+    \draw[vector, green!60!black, very thick] (0,0) -- (1,-1) node[below right] {$\vb_2$};
+\end{tikzpicture}
+\end{center}
+
+% ============================================
+\section{Vectors as Points}
+% ============================================
+
+\begin{remark}
+Sometimes instead of thinking of a vector as an arrow, it's easier to think of it as a \textbf{point}---the point where the tip of the vector lands.
+
+\begin{itemize}
+    \item When thinking about a specific vector: visualize it as an \textbf{arrow}
+    \item When thinking about a collection of vectors: visualize them as \textbf{points}
+\end{itemize}
+\end{remark}
+
+\begin{center}
+\begin{tikzpicture}[scale=1]
+    % Left: Vectors as arrows
+    \begin{scope}[shift={(0,0)}]
+        \draw[axis] (-0.5,0) -- (3,0);
+        \draw[axis] (0,-0.5) -- (0,3);
+        \draw[vector, blue!70] (0,0) -- (1,2);
+        \draw[vector, red!70] (0,0) -- (2,1);
+        \draw[vector, green!60!black] (0,0) -- (2.5,2.5);
+        \node at (1.5,-1) {Vectors as arrows};
+    \end{scope}
+
+    % Right: Vectors as points
+    \begin{scope}[shift={(6,0)}]
+        \draw[axis] (-0.5,0) -- (3,0);
+        \draw[axis] (0,-0.5) -- (0,3);
+        \fill[blue!70] (1,2) circle (3pt);
+        \fill[red!70] (2,1) circle (3pt);
+        \fill[green!60!black] (2.5,2.5) circle (3pt);
+        \node at (1.5,-1) {Vectors as points};
+    \end{scope}
+\end{tikzpicture}
+\end{center}
+
+% ============================================
+\section{Summary of Key Concepts}
+% ============================================
+
+\begin{summary}
+\begin{description}
+    \item[Linear combination:] $c_1\vv_1 + c_2\vv_2 + \cdots + c_n\vv_n$ with arbitrary scalars
+    \item[Span:] Set of all possible linear combinations
+    \item[Linear independence:] No vector is redundant
+    \item[Linear dependence:] At least one vector can be removed
+    \item[Basis:] Linearly independent set that spans the entire space
+\end{description}
+\end{summary}
+
+% ============================================
+\section{Exercises}
+% ============================================
+
+\begin{exercise}
+Write vector $\vv = \twovec{4}{6}$ as a linear combination of $\vi$ and $\vj$.
+\end{exercise}
+
+\begin{exercise}
+Are the following vectors linearly independent? Explain.
+\[
+\va = \twovec{1}{3}, \quad \vb = \twovec{2}{6}
+\]
+\end{exercise}
+
+\begin{exercise}
+Are the following vectors linearly independent?
+\[
+\vv_1 = \twovec{1}{0}, \quad \vv_2 = \twovec{1}{1}, \quad \vv_3 = \twovec{0}{1}
+\]
+\textit{Hint: In $\Rtwo$, what is the maximum number of linearly independent vectors?}
+\end{exercise}
+
+\begin{exercise}
+Describe the span of the following vectors:
+\[
+\vv = \threevec{1}{0}{0}, \quad \vw = \threevec{0}{1}{0}
+\]
+\end{exercise}
+
+\begin{exercise}[Challenge]
+Show that the following set is a basis for $\Rtwo$:
+\[
+\left\{ \twovec{2}{1}, \twovec{1}{3} \right\}
+\]
+Then find the coordinates of vector $\twovec{5}{7}$ in this new basis.
+\end{exercise}
+
+\begin{exercise}
+Three vectors in $\Rthree$ are given:
+\[
+\vv_1 = \threevec{1}{0}{1}, \quad \vv_2 = \threevec{0}{1}{1}, \quad \vv_3 = \threevec{1}{1}{2}
+\]
+Are these vectors linearly independent? What is their span?
+\end{exercise}
+
+\begin{problem}
+Prove that if $\{\vv_1, \vv_2\}$ is a basis for $\Rtwo$, then $\{2\vv_1, 3\vv_2\}$ is also a basis.
+\end{problem}
+
+\begin{problem}
+Is it possible to find three vectors in $\Rtwo$ that are linearly independent? Why or why not?
+\end{problem}

@@ -1,0 +1,233 @@
+% lecture08.tex - قاعده کرامر
+% Chapter 8: Cramer's Rule
+
+\chapter{قاعده کرامر}
+\label{ch:cramer}
+
+\begin{abstract}
+قاعده کرامر روشی زیبا برای حل دستگاه معادلات خطی با استفاده از دترمینان است. در این درس با تفسیر هندسی این قاعده و شرایط کاربرد آن آشنا می‌شویم.
+\end{abstract}
+
+% ============================================
+\section{بیان قاعده کرامر}
+% ============================================
+
+\begin{theorem}[قاعده کرامر]
+برای دستگاه $\mA\vx = \vb$ با ماتریس $n \times n$ و $\det(\mA) \neq 0$:
+\[
+x_i = \frac{\det(\mA_i)}{\det(\mA)}
+\]
+که $\mA_i$ ماتریسی است که ستون $i$ام $\mA$ با بردار $\vb$ جایگزین شده.
+\end{theorem}
+
+\begin{example}
+دستگاه $2 \times 2$:
+\[
+\system{
+ax + by &= e \\
+cx + dy &= f
+}
+\]
+جواب:
+\[
+x = \frac{\det\twomat{e}{b}{f}{d}}{\det\twomat{a}{b}{c}{d}} = \frac{ed - bf}{ad - bc}
+\]
+\[
+y = \frac{\det\twomat{a}{e}{c}{f}}{\det\twomat{a}{b}{c}{d}} = \frac{af - ec}{ad - bc}
+\]
+\end{example}
+
+% ============================================
+\section{تفسیر هندسی}
+% ============================================
+
+\begin{intuition}
+در دو بعد، معادله $\mA\vx = \vb$ می‌پرسد:
+
+«چه ترکیب خطی از ستون‌های $\mA$ برابر $\vb$ است؟»
+
+اگر $\mA = [\va_1 \,|\, \va_2]$ و $\vx = \twovec{x}{y}$:
+\[
+x\va_1 + y\va_2 = \vb
+\]
+\end{intuition}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.3]
+    % Parallelogram
+    \draw[vector, red!70, very thick] (0,0) -- (2,0.5) node[right] {$\va_1$};
+    \draw[vector, blue!70, very thick] (0,0) -- (0.5,2) node[above] {$\va_2$};
+    \draw[vector, green!60!black, ultra thick] (0,0) -- (1.5,1.5) node[above right] {$\vb$};
+
+    % Parallelogram formed by b and a2
+    \fill[orange!20] (0,0) -- (1.5,1.5) -- (2,3.5) -- (0.5,2) -- cycle;
+
+    % Parallelogram formed by a1 and a2
+    \fill[gray!20] (0,0) -- (2,0.5) -- (2.5,2.5) -- (0.5,2) -- cycle;
+
+    \node at (1.2,2.5) {\small مساحت نارنجی};
+    \node at (1.8,1) {\small مساحت خاکستری};
+\end{tikzpicture}
+\end{center}
+
+\begin{theorem}[تفسیر مساحتی]
+\[
+x = \frac{\text{مساحت متوازی‌الاضلاع}(\vb, \va_2)}{\text{مساحت متوازی‌الاضلاع}(\va_1, \va_2)}
+\]
+\[
+y = \frac{\text{مساحت متوازی‌الاضلاع}(\va_1, \vb)}{\text{مساحت متوازی‌الاضلاع}(\va_1, \va_2)}
+\]
+\end{theorem}
+
+\begin{intuition}
+چرا این کار می‌کند؟
+
+متوازی‌الاضلاع $(\vb, \va_2)$ را در نظر بگیرید. چون $\vb = x\va_1 + y\va_2$:
+\[
+\text{مساحت}(\vb, \va_2) = \text{مساحت}(x\va_1 + y\va_2, \va_2)
+\]
+چون $\va_2 \times \va_2 = 0$:
+\[
+= \text{مساحت}(x\va_1, \va_2) = x \cdot \text{مساحت}(\va_1, \va_2)
+\]
+پس:
+\[
+x = \frac{\text{مساحت}(\vb, \va_2)}{\text{مساحت}(\va_1, \va_2)}
+\]
+\end{intuition}
+
+% ============================================
+\section{مثال محاسباتی}
+% ============================================
+
+\begin{example}
+حل دستگاه:
+\[
+\system{
+3x + 2y &= 7 \\
+x + 4y &= 9
+}
+\]
+
+\textbf{مرحله ۱:} محاسبه $\det(\mA)$:
+\[
+\det\twomat{3}{2}{1}{4} = 12 - 2 = 10
+\]
+
+\textbf{مرحله ۲:} محاسبه $x$:
+\[
+x = \frac{\det\twomat{7}{2}{9}{4}}{\det(\mA)} = \frac{28 - 18}{10} = \frac{10}{10} = 1
+\]
+
+\textbf{مرحله ۳:} محاسبه $y$:
+\[
+y = \frac{\det\twomat{3}{7}{1}{9}}{\det(\mA)} = \frac{27 - 7}{10} = \frac{20}{10} = 2
+\]
+
+\textbf{بررسی:} $3(1) + 2(2) = 7$ ✓ و $1(1) + 4(2) = 9$ ✓
+\end{example}
+
+% ============================================
+\section{سه بعد و بالاتر}
+% ============================================
+
+\begin{example}
+دستگاه $3 \times 3$:
+\[
+\system{
+2x + y - z &= 3 \\
+x - y + 2z &= 1 \\
+3x + 2y + z &= 4
+}
+\]
+
+ماتریس ضرایب:
+\[
+\mA = \threemat{2}{1}{-1}{1}{-1}{2}{3}{2}{1}
+\]
+
+\[
+x = \frac{\det\threemat{3}{1}{-1}{1}{-1}{2}{4}{2}{1}}{\det(\mA)}, \quad
+y = \frac{\det\threemat{2}{3}{-1}{1}{1}{2}{3}{4}{1}}{\det(\mA)}, \quad
+z = \frac{\det\threemat{2}{1}{3}{1}{-1}{1}{3}{2}{4}}{\det(\mA)}
+\]
+\end{example}
+
+\begin{intuition}
+در سه بعد، به جای نسبت مساحت‌ها، نسبت \textbf{حجم‌ها} را داریم.
+
+$x$ = نسبت حجم متوازی‌السطوح $(\vb, \va_2, \va_3)$ به حجم $(\va_1, \va_2, \va_3)$
+\end{intuition}
+
+% ============================================
+\section{محدودیت‌ها و کاربردها}
+% ============================================
+
+\begin{warning}
+قاعده کرامر:
+\begin{itemize}
+    \item فقط برای دستگاه‌های مربعی ($n$ معادله، $n$ مجهول)
+    \item فقط وقتی $\det(\mA) \neq 0$ (جواب یکتا)
+    \item برای $n$ بزرگ، محاسباتی \textbf{بسیار پرهزینه} است
+\end{itemize}
+\end{warning}
+
+\begin{remark}
+در عمل برای حل دستگاه‌های بزرگ از روش‌هایی مثل حذف گاوسی استفاده می‌شود که کارآمدتر هستند. اما قاعده کرامر:
+\begin{itemize}
+    \item درک نظری عمیق‌تری می‌دهد
+    \item برای فرمول‌های تحلیلی مفید است
+    \item در اثبات قضایا کاربرد دارد
+\end{itemize}
+\end{remark}
+
+\begin{practical}
+\textbf{کاربرد: یافتن تقاطع خطوط}
+
+دو خط $a_1x + b_1y = c_1$ و $a_2x + b_2y = c_2$ در نقطه زیر تقاطع دارند:
+\[
+x = \frac{c_1 b_2 - c_2 b_1}{a_1 b_2 - a_2 b_1}, \quad y = \frac{a_1 c_2 - a_2 c_1}{a_1 b_2 - a_2 b_1}
+\]
+این فرمول مستقیم از قاعده کرامر می‌آید.
+\end{practical}
+
+% ============================================
+\section{تمرین‌ها}
+% ============================================
+
+\begin{exercise}
+دستگاه زیر را با قاعده کرامر حل کنید:
+\[
+\system{
+2x + 3y &= 8 \\
+4x - y &= 2
+}
+\]
+\end{exercise}
+
+\begin{exercise}
+دستگاه زیر را با قاعده کرامر حل کنید:
+\[
+\system{
+x + y + z &= 6 \\
+2x - y + z &= 3 \\
+x + 2y - z &= 2
+}
+\]
+\end{exercise}
+
+\begin{exercise}
+نقطه تقاطع دو خط $2x + 3y = 7$ و $x - y = 1$ را با قاعده کرامر پیدا کنید.
+\end{exercise}
+
+\begin{exercise}
+تفسیر هندسی قاعده کرامر را برای حالتی که $\det(\mA) = 0$ توضیح دهید.
+\end{exercise}
+
+\begin{exercise}[چالشی]
+نشان دهید که فرمول کرامر با ضرب $\mA\inv \vb$ سازگار است.
+\end{exercise}
+
+\begin{problem}
+یک مثلث با رأس‌های $A(1,1)$، $B(4,2)$، $C(2,5)$ داده شده. با استفاده از قاعده کرامر، مختصات مرکز ثقل را پیدا کنید.
+\end{problem}

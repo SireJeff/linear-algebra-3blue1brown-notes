@@ -1,0 +1,219 @@
+% lecture11.tex - Computing Eigenvalues and Eigenbasis
+% Chapter 11: Computing Eigenvalues and Eigenbasis
+
+\chapter{Computing Eigenvalues and Eigenbasis}
+\label{ch:eigenbasis}
+
+\begin{abstract}
+In this chapter, we learn faster methods for computing eigenvalues of $2 \times 2$ matrices and become familiar with the concept of eigenbasis and diagonalization.
+\end{abstract}
+
+% ============================================
+\section{Quick Trick for $2 \times 2$ Matrices}
+% ============================================
+
+\begin{theorem}[Quick Formula]
+For matrix $\mA = \twomat{a}{b}{c}{d}$:
+
+\textbf{Sum of eigenvalues:}
+\[
+\lambda_1 + \lambda_2 = a + d = \tr(\mA)
+\]
+
+\textbf{Product of eigenvalues:}
+\[
+\lambda_1 \cdot \lambda_2 = ad - bc = \det(\mA)
+\]
+\end{theorem}
+
+\begin{intuition}
+Knowing $m = \lambda_1 + \lambda_2$ and $p = \lambda_1 \lambda_2$, you can find $\lambda_{1,2}$:
+\[
+\lambda = \frac{m}{2} \pm \sqrt{\left(\frac{m}{2}\right)^2 - p}
+\]
+Or: find two numbers whose sum is $m$ and whose product is $p$.
+\end{intuition}
+
+\begin{example}
+$\mA = \twomat{3}{1}{4}{1}$
+
+Trace: $m = 3 + 1 = 4$
+
+Determinant: $p = 3 - 4 = -1$
+
+Eigenvalues: two numbers with $x + y = 4$ and $xy = -1$:
+\[
+\lambda = 2 \pm \sqrt{4 - (-1)} = 2 \pm \sqrt{5}
+\]
+\end{example}
+
+% ============================================
+\section{Eigenbasis}
+% ============================================
+
+\begin{definition}[Eigenbasis]
+If the eigenvectors of a matrix can form a \vocab{basis} (i.e., we have $n$ linearly independent eigenvectors), this basis is called an \vocab{eigenbasis}.
+\end{definition}
+
+\begin{theorem}
+In an eigenbasis, the transformation matrix becomes \vocab{diagonal}:
+\[
+[\mA]_{\text{eigenbasis}} = \mD = \threemat{\lambda_1}{0}{0}{0}{\lambda_2}{0}{0}{0}{\ddots}
+\]
+\end{theorem}
+
+\begin{intuition}
+Why diagonal?
+
+In an eigenbasis, each basis vector only gets scaled:
+\begin{align*}
+\mA \vv_1 &= \lambda_1 \vv_1 \to \text{first column: } \threevec{\lambda_1}{0}{0} \\
+\mA \vv_2 &= \lambda_2 \vv_2 \to \text{second column: } \threevec{0}{\lambda_2}{0}
+\end{align*}
+\end{intuition}
+
+% ============================================
+\section{Diagonalization}
+% ============================================
+
+\begin{definition}[Diagonalization]
+Matrix $\mA$ is \vocab{diagonalizable} if:
+\[
+\mA = \mP \mD \mP\inv
+\]
+where $\mD$ is diagonal and $\mP$ is the matrix of eigenvectors.
+\end{definition}
+
+\begin{theorem}[Diagonalizability Condition]
+An $n \times n$ matrix is diagonalizable if and only if it has $n$ linearly independent eigenvectors.
+\end{theorem}
+
+\begin{example}
+$\mA = \twomat{3}{1}{0}{2}$ with eigenvalues $\lambda_1 = 3$, $\lambda_2 = 2$
+
+Eigenvectors: $\vv_1 = \twovec{1}{0}$, $\vv_2 = \twovec{-1}{1}$
+
+\[
+\mP = \twomat{1}{-1}{0}{1}, \quad \mD = \twomat{3}{0}{0}{2}
+\]
+
+Verification: $\mP\mD\mP\inv = \mA$ \checkmark
+\end{example}
+
+% ============================================
+\section{Matrix Powers via Diagonalization}
+% ============================================
+
+\begin{theorem}
+If $\mA = \mP\mD\mP\inv$:
+\[
+\mA^n = \mP \mD^n \mP\inv
+\]
+and $\mD^n$ is very simple:
+\[
+\mD^n = \threemat{\lambda_1^n}{0}{0}{0}{\lambda_2^n}{0}{0}{0}{\ddots}
+\]
+\end{theorem}
+
+\begin{example}
+Computing $\mA^{100}$ for the previous example:
+\[
+\mA^{100} = \mP \twomat{3^{100}}{0}{0}{2^{100}} \mP\inv
+\]
+Without diagonalization, we would need 100 matrix multiplications!
+\end{example}
+
+\begin{practical}
+\textbf{Application: Fibonacci Numbers}
+
+Fibonacci sequence: $F_{n+1} = F_n + F_{n-1}$
+
+Matrix:
+\[
+\twomat{1}{1}{1}{0}^n = \twomat{F_{n+1}}{F_n}{F_n}{F_{n-1}}
+\]
+
+With diagonalization, we find a closed-form formula:
+\[
+F_n = \frac{1}{\sqrt{5}}\left[\left(\frac{1+\sqrt{5}}{2}\right)^n - \left(\frac{1-\sqrt{5}}{2}\right)^n\right]
+\]
+\end{practical}
+
+% ============================================
+\section{Non-Diagonalizable Matrices}
+% ============================================
+
+\begin{example}
+Shear matrix $\mA = \twomat{1}{1}{0}{1}$:
+
+Characteristic polynomial: $(1-\lambda)^2 = 0$
+
+Eigenvalue: $\lambda = 1$ (repeated)
+
+Eigenvector: only $\twovec{1}{0}$ (one-dimensional)
+
+This matrix is not diagonalizable!
+\end{example}
+
+\begin{warning}
+A repeated eigenvalue is not necessarily problematic. The problem arises when the number of independent eigenvectors is less than the multiplicity of the eigenvalue.
+\end{warning}
+
+% ============================================
+\section{Symmetric Matrices}
+% ============================================
+
+\begin{theorem}[Spectral Theorem]
+A symmetric matrix ($\mA = \mA\trans$):
+\begin{enumerate}
+    \item Has real eigenvalues
+    \item Eigenvectors corresponding to distinct eigenvalues are orthogonal
+    \item Is always diagonalizable (with an orthogonal basis)
+\end{enumerate}
+\end{theorem}
+
+\begin{intuition}
+Symmetric matrices are ``well-behaved.'' They always become diagonal and their eigenvectors are perpendicular - like the principal axes of an ellipse.
+\end{intuition}
+
+% ============================================
+\section{Exercises}
+% ============================================
+
+\begin{exercise}
+Using the quick trick, find the eigenvalues of:
+\[
+\mA = \twomat{5}{2}{2}{2}
+\]
+\end{exercise}
+
+\begin{exercise}
+Diagonalize matrix $\mA = \twomat{2}{1}{1}{2}$.
+\end{exercise}
+
+\begin{exercise}
+Using diagonalization, compute $\mA^{10}$:
+\[
+\mA = \twomat{1}{1}{0}{2}
+\]
+\end{exercise}
+
+\begin{exercise}
+Is the following matrix diagonalizable?
+\[
+\mA = \twomat{2}{1}{0}{2}
+\]
+\end{exercise}
+
+\begin{exercise}[Challenge]
+Show that $\mA$ and $\mA\trans$ have the same eigenvalues.
+\end{exercise}
+
+\begin{problem}
+The population of rabbits and foxes is modeled by:
+\[
+\twovec{R_{n+1}}{F_{n+1}} = \twomat{1.1}{-0.4}{0.2}{0.8}\twovec{R_n}{F_n}
+\]
+Analyze the long-term behavior of the population.
+\end{problem}
+

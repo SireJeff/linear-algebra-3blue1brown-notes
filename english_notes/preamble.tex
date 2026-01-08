@@ -1,0 +1,168 @@
+% preamble.tex - English Linear Algebra Lecture Notes
+% Standard LaTeX configuration (no RTL support needed)
+
+\documentclass[12pt,a4paper,openany,oneside]{book}
+
+% === Page Geometry ===
+\usepackage{geometry}
+\geometry{
+    top=2.5cm,
+    bottom=2.5cm,
+    left=2.5cm,
+    right=2.5cm,
+    headheight=14pt
+}
+
+% === Math Packages ===
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{bm}
+
+% === Graphics and Diagrams ===
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usetikzlibrary{arrows.meta, calc, positioning, decorations.pathreplacing, patterns}
+
+% === Colors and Boxes ===
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,breakable,theorems}
+
+% === Tables and Lists ===
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{enumitem}
+
+% === Hyperlinks ===
+\usepackage[colorlinks=true,linkcolor=blue!70!black,urlcolor=blue!70!black,citecolor=green!50!black]{hyperref}
+
+% === Theorem Environments (English) ===
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[chapter]
+\newtheorem{example}{Example}[chapter]
+\newtheorem{exercise}{Exercise}[chapter]
+\newtheorem{problem}{Problem}[chapter]
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[chapter]
+\newtheorem{lemma}{Lemma}[chapter]
+\newtheorem{proposition}{Proposition}[chapter]
+\newtheorem{corollary}{Corollary}[chapter]
+
+\theoremstyle{remark}
+\newtheorem{remark}{Remark}[chapter]
+\newtheorem{note}{Note}[chapter]
+
+% === Custom tcolorbox Environments ===
+
+% Geometric Intuition Box
+\newtcolorbox{intuition}{
+    enhanced,
+    colback=blue!5,
+    colframe=blue!75!black,
+    fonttitle=\bfseries,
+    title={Geometric Intuition},
+    breakable,
+    left=5mm,
+    right=5mm,
+    top=3mm,
+    bottom=3mm,
+    arc=2mm,
+    boxrule=1pt
+}
+
+% Practical Application Box
+\newtcolorbox{practical}{
+    enhanced,
+    colback=green!5,
+    colframe=green!60!black,
+    fonttitle=\bfseries,
+    title={Practical Application},
+    breakable,
+    left=5mm,
+    right=5mm,
+    top=3mm,
+    bottom=3mm,
+    arc=2mm,
+    boxrule=1pt
+}
+
+% Warning Box
+\newtcolorbox{warning}{
+    enhanced,
+    colback=red!5,
+    colframe=red!75!black,
+    fonttitle=\bfseries,
+    title={Warning},
+    breakable,
+    left=5mm,
+    right=5mm,
+    top=3mm,
+    bottom=3mm,
+    arc=2mm,
+    boxrule=1pt
+}
+
+% Important Note Box
+\newtcolorbox{important}{
+    enhanced,
+    colback=orange!5,
+    colframe=orange!75!black,
+    fonttitle=\bfseries,
+    title={Important},
+    breakable,
+    left=5mm,
+    right=5mm,
+    top=3mm,
+    bottom=3mm,
+    arc=2mm,
+    boxrule=1pt
+}
+
+% Summary Box
+\newtcolorbox{summary}{
+    enhanced,
+    colback=purple!5,
+    colframe=purple!75!black,
+    fonttitle=\bfseries,
+    title={Summary},
+    breakable,
+    left=5mm,
+    right=5mm,
+    top=3mm,
+    bottom=3mm,
+    arc=2mm,
+    boxrule=1pt
+}
+
+% === Page Header/Footer ===
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\leftmark}
+\fancyhead[R]{\rightmark}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0pt}
+
+% === Spacing ===
+\usepackage{setspace}
+\onehalfspacing
+
+% === Custom Commands for Math ===
+\input{commands}
+
+% === TikZ styles for linear algebra diagrams ===
+\tikzset{
+    vector/.style={-{Stealth[length=3mm]}, thick},
+    axis/.style={-{Stealth[length=2mm]}, gray},
+    grid/.style={very thin, gray!30},
+    transformed/.style={blue!70},
+    original/.style={black},
+    basis/.style={red!70!black, very thick},
+    point/.style={circle, fill, inner sep=1.5pt}
+}

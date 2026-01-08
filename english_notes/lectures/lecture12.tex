@@ -1,0 +1,274 @@
+% lecture12.tex - Abstract Vector Spaces
+% Chapter 12: Abstract Vector Spaces
+
+\chapter{Abstract Vector Spaces}
+\label{ch:abstract}
+
+\begin{abstract}
+In this final chapter, we extend the concept of vectors beyond geometric arrows. We will see that functions, polynomials, and even music can be ``vectors'' - as long as they follow the rules of linear algebra.
+\end{abstract}
+
+% ============================================
+\section{Motivation: What is a Vector?}
+% ============================================
+
+\begin{intuition}
+So far we have known vectors as arrows or lists of numbers. But mathematicians ask a deeper question:
+
+\textbf{``What things behave like vectors?''}
+
+Answer: Anything that can be added and multiplied by scalars!
+\end{intuition}
+
+\begin{example}
+Functions can be added: $(f + g)(x) = f(x) + g(x)$
+
+Functions can be multiplied by numbers: $(cf)(x) = c \cdot f(x)$
+
+So functions can be ``vectors''!
+\end{example}
+
+% ============================================
+\section{Formal Definition of Vector Space}
+% ============================================
+
+\begin{definition}[Vector Space]
+A \vocab{vector space} over the field $\R$ is a set $V$ with two operations:
+\begin{itemize}
+    \item \textbf{Addition:} $+ : V \times V \to V$
+    \item \textbf{Scalar multiplication:} $\cdot : \R \times V \to V$
+\end{itemize}
+that satisfy the following axioms.
+\end{definition}
+
+\begin{theorem}[Vector Space Axioms]
+For all $\vu, \vv, \vw \in V$ and $a, b \in \R$:
+
+\textbf{Addition axioms:}
+\begin{enumerate}
+    \item $\vu + \vv = \vv + \vu$ (commutativity)
+    \item $(\vu + \vv) + \vw = \vu + (\vv + \vw)$ (associativity)
+    \item Existence of identity: $\exists \vzero : \vv + \vzero = \vv$
+    \item Existence of inverse: $\forall \vv, \exists (-\vv) : \vv + (-\vv) = \vzero$
+\end{enumerate}
+
+\textbf{Scalar multiplication axioms:}
+\begin{enumerate}[resume]
+    \item $a(b\vv) = (ab)\vv$
+    \item $1 \cdot \vv = \vv$
+\end{enumerate}
+
+\textbf{Distributive axioms:}
+\begin{enumerate}[resume]
+    \item $a(\vu + \vv) = a\vu + a\vv$
+    \item $(a + b)\vv = a\vv + b\vv$
+\end{enumerate}
+\end{theorem}
+
+% ============================================
+\section{Examples of Vector Spaces}
+% ============================================
+
+\subsection{$\R^n$ - The Standard Space}
+
+\begin{example}
+$\R^n = \{(x_1, x_2, \ldots, x_n) \mid x_i \in \R\}$ with usual addition and multiplication.
+
+This is the same space we have been working with until now.
+\end{example}
+
+\subsection{The Space of Polynomials}
+
+\begin{example}
+$\mathcal{P}_n$ = the set of polynomials of degree at most $n$:
+\[
+p(x) = a_0 + a_1 x + a_2 x^2 + \cdots + a_n x^n
+\]
+
+Addition: $(p + q)(x) = p(x) + q(x)$
+
+Scalar multiplication: $(cp)(x) = c \cdot p(x)$
+
+Zero vector: $p(x) = 0$
+
+\textbf{Basis:} $\{1, x, x^2, \ldots, x^n\}$ - dimension of space: $n + 1$
+\end{example}
+
+\subsection{The Space of Functions}
+
+\begin{example}
+$C[a,b]$ = the set of continuous functions on interval $[a,b]$
+
+This space is \textbf{infinite-dimensional}!
+\end{example}
+
+\subsection{The Space of Matrices}
+
+\begin{example}
+$M_{m \times n}$ = the set of $m \times n$ matrices
+
+Addition: element-wise addition
+
+Scalar multiplication: multiply all entries by the scalar
+
+Dimension: $m \times n$
+\end{example}
+
+% ============================================
+\section{Abstract Linear Transformations}
+% ============================================
+
+\begin{definition}[Linear Transformation Between Spaces]
+A function $T: V \to W$ is a \vocab{linear transformation} if:
+\begin{enumerate}
+    \item $T(\vu + \vv) = T(\vu) + T(\vv)$
+    \item $T(c\vv) = c \cdot T(\vv)$
+\end{enumerate}
+\end{definition}
+
+\begin{example}
+\textbf{Differentiation:} $D: \mathcal{P}_n \to \mathcal{P}_{n-1}$ with $D(p) = p'$
+
+This is linear because $(f + g)' = f' + g'$ and $(cf)' = cf'$.
+\end{example}
+
+\begin{example}
+\textbf{Definite integral:} $I: C[0,1] \to \R$ with $I(f) = \int_0^1 f(x) dx$
+
+This is linear because $\int(f+g) = \int f + \int g$ and $\int cf = c\int f$.
+\end{example}
+
+% ============================================
+\section{Functions as Infinite-Dimensional Vectors}
+% ============================================
+
+\begin{intuition}
+A function $f: [0, 2\pi] \to \R$ can be thought of as an infinite-dimensional vector:
+\begin{itemize}
+    \item Each point $x$ is a ``component''
+    \item The value $f(x)$ is the value of that component
+\end{itemize}
+
+Inner product of functions:
+\[
+\langle f, g \rangle = \int_0^{2\pi} f(x) g(x) dx
+\]
+\end{intuition}
+
+\begin{practical}
+\textbf{Fourier Series}
+
+Sine and cosine functions form a ``basis'' for periodic functions:
+\[
+f(x) = \frac{a_0}{2} + \sum_{n=1}^{\infty} (a_n \cos nx + b_n \sin nx)
+\]
+
+The coefficients $a_n, b_n$ are like ``coordinates'' of the function in this basis!
+\end{practical}
+
+% ============================================
+\section{Why Does Abstraction Matter?}
+% ============================================
+
+\begin{summary}
+\textbf{The Power of Abstraction:}
+
+When something is a vector space, \textbf{all the tools of linear algebra} are applicable:
+\begin{itemize}
+    \item Linear independence and dependence
+    \item Basis and dimension
+    \item Linear transformations and matrices
+    \item Eigenvalues and eigenvectors
+    \item Image and null space
+\end{itemize}
+
+One theorem in linear algebra = a theorem for all these spaces!
+\end{summary}
+
+\begin{practical}
+\textbf{Quantum Mechanics}
+
+Quantum states form a vector space (Hilbert space). Physical operators are linear transformations. Measurement values = eigenvalues!
+\end{practical}
+
+\begin{practical}
+\textbf{Signal Processing}
+
+Audio signals are vectors in function space. Fourier transform is a change of basis. Filters are linear transformations.
+\end{practical}
+
+\begin{practical}
+\textbf{Machine Learning}
+
+Data are vectors in feature space. Linear models are linear transformations. Dimensionality reduction = finding a better basis.
+\end{practical}
+
+% ============================================
+\section{Looking Ahead}
+% ============================================
+
+\begin{remark}
+This course was an introduction to linear algebra. More advanced topics include:
+\begin{itemize}
+    \item \textbf{Quadratic forms} and classification of conic sections
+    \item \textbf{Singular Value Decomposition (SVD)} - powerful tool in data science
+    \item \textbf{Numerical linear algebra} - efficient algorithms
+    \item \textbf{Hilbert spaces} - infinite-dimensional linear algebra
+    \item \textbf{Representation theory} - groups and linear algebra
+\end{itemize}
+\end{remark}
+
+% ============================================
+\section{Exercises}
+% ============================================
+
+\begin{exercise}
+Show that the set of $2 \times 2$ symmetric matrices is a vector space. What is its dimension?
+\end{exercise}
+
+\begin{exercise}
+Is the set of polynomials with $p(0) = 1$ a vector space? Why or why not?
+\end{exercise}
+
+\begin{exercise}
+Show that differentiation $D: \mathcal{P}_3 \to \mathcal{P}_2$ is a linear transformation. Write its matrix in the standard basis.
+\end{exercise}
+
+\begin{exercise}
+Prove that in any vector space: $0 \cdot \vv = \vzero$
+\end{exercise}
+
+\begin{exercise}[Challenge]
+Consider the solution space of the differential equation $y'' + y = 0$. Show that this is a vector space and find a basis for it.
+\end{exercise}
+
+\begin{problem}
+For the linear transformation $T: \mathcal{P}_2 \to \mathcal{P}_2$ with $T(p) = p + p'$:
+\begin{enumerate}[label=(\alph*)]
+    \item Write the matrix of $T$ in the basis $\{1, x, x^2\}$
+    \item Find the eigenvalues
+    \item Find the eigenpolynomials (eigenvectors)
+\end{enumerate}
+\end{problem}
+
+% ============================================
+\section{Course Summary}
+% ============================================
+
+\begin{summary}
+\textbf{The Essence of Linear Algebra}
+
+We started from vectors and matrices and arrived at abstract spaces. Key ideas:
+
+\begin{enumerate}
+    \item \textbf{Vector:} Something that has addition and scalar multiplication
+    \item \textbf{Linear transformation:} A function that preserves lines
+    \item \textbf{Matrix:} The numerical representation of a linear transformation
+    \item \textbf{Determinant:} The volume scaling factor
+    \item \textbf{Eigenvalues:} Special directions that only get scaled
+    \item \textbf{Abstraction:} All these concepts work beyond arrows
+\end{enumerate}
+
+Linear algebra is the common language of mathematics, physics, engineering, and computer science.
+\end{summary}
+

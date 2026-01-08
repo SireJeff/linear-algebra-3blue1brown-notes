@@ -1,0 +1,247 @@
+% lecture04.tex - 3D Transformations and Determinants
+% Chapter 4: 3D Transformations and Determinants
+
+\chapter{3D Transformations and Determinants}
+\label{ch:determinant}
+
+\begin{abstract}
+The determinant is a number that measures how much a linear transformation ``stretches'' or ``compresses'' space. In this chapter, we learn the geometric meaning of determinants and how to compute them.
+\end{abstract}
+
+% ============================================
+\section{Transformations in Three-Dimensional Space}
+% ============================================
+
+\begin{definition}[3D Transformation Matrix]
+A linear transformation in $\Rthree$ is represented by a $3 \times 3$ matrix:
+\[
+\mA = \threemat{a_{11}}{a_{12}}{a_{13}}{a_{21}}{a_{22}}{a_{23}}{a_{31}}{a_{32}}{a_{33}}
+\]
+The columns are where $\vi$, $\vj$, and $\vk$ land.
+\end{definition}
+
+\begin{intuition}
+The same logic from 2D applies in 3D. Imagine a three-dimensional grid being stretched, compressed, rotated, or sheared. Lines still remain straight and the origin stays fixed.
+\end{intuition}
+
+% ============================================
+\section{Determinant: Geometric Meaning}
+% ============================================
+
+\begin{definition}[Determinant - Geometric Definition]
+The \vocab{determinant} of a matrix is the factor by which the corresponding transformation scales area (in 2D) or volume (in 3D).
+
+If $\mA$ is the matrix of transformation $T$:
+\[
+\det(\mA) = \frac{\text{area/volume after transformation}}{\text{area/volume before transformation}}
+\]
+\end{definition}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.2]
+    % Original unit square
+    \begin{scope}[shift={(0,0)}]
+        \fill[blue!20] (0,0) -- (1,0) -- (1,1) -- (0,1) -- cycle;
+        \draw[thick] (0,0) -- (1,0) -- (1,1) -- (0,1) -- cycle;
+        \draw[basis] (0,0) -- (1,0);
+        \draw[basis] (0,0) -- (0,1);
+        \node at (0.5,0.5) {$1$};
+        \node at (0.5,-0.5) {Area = $1$};
+    \end{scope}
+
+    \draw[-{Stealth}, very thick] (1.5,0.5) -- (2.5,0.5) node[midway, above] {$T$};
+
+    % Transformed parallelogram
+    \begin{scope}[shift={(3,0)}]
+        \fill[green!20] (0,0) -- (2,0) -- (3,1.5) -- (1,1.5) -- cycle;
+        \draw[thick] (0,0) -- (2,0) -- (3,1.5) -- (1,1.5) -- cycle;
+        \draw[transformed, very thick] (0,0) -- (2,0);
+        \draw[transformed, very thick] (0,0) -- (1,1.5);
+        \node at (1.5,0.75) {$3$};
+        \node at (1.5,-0.5) {Area = $3$};
+    \end{scope}
+\end{tikzpicture}
+\end{center}
+
+\begin{important}
+Determinant = scaling factor for area/volume
+
+If $\det(\mA) = 3$, every shape becomes $3$ times larger after the transformation.
+\end{important}
+
+% ============================================
+\section{The Sign of the Determinant}
+% ============================================
+
+\begin{theorem}[Meaning of the Sign]
+\begin{itemize}
+    \item $\det(\mA) > 0$: Orientation of space is preserved
+    \item $\det(\mA) < 0$: Orientation of space is reversed (like a mirror)
+    \item $\det(\mA) = 0$: Space is collapsed to a lower dimension
+\end{itemize}
+\end{theorem}
+
+\begin{intuition}
+In 2D, if $\vj$ is to the left of $\vi$, the orientation is ``positive.'' If a transformation reverses this relationship (like a reflection), the determinant becomes negative.
+
+In 3D, use the right-hand rule: if curling fingers from $\vi$ to $\vj$ makes the thumb point toward $\vk$, the orientation is positive.
+\end{intuition}
+
+% ============================================
+\section{Computing the Determinant}
+% ============================================
+
+\subsection{Determinant of a $2 \times 2$ Matrix}
+
+\begin{definition}
+\[
+\det\twomat{a}{b}{c}{d} = ad - bc
+\]
+\end{definition}
+
+\begin{example}
+\[
+\det\twomat{3}{1}{0}{2} = 3 \times 2 - 1 \times 0 = 6
+\]
+Every shape's area is multiplied by 6.
+\end{example}
+
+\subsection{Determinant of a $3 \times 3$ Matrix}
+
+\begin{definition}[Expansion Formula]
+\[
+\det\threemat{a}{b}{c}{d}{e}{f}{g}{h}{i} = a(ei-fh) - b(di-fg) + c(dh-eg)
+\]
+\end{definition}
+
+\begin{intuition}
+The $3 \times 3$ determinant equals the volume of the parallelepiped formed by the three column vectors of the matrix (with sign).
+\end{intuition}
+
+\begin{example}
+\[
+\det\threemat{1}{2}{3}{4}{5}{6}{7}{8}{9}
+\]
+\begin{align*}
+&= 1(5 \times 9 - 6 \times 8) - 2(4 \times 9 - 6 \times 7) + 3(4 \times 8 - 5 \times 7) \\
+&= 1(45-48) - 2(36-42) + 3(32-35) \\
+&= 1(-3) - 2(-6) + 3(-3) \\
+&= -3 + 12 - 9 = 0
+\end{align*}
+A zero determinant means the three columns lie in the same plane!
+\end{example}
+
+% ============================================
+\section{Properties of the Determinant}
+% ============================================
+
+\begin{theorem}[Main Properties]
+\begin{enumerate}
+    \item $\det(\mI) = 1$
+    \item $\det(\mA\mB) = \det(\mA) \cdot \det(\mB)$
+    \item $\det(\mA\trans) = \det(\mA)$
+    \item $\det(c\mA) = c^n \det(\mA)$ for an $n \times n$ matrix
+    \item If a row/column is all zeros: $\det(\mA) = 0$
+    \item If two rows/columns are equal: $\det(\mA) = 0$
+\end{enumerate}
+\end{theorem}
+
+\begin{intuition}
+The property $\det(\mA\mB) = \det(\mA) \cdot \det(\mB)$ is very important:
+
+If $\mA$ scales area by 3 and $\mB$ scales area by 2, their composition scales area by $3 \times 2 = 6$.
+\end{intuition}
+
+% ============================================
+\section{Zero Determinant: Collapsing Space}
+% ============================================
+
+\begin{theorem}
+$\det(\mA) = 0$ if and only if:
+\begin{itemize}
+    \item The columns of $\mA$ are linearly dependent
+    \item The corresponding transformation collapses space to a lower dimension
+\end{itemize}
+\end{theorem}
+
+\begin{center}
+\begin{tikzpicture}[scale=1]
+    % 2D to 1D
+    \begin{scope}[shift={(0,0)}]
+        \fill[blue!20] (0,0) -- (1,0) -- (1,1) -- (0,1) -- cycle;
+        \node at (0.5,-0.5) {$\Rtwo$};
+    \end{scope}
+
+    \draw[-{Stealth}, very thick] (1.5,0.5) -- (3,0.5) node[midway, above] {$\det = 0$};
+
+    \begin{scope}[shift={(3.5,0)}]
+        \draw[blue!70, ultra thick] (-0.5,0.5) -- (2,0.5);
+        \node at (0.75,-0.5) {A line};
+    \end{scope}
+\end{tikzpicture}
+\end{center}
+
+\begin{practical}
+\textbf{Testing Linear Independence:}
+
+Want to know if three vectors in space are linearly independent? Put them as columns of a matrix. If $\det \neq 0$, they're independent.
+\end{practical}
+
+% ============================================
+\section{Practical Examples}
+% ============================================
+
+\begin{practical}
+\textbf{Computing Triangle Area from Vertices}
+
+If a triangle has vertices $(x_1, y_1)$, $(x_2, y_2)$, $(x_3, y_3)$:
+\[
+\text{Area} = \frac{1}{2} \left| \det\threemat{x_1}{y_1}{1}{x_2}{y_2}{1}{x_3}{y_3}{1} \right|
+\]
+\end{practical}
+
+\begin{practical}
+\textbf{Physics: Torque and Force}
+
+Determinants are used in computing cross products, which appear in calculations of torque, angular momentum, and electromagnetic fields.
+\end{practical}
+
+% ============================================
+\section{Exercises}
+% ============================================
+
+\begin{exercise}
+Compute the determinant of the following matrices:
+\begin{enumerate}[label=(\alph*)]
+    \item $\twomat{3}{7}{1}{4}$
+    \item $\twomat{2}{6}{1}{3}$
+    \item $\twomat{-1}{2}{3}{-6}$
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}
+If $\det(\mA) = 5$ and $\det(\mB) = -2$, what is $\det(\mA\mB)$?
+\end{exercise}
+
+\begin{exercise}
+Compute the area of the parallelogram with vertices $(0,0)$, $(3,1)$, $(1,4)$, $(4,5)$.
+\end{exercise}
+
+\begin{exercise}
+Compute the determinant of the rotation matrix for angle $\theta$ and interpret the result.
+\end{exercise}
+
+\begin{exercise}[Challenge]
+Prove that for any matrix $\mA$:
+\[
+\det(\mA\inv) = \frac{1}{\det(\mA)}
+\]
+(Assume $\mA$ is invertible)
+\end{exercise}
+
+\begin{problem}
+Compute the volume of the parallelepiped formed by the following vectors:
+\[
+\va = \threevec{1}{0}{2}, \quad \vb = \threevec{0}{3}{1}, \quad \vc = \threevec{2}{1}{0}
+\]
+\end{problem}

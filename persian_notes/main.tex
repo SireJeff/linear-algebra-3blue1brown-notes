@@ -1,0 +1,198 @@
+% main.tex - Persian Linear Algebra Lecture Notes
+% Master Document - Compile with XeLaTeX
+%
+% جبر خطی: ذات جبر خطی
+% بر اساس مجموعه ویدیویی \lr{3Blue1Brown}
+%
+% Compilation: xelatex main.tex (run 3 times for references)
+
+\input{preamble}
+
+\begin{document}
+
+% === Title Page ===
+\begin{titlepage}
+\centering
+\vspace*{0.5cm}
+
+\includegraphics[width=2.5cm]{figures/anjoman_logo.png}\\[0.3cm]
+{\small انجمن علمی فیزیک دانشگاه صنعتی شریف}\\[0.7cm]
+
+{\Huge\titr جبر خطی}\\[0.2cm]
+{\LARGE\titr ذات جبر خطی}\\[0.7cm]
+
+{\Large یادداشت‌های درسی جامع}\\[0.3cm]
+{\large با تأکید بر شهود هندسی و کاربردهای عملی}\\[0.8cm]
+
+\begin{tikzpicture}[scale=0.5]
+    % Background grid
+    \draw[grid] (-3,-3) grid (3,3);
+
+    % Axes
+    \draw[axis] (-3.5,0) -- (3.5,0);
+    \draw[axis] (0,-3.5) -- (0,3.5);
+
+    % Basis vectors
+    \draw[basis, -{Stealth[length=4mm]}] (0,0) -- (1,0) node[below right] {$\vi$};
+    \draw[basis, -{Stealth[length=4mm]}] (0,0) -- (0,1) node[above left] {$\vj$};
+
+    % A transformed vector
+    \draw[vector, blue!70, very thick] (0,0) -- (2,1.5) node[above right] {$\vv$};
+
+    % Another vector
+    \draw[vector, green!60!black, very thick] (0,0) -- (-1,2) node[above left] {$\vw$};
+\end{tikzpicture}\\[1.5cm]
+
+{\large بر اساس مجموعه ویدیویی}\\[0.2cm]
+{\Large\textbf{Essence of Linear Algebra}}\\[0.2cm]
+{\large اثر \lr{Grant Sanderson}}\\[0.2cm]
+{\small کانال یوتیوب: \lr{3Blue1Brown}}\\[0.8cm]
+
+{\small \today}
+
+\end{titlepage}
+
+% === Credits Page ===
+\begin{titlepage}
+\centering
+\vspace*{1.5cm}
+
+\includegraphics[width=3.5cm]{figures/anjoman_logo.png}
+
+\vspace{1cm}
+
+{\Large\titr انجمن علمی فیزیک دانشگاه صنعتی شریف}
+
+\vspace{1.5cm}
+
+{\large\titr با تشکر از:}
+
+\vspace{0.8cm}
+
+ابراهیم خسروانی\\[0.25cm]
+محمدحسن شیری\\[0.25cm]
+زهرا امیری\\[0.25cm]
+امین عزیزی\\[0.25cm]
+بیتا قربانی\\[0.25cm]
+یاسمین یزدانی\\[0.25cm]
+سپهر طلایی
+
+\vspace{1.5cm}
+
+{\small بر اساس مجموعه ویدیویی «ذات جبر خطی» از کانال \lr{3Blue1Brown}}
+\end{titlepage}
+
+% === Table of Contents ===
+\tableofcontents
+
+% === Preface ===
+\chapter*{پیش‌گفتار}
+\addcontentsline{toc}{chapter}{پیش‌گفتار}
+
+این یادداشت‌ها بر اساس مجموعه ویدیویی معروف «ذات جبر خطی» \lr{(Essence of Linear Algebra)} اثر \lr{Grant Sanderson} از کانال \lr{3Blue1Brown} تهیه شده است. هدف اصلی این مجموعه، ارائه درکی شهودی و هندسی از مفاهیم جبر خطی است.
+
+\section*{ویژگی‌های این یادداشت‌ها}
+\begin{itemize}
+    \item \textbf{شهود هندسی:} تأکید بر درک تصویری مفاهیم، نه فقط محاسبات
+    \item \textbf{تعاریف دقیق:} ارائه فرمول‌های ریاضی استاندارد
+    \item \textbf{مثال‌های کاربردی:} کاربرد در فیزیک، علوم کامپیوتر و مهندسی
+    \item \textbf{تمرین‌ها:} مسائل متنوع برای تثبیت یادگیری
+\end{itemize}
+
+\section*{پیش‌نیازها}
+\begin{itemize}
+    \item آشنایی با مفاهیم پایه ریاضیات (جبر دبیرستانی)
+    \item آشنایی با دستگاه مختصات دکارتی
+    \item علاقه به درک عمیق ریاضیات!
+\end{itemize}
+
+\section*{نحوه استفاده}
+هر درس شامل بخش‌های زیر است:
+\begin{description}
+    \item[تعاریف:] مفاهیم کلیدی با نماد‌گذاری ریاضی
+    \item[شهود هندسی:] توضیحات تصویری (در کادرهای آبی)
+    \item[کاربرد عملی:] مثال‌های واقعی (در کادرهای سبز)
+    \item[تمرین‌ها:] مسائل برای تمرین
+\end{description}
+
+\begin{flushright}
+با آرزوی موفقیت در یادگیری جبر خطی
+\end{flushright}
+
+% === LECTURES ===
+
+% درس ۱: مقدمه‌ای بر بردارها
+\input{lectures/lecture01}
+
+% درس ۲: ترکیبات خطی، فضای برداری و پایه
+\input{lectures/lecture02}
+
+% درس ۳: تبدیلات خطی و ماتریس‌ها
+\input{lectures/lecture03}
+
+% درس ۴: تبدیلات در سه بعد و دترمینان
+\input{lectures/lecture04}
+
+% درس ۵: ماتریس معکوس، فضای ستونی و فضای پوچ
+\input{lectures/lecture05}
+
+% درس ۶: ضرب داخلی و دوگانگی
+\input{lectures/lecture06}
+
+% درس ۷: ضرب خارجی و کاربردها
+\input{lectures/lecture07}
+
+% درس ۸: قاعده کرامر
+\input{lectures/lecture08}
+
+% درس ۹: تغییر پایه
+\input{lectures/lecture09}
+
+% درس ۱۰: بردارها و مقادیر ویژه
+\input{lectures/lecture10}
+
+% درس ۱۱: محاسبه مقادیر ویژه و پایه ویژه
+\input{lectures/lecture11}
+
+% درس ۱۲: فضاهای برداری انتزاعی
+\input{lectures/lecture12}
+
+% === Appendix: Glossary ===
+\appendix
+\chapter{واژه‌نامه انگلیسی-فارسی}
+
+\begin{center}
+\begin{tabular}{r|l}
+\toprule
+\textbf{فارسی} & \textbf{English} \\
+\midrule
+بردار & Vector \\
+ماتریس & Matrix \\
+تبدیل خطی & Linear Transformation \\
+دترمینان & Determinant \\
+مقدار ویژه & Eigenvalue \\
+بردار ویژه & Eigenvector \\
+پایه & Basis \\
+فضای پوشش & Span \\
+فضای پوچ & Null Space \\
+فضای ستونی & Column Space \\
+فضای سطری & Row Space \\
+رتبه & Rank \\
+استقلال خطی & Linear Independence \\
+وابستگی خطی & Linear Dependence \\
+ضرب داخلی & Dot Product \\
+ضرب خارجی & Cross Product \\
+ماتریس همانی & Identity Matrix \\
+ماتریس معکوس & Inverse Matrix \\
+ترانهاده & Transpose \\
+تغییر پایه & Change of Basis \\
+پایه ویژه & Eigenbasis \\
+ماتریس قطری & Diagonal Matrix \\
+اسکالر & Scalar \\
+ترکیب خطی & Linear Combination \\
+فضای برداری & Vector Space \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\end{document}

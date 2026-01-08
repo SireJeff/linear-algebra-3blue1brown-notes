@@ -1,0 +1,242 @@
+% lecture10.tex - Eigenvectors and Eigenvalues
+% Chapter 10: Eigenvectors and Eigenvalues
+
+\chapter{Eigenvectors and Eigenvalues}
+\label{ch:eigen}
+
+\begin{abstract}
+Eigenvectors are special directions that a linear transformation only scales without changing their direction. This concept is one of the most important ideas in linear algebra with broad applications in physics, engineering, and data science.
+\end{abstract}
+
+% ============================================
+\section{Motivation: Special Vectors}
+% ============================================
+
+\begin{intuition}
+When you apply a linear transformation, most vectors get knocked off their original direction. But some special vectors only get stretched or compressed and \textbf{stay on the same line}.
+
+These special vectors are called \textbf{eigenvectors}.
+\end{intuition}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.2]
+    % Before transformation
+    \begin{scope}[shift={(0,0)}]
+        \draw[grid] (-2,-2) grid (2,2);
+        \draw[axis] (-2,0) -- (2,0);
+        \draw[axis] (0,-2) -- (0,2);
+        \draw[vector, blue!70, very thick] (0,0) -- (1,0.5) node[right] {$\vv_1$};
+        \draw[vector, red!70, very thick] (0,0) -- (0.5,1) node[above] {$\vv_2$};
+        \draw[vector, green!60!black, very thick] (0,0) -- (-1,1) node[above left] {eigen!};
+        \node at (0,-2.5) {Before transformation};
+    \end{scope}
+
+    \draw[-{Stealth}, very thick] (2.5,0) -- (4,0) node[midway, above] {$T$};
+
+    % After transformation
+    \begin{scope}[shift={(6.5,0)}]
+        \draw[blue!20] (-2,-1) -- (0,2) -- (4,2) -- (2,-1) -- cycle;
+        \draw[axis] (-2,0) -- (4,0);
+        \draw[axis] (0,-2) -- (0,2);
+        \draw[vector, blue!70, very thick] (0,0) -- (1.5,1) node[right] {$T(\vv_1)$};
+        \draw[vector, red!70, very thick] (0,0) -- (1.5,1.5) node[above] {$T(\vv_2)$};
+        \draw[vector, green!60!black, very thick] (0,0) -- (-2,2) node[above left] {$2 \times$ eigen!};
+        \node at (1,-2.5) {After transformation};
+    \end{scope}
+\end{tikzpicture}
+\end{center}
+
+% ============================================
+\section{Formal Definition}
+% ============================================
+
+\begin{definition}[Eigenvector and Eigenvalue]
+A nonzero vector $\vv$ is an \vocab{eigenvector} of matrix $\mA$ if:
+\[
+\mA\vv = \lambda\vv
+\]
+for some scalar $\lambda$. This scalar is called the corresponding \vocab{eigenvalue}.
+\end{definition}
+
+\begin{intuition}
+$\mA\vv = \lambda\vv$ means:
+\begin{center}
+``Transformation $\mA$ acts on vector $\vv$ as just a scalar multiplication''
+\end{center}
+Vector $\vv$ stays on the same line, just scaled by $\lambda$.
+\end{intuition}
+
+\begin{example}
+For matrix $\mA = \twomat{3}{1}{0}{2}$:
+
+Vector $\vv = \twovec{1}{0}$ is an eigenvector:
+\[
+\mA\vv = \twomat{3}{1}{0}{2}\twovec{1}{0} = \twovec{3}{0} = 3\twovec{1}{0} = 3\vv
+\]
+Corresponding eigenvalue: $\lambda = 3$
+\end{example}
+
+% ============================================
+\section{Finding Eigenvalues}
+% ============================================
+
+\begin{theorem}[Characteristic Equation]
+$\lambda$ is an eigenvalue of $\mA$ if and only if:
+\[
+\det(\mA - \lambda\mI) = 0
+\]
+\end{theorem}
+
+\begin{proof}
+$\mA\vv = \lambda\vv$ can be written as:
+\[
+\mA\vv - \lambda\vv = \vzero \implies (\mA - \lambda\mI)\vv = \vzero
+\]
+This equation has a nonzero solution if and only if $\mA - \lambda\mI$ is not invertible, i.e., $\det(\mA - \lambda\mI) = 0$.
+\end{proof}
+
+\begin{definition}[Characteristic Polynomial]
+$\det(\mA - \lambda\mI)$ is a polynomial in $\lambda$ called the \vocab{characteristic polynomial}. Its roots are the eigenvalues.
+\end{definition}
+
+\begin{example}
+For $\mA = \twomat{3}{1}{0}{2}$:
+\[
+\det(\mA - \lambda\mI) = \det\twomat{3-\lambda}{1}{0}{2-\lambda} = (3-\lambda)(2-\lambda) - 0 = 0
+\]
+Roots: $\lambda_1 = 3$, $\lambda_2 = 2$
+\end{example}
+
+% ============================================
+\section{Finding Eigenvectors}
+% ============================================
+
+\begin{theorem}
+For each eigenvalue $\lambda$, the corresponding eigenvectors are found by solving the homogeneous system:
+\[
+(\mA - \lambda\mI)\vv = \vzero
+\]
+\end{theorem}
+
+\begin{example}
+Continuing the previous example with $\lambda = 2$:
+\[
+(\mA - 2\mI)\vv = \twomat{1}{1}{0}{0}\twovec{v_1}{v_2} = \vzero
+\]
+Equation: $v_1 + v_2 = 0$, so $v_1 = -v_2$
+
+Eigenvector: $\vv = t\twovec{-1}{1}$ for any $t \neq 0$
+\end{example}
+
+% ============================================
+\section{Eigenspace}
+% ============================================
+
+\begin{definition}[Eigenspace]
+The \vocab{eigenspace} corresponding to eigenvalue $\lambda$:
+\[
+E_\lambda = \Null(\mA - \lambda\mI) = \{\vv \mid \mA\vv = \lambda\vv\}
+\]
+\end{definition}
+
+\begin{intuition}
+The eigenspace contains all vectors that transformation $\mA$ only scales by factor $\lambda$. This space is always a vector subspace.
+\end{intuition}
+
+% ============================================
+\section{Geometric Interpretation}
+% ============================================
+
+\begin{practical}
+\textbf{3D Rotation}
+
+For a rotation in $\Rthree$, the eigenvector with $\lambda = 1$ is the \textbf{axis of rotation}! This vector stays fixed.
+
+Describing rotation with axis and angle is much simpler than a $3 \times 3$ matrix.
+\end{practical}
+
+\begin{example}
+Shear matrix: $\mA = \twomat{1}{1}{0}{1}$
+
+Eigenvalue: $\lambda = 1$ (repeated)
+
+Eigenvector: $\twovec{1}{0}$ (only one eigen-direction)
+
+Interpretation: Shear keeps the $x$-axis fixed.
+\end{example}
+
+% ============================================
+\section{Special Cases}
+% ============================================
+
+\begin{theorem}[2D Rotation]
+The rotation matrix $\mR_\theta = \twomat{\cos\theta}{-\sin\theta}{\sin\theta}{\cos\theta}$ for $\theta \neq 0, \pi$:
+
+Eigenvalues: $\lambda = \cos\theta \pm i\sin\theta$ (complex!)
+
+No real vector stays in place - all vectors rotate.
+\end{theorem}
+
+\begin{warning}
+Eigenvalues can be \textbf{complex} even for real matrices! This happens in rotations.
+\end{warning}
+
+% ============================================
+\section{Applications}
+% ============================================
+
+\begin{practical}
+\textbf{Google PageRank}
+
+Consider web pages as vectors and links as a matrix. The dominant eigenvector (with the largest eigenvalue) shows the relative importance of pages.
+\end{practical}
+
+\begin{practical}
+\textbf{Principal Component Analysis (PCA)}
+
+In machine learning, eigenvectors of the covariance matrix show the principal directions of variation in the data.
+\end{practical}
+
+\begin{practical}
+\textbf{Quantum Mechanics}
+
+Eigenvalues of operators = possible measurement outcomes
+
+Eigenvectors = stable states of the system
+\end{practical}
+
+% ============================================
+\section{Exercises}
+% ============================================
+
+\begin{exercise}
+Find the eigenvalues and eigenvectors of the following matrix:
+\[
+\mA = \twomat{4}{1}{2}{3}
+\]
+\end{exercise}
+
+\begin{exercise}
+Show that the eigenvalues of a diagonal matrix are its diagonal entries.
+\end{exercise}
+
+\begin{exercise}
+Find the eigenvalues of the $90°$ rotation matrix.
+\end{exercise}
+
+\begin{exercise}
+If $\lambda$ is an eigenvalue of $\mA$, show that $\lambda^2$ is an eigenvalue of $\mA^2$.
+\end{exercise}
+
+\begin{exercise}[Challenge]
+Prove that the trace of a matrix (sum of diagonal entries) equals the sum of eigenvalues.
+\end{exercise}
+
+\begin{problem}
+Population matrix:
+\[
+\mL = \twomat{0}{4}{0.5}{0}
+\]
+Find the dominant eigenvalue and interpret it.
+\end{problem}
+

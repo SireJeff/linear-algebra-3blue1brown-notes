@@ -1,0 +1,374 @@
+% lecture02.tex - ترکیبات خطی، فضای پوشش و بردارهای پایه
+% Chapter 2: Linear Combinations, Span, and Basis Vectors
+
+\chapter{ترکیبات خطی، فضای پوشش و پایه}
+\label{ch:span-basis}
+
+\begin{abstract}
+در این درس با مفاهیم کلیدی «ترکیب خطی»، «فضای پوشش» \lr{(span)}، و «پایه» آشنا می‌شویم. این مفاهیم پایه و اساس درک عمیق جبر خطی هستند و به ما امکان می‌دهند بفهمیم چگونه بردارها فضا را «پر می‌کنند».
+\end{abstract}
+
+% ============================================
+\section{نگاه جدید به مختصات}
+% ============================================
+
+در درس قبل، مختصات بردار را به عنوان «دستورالعمل حرکت» معرفی کردیم. اما نگاه دیگری وجود دارد که بسیار مهم است.
+
+\begin{intuition}
+وقتی می‌نویسیم $\vv = \twovec{3}{-2}$، به جای فکر کردن به «۳ واحد راست، ۲ واحد پایین»، اینطور فکر کنید:
+\begin{itemize}
+    \item عدد ۳ یک \textbf{اسکالر} است که بردار $\vi$ را مقیاس می‌کند
+    \item عدد $-2$ یک \textbf{اسکالر} است که بردار $\vj$ را مقیاس می‌کند
+    \item بردار نهایی، \textbf{مجموع} این دو بردار مقیاس‌شده است
+\end{itemize}
+\end{intuition}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.3]
+    % Grid
+    \draw[grid] (-1.5,-2.5) grid (4.5,1.5);
+
+    % Axes
+    \draw[axis] (-1.5,0) -- (4.5,0) node[right] {$x$};
+    \draw[axis] (0,-2.5) -- (0,1.5) node[above] {$y$};
+
+    % Basis vectors (unit)
+    \draw[basis, -{Stealth[length=3mm]}] (0,0) -- (1,0) node[below right] {$\vi$};
+    \draw[basis, -{Stealth[length=3mm]}] (0,0) -- (0,1) node[above left] {$\vj$};
+
+    % Scaled vectors
+    \draw[vector, orange!70, very thick] (0,0) -- (3,0) node[midway, below] {$3\vi$};
+    \draw[vector, green!60!black, very thick] (3,0) -- (3,-2) node[midway, right] {$-2\vj$};
+
+    % Result vector
+    \draw[vector, blue!70, ultra thick] (0,0) -- (3,-2) node[below right] {$\vv = 3\vi - 2\vj$};
+\end{tikzpicture}
+\end{center}
+
+% ============================================
+\section{ترکیب خطی}
+% ============================================
+
+\begin{definition}[ترکیب خطی]
+\vocab{ترکیب خطی} دو بردار $\vv$ و $\vw$ عبارت است از:
+\[
+a\vv + b\vw
+\]
+که در آن $a$ و $b$ اسکالرهای دلخواه هستند.
+
+به طور کلی، ترکیب خطی $n$ بردار $\vv_1, \vv_2, \ldots, \vv_n$ برابر است با:
+\[
+c_1\vv_1 + c_2\vv_2 + \cdots + c_n\vv_n = \sum_{i=1}^{n} c_i\vv_i
+\]
+\end{definition}
+
+\begin{intuition}
+نام «خطی» از کجا می‌آید؟ اگر یکی از اسکالرها را ثابت نگه دارید و دیگری را تغییر دهید، نوک بردار حاصل روی یک \textbf{خط راست} حرکت می‌کند.
+
+برای مثال، اگر $b = 1$ ثابت باشد و $a$ تغییر کند، بردار $a\vv + \vw$ روی خطی موازی با $\vv$ حرکت می‌کند.
+\end{intuition}
+
+\begin{example}
+فرض کنید $\vv = \twovec{1}{2}$ و $\vw = \twovec{3}{-1}$. چند ترکیب خطی:
+\begin{align*}
+2\vv + 1\vw &= 2\twovec{1}{2} + 1\twovec{3}{-1} = \twovec{2}{4} + \twovec{3}{-1} = \twovec{5}{3} \\
+-1\vv + 3\vw &= -\twovec{1}{2} + 3\twovec{3}{-1} = \twovec{-1}{-2} + \twovec{9}{-3} = \twovec{8}{-5} \\
+0\vv + 0\vw &= \twovec{0}{0} = \vzero
+\end{align*}
+\end{example}
+
+% ============================================
+\section{فضای پوشش \lr{(Span)}}
+% ============================================
+
+\begin{definition}[فضای پوشش]
+\vocab{فضای پوشش} \lr{(Span)} مجموعه‌ای از بردارها، مجموعه تمام ترکیبات خطی ممکن آن بردارهاست:
+\[
+\spn\{\vv_1, \vv_2, \ldots, \vv_n\} = \{c_1\vv_1 + c_2\vv_2 + \cdots + c_n\vv_n \mid c_i \in \R\}
+\]
+\end{definition}
+
+\begin{intuition}
+سؤال کلیدی: با داشتن چند بردار و استفاده از دو عملیات اصلی (جمع و ضرب اسکالری)، به چه بردارهایی می‌توان رسید؟
+
+پاسخ: \textbf{فضای پوشش} آن بردارها.
+\end{intuition}
+
+% -------------------------------------------
+\subsection{فضای پوشش در دو بعد}
+% -------------------------------------------
+
+\begin{theorem}
+برای دو بردار $\vv$ و $\vw$ در $\Rtwo$، سه حالت ممکن است:
+\begin{enumerate}
+    \item اگر $\vv$ و $\vw$ در یک راستا نباشند: $\spn\{\vv, \vw\} = \Rtwo$ (کل صفحه)
+    \item اگر $\vv$ و $\vw$ در یک راستا باشند (ولی غیرصفر): $\spn\{\vv, \vw\}$ یک خط است
+    \item اگر هر دو صفر باشند: $\spn\{\vv, \vw\} = \{\vzero\}$ (فقط مبدأ)
+\end{enumerate}
+\end{theorem}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.9]
+    % Case 1: Full plane
+    \begin{scope}[shift={(0,0)}]
+        \fill[blue!10] (-2,-2) rectangle (2,2);
+        \draw[axis] (-2,0) -- (2,0);
+        \draw[axis] (0,-2) -- (0,2);
+        \draw[vector, red!70, very thick] (0,0) -- (1,0.5) node[right] {$\vv$};
+        \draw[vector, green!60!black, very thick] (0,0) -- (-0.3,1) node[above] {$\vw$};
+        \node at (0,-2.5) {حالت ۱: کل صفحه};
+    \end{scope}
+
+    % Case 2: Line
+    \begin{scope}[shift={(6,0)}]
+        \draw[blue!30, very thick] (-2,-1) -- (2,1);
+        \draw[axis] (-2,0) -- (2,0);
+        \draw[axis] (0,-2) -- (0,2);
+        \draw[vector, red!70, very thick] (0,0) -- (1,0.5) node[right] {$\vv$};
+        \draw[vector, green!60!black, very thick] (0,0) -- (1.6,0.8) node[above] {$\vw$};
+        \node at (0,-2.5) {حالت ۲: یک خط};
+    \end{scope}
+
+    % Case 3: Origin
+    \begin{scope}[shift={(12,0)}]
+        \draw[axis] (-2,0) -- (2,0);
+        \draw[axis] (0,-2) -- (0,2);
+        \fill[blue!70] (0,0) circle (3pt);
+        \node at (0,-2.5) {حالت ۳: فقط مبدأ};
+    \end{scope}
+\end{tikzpicture}
+\end{center}
+
+% -------------------------------------------
+\subsection{فضای پوشش در سه بعد}
+% -------------------------------------------
+
+\begin{theorem}
+برای بردارها در $\Rthree$:
+\begin{itemize}
+    \item \textbf{یک بردار غیرصفر:} فضای پوشش یک \textbf{خط} است
+    \item \textbf{دو بردار غیر هم‌راستا:} فضای پوشش یک \textbf{صفحه} است
+    \item \textbf{سه بردار که در یک صفحه نباشند:} فضای پوشش کل $\Rthree$ است
+\end{itemize}
+\end{theorem}
+
+\begin{intuition}
+دو بردار در فضای سه‌بعدی را تصور کنید. ترکیبات خطی آنها یک صفحه تخت از مبدأ می‌سازد. حالا اگر بردار سومی اضافه کنید که روی این صفحه نباشد، مثل این است که صفحه را در فضا «جارو» می‌کنید و کل فضا را پوشش می‌دهید.
+\end{intuition}
+
+% ============================================
+\section{استقلال و وابستگی خطی}
+% ============================================
+
+\begin{definition}[وابستگی خطی]
+مجموعه‌ای از بردارها \vocab{وابسته خطی} است اگر بتوان یکی از آنها را حذف کرد بدون اینکه فضای پوشش تغییر کند. به عبارت دیگر، حداقل یکی از بردارها «اضافی» است.
+
+به بیان ریاضی: بردارهای $\vv_1, \ldots, \vv_n$ وابسته خطی هستند اگر و تنها اگر اسکالرهای غیرهمه‌صفر $c_1, \ldots, c_n$ وجود داشته باشند که:
+\[
+c_1\vv_1 + c_2\vv_2 + \cdots + c_n\vv_n = \vzero
+\]
+\end{definition}
+
+\begin{definition}[استقلال خطی]
+مجموعه‌ای از بردارها \vocab{مستقل خطی} است اگر هیچ‌کدام از آنها اضافی نباشد - یعنی هر بردار بعدی جدیدی به فضای پوشش اضافه می‌کند.
+
+به بیان ریاضی: بردارهای $\vv_1, \ldots, \vv_n$ مستقل خطی هستند اگر و تنها اگر:
+\[
+c_1\vv_1 + c_2\vv_2 + \cdots + c_n\vv_n = \vzero \implies c_1 = c_2 = \cdots = c_n = 0
+\]
+\end{definition}
+
+\begin{example}
+بردارهای $\vv = \twovec{2}{1}$ و $\vw = \twovec{4}{2}$ را در نظر بگیرید.
+
+این دو بردار \textbf{وابسته خطی} هستند زیرا $\vw = 2\vv$. می‌توان نوشت:
+\[
+2\vv - \vw = \vzero \quad \text{یعنی} \quad 2\twovec{2}{1} - \twovec{4}{2} = \twovec{0}{0}
+\]
+\end{example}
+
+\begin{example}
+بردارهای $\vv = \twovec{1}{0}$ و $\vw = \twovec{0}{1}$ مستقل خطی هستند.
+
+اگر $a\vv + b\vw = \vzero$:
+\[
+a\twovec{1}{0} + b\twovec{0}{1} = \twovec{a}{b} = \twovec{0}{0}
+\]
+پس $a = 0$ و $b = 0$. تنها راه رسیدن به بردار صفر، صفر بودن همه ضرایب است.
+\end{example}
+
+\begin{warning}
+در فضای $n$-بعدی، حداکثر $n$ بردار می‌توانند مستقل خطی باشند. اگر بیش از $n$ بردار داشته باشید، حتماً وابسته خطی هستند.
+\end{warning}
+
+% ============================================
+\section{پایه \lr{(Basis)}}
+% ============================================
+
+\begin{definition}[پایه]
+\vocab{پایه} یک فضای برداری، مجموعه‌ای از بردارها است که:
+\begin{enumerate}
+    \item \textbf{مستقل خطی} باشند
+    \item کل فضا را \textbf{پوشش دهند} (span کنند)
+\end{enumerate}
+\end{definition}
+
+\begin{theorem}
+پایه استاندارد $\Rtwo$ عبارت است از:
+\[
+\left\{ \vi = \twovec{1}{0}, \; \vj = \twovec{0}{1} \right\}
+\]
+و پایه استاندارد $\Rthree$:
+\[
+\left\{ \vi = \threevec{1}{0}{0}, \; \vj = \threevec{0}{1}{0}, \; \vk = \threevec{0}{0}{1} \right\}
+\]
+\end{theorem}
+
+\begin{intuition}
+پایه مثل یک «زبان» برای توصیف بردارهاست. وقتی می‌گوییم $\twovec{3}{2}$، در واقع داریم می‌گوییم «۳ تا از اولین بردار پایه و ۲ تا از دومی».
+
+اگر پایه متفاوتی انتخاب کنیم، همان بردار مختصات متفاوتی خواهد داشت - مثل ترجمه یک جمله به زبان دیگر.
+\end{intuition}
+
+% -------------------------------------------
+\subsection{پایه‌های غیراستاندارد}
+% -------------------------------------------
+
+\begin{example}
+مجموعه زیر نیز یک پایه برای $\Rtwo$ است:
+\[
+\mathcal{B} = \left\{ \vb_1 = \twovec{1}{1}, \; \vb_2 = \twovec{1}{-1} \right\}
+\]
+
+\textbf{اثبات استقلال خطی:} اگر $a\vb_1 + b\vb_2 = \vzero$:
+\[
+a\twovec{1}{1} + b\twovec{1}{-1} = \twovec{a+b}{a-b} = \twovec{0}{0}
+\]
+پس $a + b = 0$ و $a - b = 0$، که نتیجه می‌دهد $a = b = 0$.
+
+\textbf{پوشش کل صفحه:} چون دو بردار مستقل خطی داریم و در $\Rtwo$ هستیم، کل صفحه پوشش داده می‌شود.
+\end{example}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.5]
+    % Grid
+    \draw[grid] (-2,-2) grid (2,2);
+
+    % Axes
+    \draw[axis] (-2,0) -- (2,0) node[right] {$x$};
+    \draw[axis] (0,-2) -- (0,2) node[above] {$y$};
+
+    % Standard basis
+    \draw[basis, -{Stealth[length=3mm]}] (0,0) -- (1,0) node[below right] {$\vi$};
+    \draw[basis, -{Stealth[length=3mm]}] (0,0) -- (0,1) node[above left] {$\vj$};
+
+    % Non-standard basis
+    \draw[vector, blue!70, very thick] (0,0) -- (1,1) node[above right] {$\vb_1$};
+    \draw[vector, green!60!black, very thick] (0,0) -- (1,-1) node[below right] {$\vb_2$};
+\end{tikzpicture}
+\end{center}
+
+% ============================================
+\section{بردارها به عنوان نقاط}
+% ============================================
+
+\begin{remark}
+گاهی به جای فکر کردن به بردار به عنوان پیکان، راحت‌تر است آن را به عنوان \textbf{نقطه} در نظر بگیریم - نقطه‌ای که نوک بردار در آن قرار دارد.
+
+\begin{itemize}
+    \item وقتی به یک بردار خاص فکر می‌کنید: آن را \textbf{پیکان} تصور کنید
+    \item وقتی به مجموعه‌ای از بردارها فکر می‌کنید: آنها را \textbf{نقاط} تصور کنید
+\end{itemize}
+\end{remark}
+
+\begin{center}
+\begin{tikzpicture}[scale=1]
+    % Left: Vectors as arrows
+    \begin{scope}[shift={(0,0)}]
+        \draw[axis] (-0.5,0) -- (3,0);
+        \draw[axis] (0,-0.5) -- (0,3);
+        \draw[vector, blue!70] (0,0) -- (1,2);
+        \draw[vector, red!70] (0,0) -- (2,1);
+        \draw[vector, green!60!black] (0,0) -- (2.5,2.5);
+        \node at (1.5,-1) {بردار به عنوان پیکان};
+    \end{scope}
+
+    % Right: Vectors as points
+    \begin{scope}[shift={(6,0)}]
+        \draw[axis] (-0.5,0) -- (3,0);
+        \draw[axis] (0,-0.5) -- (0,3);
+        \fill[blue!70] (1,2) circle (3pt);
+        \fill[red!70] (2,1) circle (3pt);
+        \fill[green!60!black] (2.5,2.5) circle (3pt);
+        \node at (1.5,-1) {بردار به عنوان نقطه};
+    \end{scope}
+\end{tikzpicture}
+\end{center}
+
+% ============================================
+\section{خلاصه مفاهیم کلیدی}
+% ============================================
+
+\begin{summary}
+\begin{description}
+    \item[ترکیب خطی:] $c_1\vv_1 + c_2\vv_2 + \cdots + c_n\vv_n$ با اسکالرهای دلخواه
+    \item[فضای پوشش:] مجموعه همه ترکیبات خطی ممکن
+    \item[استقلال خطی:] هیچ برداری اضافی نیست
+    \item[وابستگی خطی:] حداقل یک بردار می‌تواند حذف شود
+    \item[پایه:] مجموعه مستقل خطی که کل فضا را پوشش می‌دهد
+\end{description}
+\end{summary}
+
+% ============================================
+\section{تمرین‌ها}
+% ============================================
+
+\begin{exercise}
+بردار $\vv = \twovec{4}{6}$ را به صورت ترکیب خطی از $\vi$ و $\vj$ بنویسید.
+\end{exercise}
+
+\begin{exercise}
+آیا بردارهای زیر مستقل خطی هستند؟ توضیح دهید.
+\[
+\va = \twovec{1}{3}, \quad \vb = \twovec{2}{6}
+\]
+\end{exercise}
+
+\begin{exercise}
+آیا بردارهای زیر مستقل خطی هستند؟
+\[
+\vv_1 = \twovec{1}{0}, \quad \vv_2 = \twovec{1}{1}, \quad \vv_3 = \twovec{0}{1}
+\]
+\textit{راهنمایی: در $\Rtwo$ حداکثر چند بردار می‌توانند مستقل خطی باشند؟}
+\end{exercise}
+
+\begin{exercise}
+فضای پوشش بردارهای زیر را توصیف کنید:
+\[
+\vv = \threevec{1}{0}{0}, \quad \vw = \threevec{0}{1}{0}
+\]
+\end{exercise}
+
+\begin{exercise}[چالشی]
+نشان دهید که مجموعه زیر یک پایه برای $\Rtwo$ است:
+\[
+\left\{ \twovec{2}{1}, \twovec{1}{3} \right\}
+\]
+سپس مختصات بردار $\twovec{5}{7}$ را در این پایه جدید پیدا کنید.
+\end{exercise}
+
+\begin{exercise}
+سه بردار در $\Rthree$ داده شده است:
+\[
+\vv_1 = \threevec{1}{0}{1}, \quad \vv_2 = \threevec{0}{1}{1}, \quad \vv_3 = \threevec{1}{1}{2}
+\]
+آیا این بردارها مستقل خطی هستند؟ فضای پوشش آنها چیست؟
+\end{exercise}
+
+\begin{problem}
+ثابت کنید که اگر $\{\vv_1, \vv_2\}$ پایه‌ای برای $\Rtwo$ باشد، آنگاه $\{2\vv_1, 3\vv_2\}$ نیز یک پایه است.
+\end{problem}
+
+\begin{problem}
+آیا می‌توان سه بردار در $\Rtwo$ یافت که مستقل خطی باشند؟ چرا؟
+\end{problem}
